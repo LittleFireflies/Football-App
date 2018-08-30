@@ -2,6 +2,9 @@ package com.littlefireflies.footballclub
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,6 +15,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initData()
+
+        rvClubList.layoutManager = LinearLayoutManager(this)
+        rvClubList.adapter = RecyclerViewAdapter(this, clubList) {
+            toast(it.name.toString())
+        }
     }
 
     private fun initData() {
