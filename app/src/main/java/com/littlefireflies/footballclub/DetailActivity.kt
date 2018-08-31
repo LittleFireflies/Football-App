@@ -1,8 +1,10 @@
 package com.littlefireflies.footballclub
 
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
+import android.view.MenuItem
 import android.widget.TextView
 import org.jetbrains.anko.*
 
@@ -22,18 +24,32 @@ class DetailActivity : AppCompatActivity() {
                         gravity = Gravity.CENTER
                     }
 
-            val title = textView()
-                    .lparams {
-                        gravity = Gravity.CENTER
-                    }
+            val title = textView {
+                textColor = Color.BLACK
+                textSize = 20f
+            }.lparams {
+                topMargin = dip(8)
+                gravity = Gravity.CENTER
+            }
 
             val description = textView()
-                    .lparams(width = matchParent)
+                    .lparams(width = matchParent) {
+                        topMargin = dip(16)
+                    }
 
             title.text = club.name
             description.text = club.description
         }
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
