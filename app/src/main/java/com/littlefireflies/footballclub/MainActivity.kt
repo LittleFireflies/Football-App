@@ -3,20 +3,26 @@ package com.littlefireflies.footballclub
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v7.widget.RecyclerView
+import org.jetbrains.anko.matchParent
+import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
     private val clubList: MutableList<Club> = mutableListOf()
+    lateinit var rvClubList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        rvClubList = recyclerView {
+            lparams(width = matchParent, height = matchParent)
+            layoutManager = LinearLayoutManager(context)
+        }
 
         initData()
 
-        rvClubList.layoutManager = LinearLayoutManager(this)
         rvClubList.adapter = RecyclerViewAdapter(this, clubList) {
             startActivity<DetailActivity>("club" to it)
         }
