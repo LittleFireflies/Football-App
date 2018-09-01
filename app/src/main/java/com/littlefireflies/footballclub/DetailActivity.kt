@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import org.jetbrains.anko.*
 
 class DetailActivity : AppCompatActivity() {
@@ -19,8 +20,7 @@ class DetailActivity : AppCompatActivity() {
         verticalLayout {
             padding = dip(16)
 
-            imageView(club.image!!)
-                    .lparams(width = dip(100), height = dip(100)) {
+            val image = imageView().lparams(width = dip(100), height = dip(100)) {
                         gravity = Gravity.CENTER
                     }
 
@@ -39,6 +39,7 @@ class DetailActivity : AppCompatActivity() {
 
             title.text = club.name
             description.text = club.description
+            Glide.with(context).load(club.image).into(image)
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
