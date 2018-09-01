@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import org.jetbrains.anko.*
 
@@ -46,10 +45,9 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            android.R.id.home -> finish()
-        }
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home)
+            onBackPressed()
         return super.onOptionsItemSelected(item)
     }
 
