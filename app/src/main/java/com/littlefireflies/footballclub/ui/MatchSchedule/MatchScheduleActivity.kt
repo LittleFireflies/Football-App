@@ -6,15 +6,21 @@ import android.support.v4.view.ViewPager
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.ui.MatchSchedule.NextMatch.NextMatchFragment
 import com.littlefireflies.footballclub.ui.MatchSchedule.PreviousMatch.PreviousMatchFragment
+import com.littlefireflies.footballclub.ui.base.BaseActivity
 import com.littlefireflies.footballclub.utils.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_match_schedule.*
-import org.jetbrains.anko.support.v4.onPageChangeListener
+import javax.inject.Inject
 
-class MatchScheduleActivity : AppCompatActivity() {
+class MatchScheduleActivity : BaseActivity(), MatchScheduleContract.View {
+
+    @Inject
+    lateinit var presenter: MatchScheduleContract.UserActionListener<MatchScheduleContract.View>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match_schedule)
+        activityComponent.inject(this)
+        onAttachView()
 
         setupViewPager(viewPager)
 
@@ -47,6 +53,19 @@ class MatchScheduleActivity : AppCompatActivity() {
         adapter.addFragment(PreviousMatchFragment(), "Prev. Match")
         adapter.addFragment(NextMatchFragment(), "Next Match")
         viewPager.adapter = adapter
+    }
+
+    override fun onDestroy() {
+        onDetachView()
+        super.onDestroy()
+    }
+
+    override fun onAttachView() {
+        presenter.onAttach(this)
+    }
+
+    override fun onDetachView() {
+        presenter.onDetach()
     }
 
 }

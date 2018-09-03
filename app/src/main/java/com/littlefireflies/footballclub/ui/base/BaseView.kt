@@ -9,6 +9,4 @@ interface BaseView {
 
     fun onDetachView()
 
-    fun setLoading(active: Boolean)
-
 }
