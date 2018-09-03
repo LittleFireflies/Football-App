@@ -2,6 +2,7 @@ package com.littlefireflies.footballclub.di.module
 
 import com.littlefireflies.footballclub.BuildConfig
 import com.littlefireflies.footballclub.data.network.NetworkService
+import com.littlefireflies.footballclub.utils.Constants
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -39,7 +40,7 @@ class NetworkModule {
     fun provideRestClient(okHttpClient: OkHttpClient): Retrofit {
         val builder = Retrofit.Builder()
         builder.client(okHttpClient)
-                .baseUrl("https://www.thesportsdb.com/api/")
+                .baseUrl(Constants.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
         return builder.build()
