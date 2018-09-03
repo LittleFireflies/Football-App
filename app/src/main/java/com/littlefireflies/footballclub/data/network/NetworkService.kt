@@ -12,4 +12,7 @@ interface NetworkService {
     @GET("v1/json/1/eventspastleague.php")
     fun getPreviousMatches(@Query("id") leagueId: String): Single<String>
 
+    @GET("v1/json/1/eventsnextleague.php")
+    fun getNextMatches(@Query("id") leagueId: String): Single<String>
+
 }

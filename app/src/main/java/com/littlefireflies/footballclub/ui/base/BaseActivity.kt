@@ -15,11 +15,17 @@ abstract class BaseActivity : AppCompatActivity() {
 
     lateinit var activityComponent: ActivityComponent
 
+    abstract fun onActivityReady(savedInstanceState: Bundle?)
+
+    abstract fun getLayoutId(): Int
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityComponent = DaggerActivityComponent.builder()
                 .activityModule(ActivityModule(this))
                 .applicationComponent((application as App).applicationComponent)
                 .build()
+        setContentView(getLayoutId())
+        onActivityReady(savedInstanceState)
     }
 }

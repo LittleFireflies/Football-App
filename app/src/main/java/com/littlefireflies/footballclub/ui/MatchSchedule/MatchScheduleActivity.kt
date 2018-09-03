@@ -16,14 +16,18 @@ class MatchScheduleActivity : BaseActivity(), MatchScheduleContract.View {
     @Inject
     lateinit var presenter: MatchScheduleContract.UserActionListener<MatchScheduleContract.View>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_match_schedule)
+    override fun onActivityReady(savedInstanceState: Bundle?) {
         activityComponent.inject(this)
         onAttachView()
 
         setupViewPager(viewPager)
+        bottomNavListener()
+        viewPagerListener()
+    }
 
+    override fun getLayoutId(): Int = R.layout.activity_match_schedule
+
+    fun bottomNavListener() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.action_prev -> viewPager.setCurrentItem(0)
@@ -32,7 +36,9 @@ class MatchScheduleActivity : BaseActivity(), MatchScheduleContract.View {
 
             false
         }
+    }
 
+    fun viewPagerListener() {
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
@@ -45,7 +51,6 @@ class MatchScheduleActivity : BaseActivity(), MatchScheduleContract.View {
 
             }
         })
-
     }
 
     fun setupViewPager(viewPager: ViewPager) {

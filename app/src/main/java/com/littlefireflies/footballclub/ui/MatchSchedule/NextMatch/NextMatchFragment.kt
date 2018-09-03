@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.littlefireflies.footballclub.R
+import com.littlefireflies.footballclub.ui.base.BaseFragment
+import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,13 +20,30 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class NextMatchFragment : Fragment() {
+class NextMatchFragment : BaseFragment(), NextMatchContract.View {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_next_match, container, false)
+    @Inject
+    lateinit var presenter: NextMatchPresenter<NextMatchContract.View>
+
+    override fun getLayoutId(): Int = R.layout.fragment_next_match
+
+    override fun onLoadFragment(savedInstanceState: Bundle?) {
+        activityComponent?.inject(this)
+        onAttachView()
+        presenter.getMatchList()
     }
 
+    override fun onDestroyView() {
+        onDetachView()
+        super.onDestroyView()
+    }
+
+    override fun onAttachView() {
+        presenter.onAttach(this)
+    }
+
+    override fun onDetachView() {
+        presenter.onDetach()
+    }
 
 }
