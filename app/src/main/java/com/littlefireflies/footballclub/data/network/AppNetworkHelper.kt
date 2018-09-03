@@ -1,5 +1,6 @@
 package com.littlefireflies.footballclub.data.network
 
+import com.littlefireflies.footballclub.data.model.ScheduleResponse
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -9,11 +10,11 @@ import javax.inject.Inject
 class AppNetworkHelper @Inject
 constructor(val networkService: NetworkService) : NetworkHelper {
 
-    override fun getNextMatches(leagueId: String): Single<String> {
+    override fun getNextMatches(leagueId: String): Single<ScheduleResponse> {
         return networkService.getNextMatches(leagueId)
     }
 
-    override fun getPreviousMatches(leagueId: String): Single<String> {
+    override fun getPreviousMatches(leagueId: String): Single<ScheduleResponse> {
         return networkService.getPreviousMatches(leagueId)
     }
 }

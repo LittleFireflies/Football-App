@@ -1,5 +1,6 @@
 package com.littlefireflies.footballclub.data.network
 
+import com.littlefireflies.footballclub.data.model.ScheduleResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,9 +11,9 @@ import retrofit2.http.Query
 interface NetworkService {
 
     @GET("v1/json/1/eventspastleague.php")
-    fun getPreviousMatches(@Query("id") leagueId: String): Single<String>
+    fun getPreviousMatches(@Query("id") leagueId: String): Single<ScheduleResponse>
 
     @GET("v1/json/1/eventsnextleague.php")
-    fun getNextMatches(@Query("id") leagueId: String): Single<String>
+    fun getNextMatches(@Query("id") leagueId: String): Single<ScheduleResponse>
 
 }
