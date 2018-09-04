@@ -1,6 +1,8 @@
 package com.littlefireflies.footballclub.di.module
 
 import com.littlefireflies.footballclub.BuildConfig
+import com.littlefireflies.footballclub.data.network.AppNetworkHelper
+import com.littlefireflies.footballclub.data.network.NetworkHelper
 import com.littlefireflies.footballclub.data.network.NetworkService
 import com.littlefireflies.footballclub.utils.Constants
 import dagger.Module
@@ -50,5 +52,11 @@ class NetworkModule {
     @Singleton
     fun provideNetworkService(retrofit: Retrofit): NetworkService {
         return retrofit.create(NetworkService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkHelper(appNetworkHelper: AppNetworkHelper): NetworkHelper {
+        return appNetworkHelper
     }
 }

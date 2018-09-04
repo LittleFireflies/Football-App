@@ -2,6 +2,7 @@ package com.littlefireflies.footballclub.ui.MatchSchedule.NextMatch
 
 import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.ui.base.BasePresenter
+import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -14,6 +15,18 @@ class NextMatchPresenter<V: NextMatchContract.View> @Inject
 constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(dataManager, disposable, schedulerProvider), NextMatchContract.UserActionListener<V> {
 
     override fun getMatchList() {
-
+        view?.showLoading()
+        disposable.add(
+                dataManager.getNextMatches(Constants.LEAGUE_ID)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribe({
+                            view?.displayMatchData(it.events)
+                            view?.hideLoading()
+                        }, {
+                            view?.hideLoading()
+                            view?.displayErrorMessages("Unable to load the data")
+                        })
+        )
     }
 }

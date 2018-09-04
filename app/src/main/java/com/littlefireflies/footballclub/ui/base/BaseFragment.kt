@@ -15,22 +15,21 @@ import com.littlefireflies.footballclub.di.component.ActivityComponent
 abstract class BaseFragment : Fragment() {
 
     private var activity: BaseActivity? = null
-    var contentView: View? = null
 
-    override fun getView(): View? {
-        return super.getView()
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is BaseActivity) {
+            val activity = context
+            this.activity = activity
+        }
     }
 
     abstract fun getLayoutId(): Int
 
-    protected abstract fun onLoadFragment(savedInstanceState: Bundle?)
+    abstract fun onLoadFragment(saveInstance: Bundle?)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        inflater.let {
-            contentView = inflater.inflate(getLayoutId(), container, false)
-        }
-
-        return contentView
+        return inflater.inflate(getLayoutId(), container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -38,10 +37,11 @@ abstract class BaseFragment : Fragment() {
         onLoadFragment(savedInstanceState)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(false)
+    val activityComponent: ActivityComponent?
+    get() {
+        return if (activity != null) {
+            activity?.activityComponent
+        } else null
     }
 
-    val activityComponent: ActivityComponent? = activity?.activityComponent
 }
