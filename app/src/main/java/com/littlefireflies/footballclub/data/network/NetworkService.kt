@@ -16,4 +16,7 @@ interface NetworkService {
     @GET("v1/json/1/eventsnextleague.php")
     fun getNextMatches(@Query("id") leagueId: String): Single<ScheduleResponse>
 
+    @GET("v1/json/1/lookupevent.php")
+    fun getMatchDetail(@Query("id") matchId: String): Single<ScheduleResponse>
+
 }

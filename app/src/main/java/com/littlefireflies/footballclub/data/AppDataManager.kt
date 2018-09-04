@@ -18,4 +18,8 @@ constructor(var networkHelper: NetworkHelper) : DataManager {
     override fun getPreviousMatches(leagueId: String): Single<ScheduleResponse> {
         return networkHelper.getPreviousMatches(leagueId)
     }
+
+    override fun getMatchDetail(matchId: String): Single<ScheduleResponse> {
+        return networkHelper.getMatchDetail(matchId)
+    }
 }

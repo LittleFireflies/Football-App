@@ -9,4 +9,5 @@ import io.reactivex.Single
 interface NetworkHelper {
     fun getNextMatches(leagueId: String): Single<ScheduleResponse>
     fun getPreviousMatches(leagueId: String): Single<ScheduleResponse>
+    fun getMatchDetail(matchId: String): Single<ScheduleResponse>
 }
