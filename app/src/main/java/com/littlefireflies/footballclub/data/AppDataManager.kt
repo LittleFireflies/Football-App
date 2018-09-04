@@ -1,6 +1,7 @@
 package com.littlefireflies.footballclub.data
 
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
+import com.littlefireflies.footballclub.data.model.TeamResponse
 import com.littlefireflies.footballclub.data.network.NetworkHelper
 import io.reactivex.Single
 import javax.inject.Inject
@@ -21,5 +22,9 @@ constructor(var networkHelper: NetworkHelper) : DataManager {
 
     override fun getMatchDetail(matchId: String): Single<ScheduleResponse> {
         return networkHelper.getMatchDetail(matchId)
+    }
+
+    override fun getTeamDetail(teamId: String): Single<TeamResponse> {
+        return networkHelper.getTeamDetail(teamId)
     }
 }

@@ -13,9 +13,13 @@ interface MatchDetailContract {
         fun showLoading()
         fun hideLoading()
         fun displayMatch(match: Match)
+        fun displayHomeBadge(teamBadge: String?)
+        fun displayAwayBadge(teamBadge: String?)
     }
 
     interface UserActionListener<V: View>: IBasePresenter<V> {
         fun getMatchDetail(matchId: String)
+        fun getHomeTeamImage(teamId: String?)
+        fun getAwayTeamImage(teamId: String?)
     }
 }

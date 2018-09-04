@@ -1,6 +1,7 @@
 package com.littlefireflies.footballclub.data.network
 
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
+import com.littlefireflies.footballclub.data.model.TeamResponse
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -20,5 +21,9 @@ constructor(val networkService: NetworkService) : NetworkHelper {
 
     override fun getMatchDetail(matchId: String): Single<ScheduleResponse> {
         return networkService.getMatchDetail(matchId)
+    }
+
+    override fun getTeamDetail(teamId: String): Single<TeamResponse> {
+        return networkService.getTeamDetail(teamId)
     }
 }

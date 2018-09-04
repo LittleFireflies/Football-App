@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.ui.base.BaseActivity
@@ -62,6 +63,9 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         val date = dateFormatter(match.matchDate)
         val time = match.matchTime?.split(":")
 
+        presenter.getHomeTeamImage(match.homeTeamId)
+        presenter.getAwayTeamImage(match.awayTeamId)
+
         tvDateTime.text = "$date ${time?.get(0)}:${time?.get(1)}"
         tvHomeTeam.text = match.homeTeam
         tvAwayTeam.text = match.awayTeam
@@ -101,6 +105,14 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         rvHomeSub.layoutManager = LinearLayoutManager(this)
         rvAwaySub.adapter = MatchDetailAdapter(match.awaySubs?.split(";"), AWAY_STRING)
         rvAwaySub.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun displayHomeBadge(teamBadge: String?) {
+        Glide.with(this).load(teamBadge).into(ivHomeTeam)
+    }
+
+    override fun displayAwayBadge(teamBadge: String?) {
+        Glide.with(this).load(teamBadge).into(ivAwayTeam)
     }
 
     class MatchDetailAdapter(val items: List<String>?, val type: String): RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {

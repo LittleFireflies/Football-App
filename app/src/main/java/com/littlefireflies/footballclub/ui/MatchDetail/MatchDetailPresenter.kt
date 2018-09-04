@@ -25,4 +25,30 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
                         })
         )
     }
+
+    override fun getHomeTeamImage(teamId: String?) {
+        disposable.add(
+                dataManager.getTeamDetail(teamId.toString())
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribe({
+                            view?.displayHomeBadge(it.teams[0].teamBadge)
+                        }, {
+
+                        })
+        )
+    }
+
+    override fun getAwayTeamImage(teamId: String?) {
+        disposable.add(
+                dataManager.getTeamDetail(teamId.toString())
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribe({
+                            view?.displayAwayBadge(it.teams[0].teamBadge)
+                        }, {
+
+                        })
+        )
+    }
 }
