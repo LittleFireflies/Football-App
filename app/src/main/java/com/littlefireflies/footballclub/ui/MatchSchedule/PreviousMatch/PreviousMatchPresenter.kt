@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.ui.MatchSchedule.NextMatch
+package com.littlefireflies.footballclub.ui.MatchSchedule.PreviousMatch
 
 import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.ui.base.BasePresenter
@@ -8,16 +8,15 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 /**
- * Created by widyarso.purnomo on 03/09/2018.
+ * Created by widyarso.purnomo on 04/09/2018.
  */
-
-class NextMatchPresenter<V: NextMatchContract.View> @Inject
-constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(dataManager, disposable, schedulerProvider), NextMatchContract.UserActionListener<V> {
+class PreviousMatchPresenter<V: PreviousMatchContract.View> @Inject
+constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(dataManager, disposable, schedulerProvider), PreviousMatchContract.UserActionListener<V>{
 
     override fun getMatchList() {
         view?.showLoading()
         disposable.add(
-                dataManager.getNextMatches(Constants.LEAGUE_ID)
+                dataManager.getPreviousMatches(Constants.LEAGUE_ID)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({

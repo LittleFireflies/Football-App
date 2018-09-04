@@ -2,29 +2,96 @@ package com.littlefireflies.footballclub.ui.MatchSchedule.PreviousMatch
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.littlefireflies.footballclub.R
+import com.littlefireflies.footballclub.data.model.Match
+import com.littlefireflies.footballclub.ui.base.BaseFragment
+import com.littlefireflies.footballclub.utils.dateFormatter
+import com.littlefireflies.footballclub.utils.hide
+import com.littlefireflies.footballclub.utils.show
+import kotlinx.android.synthetic.main.fragment_previous_match.*
+import kotlinx.android.synthetic.main.item_prev_match.view.*
+import org.jetbrains.anko.design.snackbar
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
 
-/**
- * A simple [Fragment] subclass.
- *
- */
-class PreviousMatchFragment : Fragment() {
+    @Inject
+    lateinit var presenter: PreviousMatchPresenter<PreviousMatchContract.View>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_previous_match, container, false)
+    override fun getLayoutId(): Int = R.layout.fragment_previous_match
+
+    override fun onLoadFragment(saveInstance: Bundle?) {
+        val component = activityComponent
+        if (component !=  null) {
+            activityComponent?.inject(this)
+            onAttachView()
+        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.getMatchList()
+    }
 
+    override fun onDestroyView() {
+        onDetachView()
+        super.onDestroyView()
+    }
+
+    override fun onAttachView() {
+        presenter.onAttach(this)
+    }
+
+    override fun onDetachView() {
+        presenter.onDetach()
+    }
+
+    override fun showLoading() {
+        pbPrevMatch.show()
+    }
+
+    override fun hideLoading() {
+        pbPrevMatch.hide()
+    }
+
+    override fun displayMatchList(events: List<Match>) {
+        val adapter = PreviousMatchAdapter(events)
+        rvPrevMatch.adapter = adapter
+        rvPrevMatch.layoutManager = LinearLayoutManager(context)
+    }
+
+    override fun displayErrorMessage(message: String) {
+        snackbar(rvPrevMatch, message)
+    }
+
+    class PreviousMatchAdapter(val matches: List<Match>): RecyclerView.Adapter<PreviousMatchAdapter.ViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_prev_match, parent, false))
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.bindItem(matches[position])
+        }
+
+        override fun getItemCount(): Int = matches.size
+
+        class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
+            fun bindItem(match: Match) {
+                val date = dateFormatter(match.matchDate)
+                val time = match.matchTime?.split(":")
+
+                itemView.tvHomeTeam.text = match.homeTeam
+                itemView.tvAwayTeam.text = match.awayTeam
+                itemView.tvDateTime.text = "$date ${time?.get(0)}:${time?.get(1)}"
+                itemView.tvHomeScore.text = match.homeScore
+                itemView.tvAwayScore.text = match.awayScore
+            }
+        }
+
+    }
 }

@@ -25,5 +25,11 @@ data class Match(
         var matchDate: String? = null,
 
         @SerializedName("strTime")
-        var matchTime: String? = null
+        var matchTime: String? = null,
+
+        @SerializedName("intHomeScore")
+        var homeScore: String? = null,
+
+        @SerializedName("intAwayScore")
+        var awayScore: String? = null
 )

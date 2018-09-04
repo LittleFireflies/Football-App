@@ -11,8 +11,8 @@ import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.ui.base.BaseFragment
 import com.littlefireflies.footballclub.utils.dateFormatter
-import com.littlefireflies.footballclub.utils.invisible
-import com.littlefireflies.footballclub.utils.visible
+import com.littlefireflies.footballclub.utils.hide
+import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import kotlinx.android.synthetic.main.item_next_match.view.*
 import org.jetbrains.anko.design.snackbar
@@ -52,21 +52,21 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
     }
 
     override fun showLoading() {
-        pbNextMatch?.visible()
+        pbNextMatch?.show()
     }
 
     override fun hideLoading() {
-        pbNextMatch?.invisible()
+        pbNextMatch?.hide()
     }
 
-    override fun displayMatchData(events: List<Match>) {
+    override fun displayMatchList(events: List<Match>) {
         val adapter = NextMatchAdapter(events)
         rvNextMatch.adapter = adapter
         rvNextMatch.layoutManager = LinearLayoutManager(context)
         adapter.notifyDataSetChanged()
     }
 
-    override fun displayErrorMessages(message: String) {
+    override fun displayErrorMessage(message: String) {
         snackbar(rvNextMatch, message)
     }
 

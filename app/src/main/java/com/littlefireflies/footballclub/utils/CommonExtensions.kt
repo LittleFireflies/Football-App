@@ -6,10 +6,10 @@ import android.view.View
  * Created by widyarso.purnomo on 03/09/2018.
  */
 
-fun View.visible() {
+fun View.show() {
     visibility = View.VISIBLE
 }
 
-fun View.invisible() {
+fun View.hide() {
     visibility = View.INVISIBLE
 }

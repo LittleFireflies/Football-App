@@ -4,6 +4,7 @@ import com.littlefireflies.footballclub.di.module.ActivityModule
 import com.littlefireflies.footballclub.di.scope.PerActivity
 import com.littlefireflies.footballclub.ui.MatchSchedule.MatchScheduleActivity
 import com.littlefireflies.footballclub.ui.MatchSchedule.NextMatch.NextMatchFragment
+import com.littlefireflies.footballclub.ui.MatchSchedule.PreviousMatch.PreviousMatchFragment
 import dagger.Component
 
 
@@ -15,5 +16,6 @@ import dagger.Component
 interface ActivityComponent {
     fun inject(matchScheduleActivity: MatchScheduleActivity)
     fun inject(matchScheduleActivity: NextMatchFragment)
+    fun inject(previousMatchFragment: PreviousMatchFragment)
 
 }
