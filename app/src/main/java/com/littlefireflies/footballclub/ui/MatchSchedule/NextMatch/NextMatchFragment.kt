@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.Match
+import com.littlefireflies.footballclub.ui.MatchDetail.MatchDetailActivity
 import com.littlefireflies.footballclub.ui.base.BaseFragment
 import com.littlefireflies.footballclub.utils.dateFormatter
 import com.littlefireflies.footballclub.utils.hide
@@ -16,6 +17,7 @@ import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import kotlinx.android.synthetic.main.item_next_match.view.*
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
 class NextMatchFragment : BaseFragment(), NextMatchContract.View {
@@ -60,7 +62,11 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
     }
 
     override fun displayMatchList(events: List<Match>) {
-        val adapter = NextMatchAdapter(events)
+        val adapter = NextMatchAdapter(events, object : ActionListener {
+            override fun onClick(match: Match) {
+                startActivity<MatchDetailActivity>("matchId" to "${match.matchId}")
+            }
+        })
         rvNextMatch.adapter = adapter
         rvNextMatch.layoutManager = LinearLayoutManager(context)
         adapter.notifyDataSetChanged()
@@ -70,7 +76,7 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
         snackbar(rvNextMatch, message)
     }
 
-    internal class NextMatchAdapter(val matches: List<Match>): RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
+    internal class NextMatchAdapter(val matches: List<Match>, val listener: ActionListener): RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_next_match, parent, false))
 
@@ -80,7 +86,7 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
             holder.bindItem(matches[position])
         }
 
-        class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
             fun bindItem(match: Match) {
                 val date = dateFormatter(match.matchDate)
@@ -89,8 +95,13 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
                 itemView.tvHomeTeam.text = match.homeTeam
                 itemView.tvAwayTeam.text = match.awayTeam
                 itemView.tvDateTime.text = "$date ${time?.get(0)}:${time?.get(1)}"
+                itemView.setOnClickListener { listener.onClick(match) }
             }
         }
+    }
+
+    interface ActionListener {
+        fun onClick(match: Match)
     }
 
 }
