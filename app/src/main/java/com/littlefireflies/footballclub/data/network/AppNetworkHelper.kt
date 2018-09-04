@@ -17,4 +17,8 @@ constructor(val networkService: NetworkService) : NetworkHelper {
     override fun getPreviousMatches(leagueId: String): Single<ScheduleResponse> {
         return networkService.getPreviousMatches(leagueId)
     }
+
+    override fun getMatchDetail(matchId: String): Single<ScheduleResponse> {
+        return networkService.getMatchDetail(matchId)
+    }
 }
