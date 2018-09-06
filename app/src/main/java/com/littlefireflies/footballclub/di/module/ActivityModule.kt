@@ -3,20 +3,19 @@ package com.littlefireflies.footballclub.di.module
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import com.littlefireflies.footballclub.di.scope.PerActivity
-import com.littlefireflies.footballclub.ui.MatchDetail.MatchDetailContract
-import com.littlefireflies.footballclub.ui.MatchDetail.MatchDetailPresenter
-import com.littlefireflies.footballclub.ui.MatchSchedule.MatchScheduleContract
-import com.littlefireflies.footballclub.ui.MatchSchedule.MatchSchedulePresenter
-import com.littlefireflies.footballclub.ui.MatchSchedule.NextMatch.NextMatchContract
-import com.littlefireflies.footballclub.ui.MatchSchedule.NextMatch.NextMatchPresenter
-import com.littlefireflies.footballclub.ui.MatchSchedule.PreviousMatch.PreviousMatchContract
-import com.littlefireflies.footballclub.ui.MatchSchedule.PreviousMatch.PreviousMatchPresenter
+import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailContract
+import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailPresenter
+import com.littlefireflies.footballclub.ui.matchschedule.MatchScheduleContract
+import com.littlefireflies.footballclub.ui.matchschedule.MatchSchedulePresenter
+import com.littlefireflies.footballclub.ui.matchschedule.nextmatch.NextMatchContract
+import com.littlefireflies.footballclub.ui.matchschedule.nextmatch.NextMatchPresenter
+import com.littlefireflies.footballclub.ui.matchschedule.previousmatch.PreviousMatchContract
+import com.littlefireflies.footballclub.ui.matchschedule.previousmatch.PreviousMatchPresenter
 import com.littlefireflies.footballclub.utils.rx.AppSchedulerProvider
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Singleton
 
 /**
  * Created by widyarso.purnomo on 03/09/2018.

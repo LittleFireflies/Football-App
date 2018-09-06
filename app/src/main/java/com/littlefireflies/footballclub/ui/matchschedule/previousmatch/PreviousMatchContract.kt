@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.ui.MatchSchedule.PreviousMatch
+package com.littlefireflies.footballclub.ui.matchschedule.previousmatch
 
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.ui.base.BaseView

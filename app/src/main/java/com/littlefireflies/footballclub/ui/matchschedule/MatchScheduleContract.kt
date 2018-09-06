@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.ui.MatchSchedule
+package com.littlefireflies.footballclub.ui.matchschedule
 
 import com.littlefireflies.footballclub.ui.base.BaseView
 import com.littlefireflies.footballclub.ui.base.IBasePresenter

@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.ui.MatchDetail
+package com.littlefireflies.footballclub.ui.matchdetail
 
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.ui.base.BaseView

@@ -1,11 +1,10 @@
-package com.littlefireflies.footballclub.ui.MatchSchedule
+package com.littlefireflies.footballclub.ui.matchschedule
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import com.littlefireflies.footballclub.R
-import com.littlefireflies.footballclub.ui.MatchSchedule.NextMatch.NextMatchFragment
-import com.littlefireflies.footballclub.ui.MatchSchedule.PreviousMatch.PreviousMatchFragment
+import com.littlefireflies.footballclub.ui.matchschedule.nextmatch.NextMatchFragment
+import com.littlefireflies.footballclub.ui.matchschedule.previousmatch.PreviousMatchFragment
 import com.littlefireflies.footballclub.ui.base.BaseActivity
 import com.littlefireflies.footballclub.utils.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_match_schedule.*

@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.ui.MatchDetail
+package com.littlefireflies.footballclub.ui.matchdetail
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -19,8 +19,10 @@ import javax.inject.Inject
 
 class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
 
-    val HOME_STRING = "home"
-    val AWAY_STRING = "away"
+    companion object {
+        private const val HOME_STRING = "home"
+        private const val AWAY_STRING = "away"
+    }
 
     @Inject
     lateinit var presenter: MatchDetailPresenter<MatchDetailContract.View>
