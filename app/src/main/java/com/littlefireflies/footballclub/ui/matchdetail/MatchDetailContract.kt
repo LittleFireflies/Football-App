@@ -15,11 +15,15 @@ interface MatchDetailContract {
         fun displayMatch(match: Match)
         fun displayHomeBadge(teamBadge: String?)
         fun displayAwayBadge(teamBadge: String?)
+        fun displayFavoriteStatus(favorite: Boolean)
     }
 
     interface UserActionListener<V: View>: IBasePresenter<V> {
         fun getMatchDetail(matchId: String)
+        fun checkIfMatchIsFavorite(match: Match)
         fun getHomeTeamImage(teamId: String?)
         fun getAwayTeamImage(teamId: String?)
+        fun addToFavorite(match: Match)
+        fun removeFromFavorite(match: Match)
     }
 }

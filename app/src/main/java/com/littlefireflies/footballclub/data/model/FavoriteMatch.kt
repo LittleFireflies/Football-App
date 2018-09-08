@@ -4,7 +4,16 @@ package com.littlefireflies.footballclub.data.model
  * Created by widyarso.purnomo on 08/09/2018.
  */
 
-data class FavoriteMatch(val id: Long?) {
+data class FavoriteMatch(val id: Long?,
+                         val matchId: String?,
+                         val matchName: String?,
+                         val matchLeague: String?,
+                         val homeTeam: String?,
+                         val awayTeam: String?,
+                         val matchDate: String?,
+                         val matchTime: String?,
+                         val homeScore: String?,
+                         val awayScore: String?) {
     companion object {
         const val TABLE_FAVORITE: String = "TABLE_FAVORITE"
         const val ID: String = "ID_"

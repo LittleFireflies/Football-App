@@ -1,6 +1,7 @@
 package com.littlefireflies.footballclub.ui.matchdetail
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -24,6 +25,7 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
 
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
+    private lateinit var match: Match
 
     @Inject
     lateinit var presenter: MatchDetailPresenter<MatchDetailContract.View>
@@ -55,6 +57,14 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
                 finish()
                 true
             }
+            R.id.add_to_favorite -> {
+                if (isFavorite) presenter.removeFromFavorite(match) else presenter.addToFavorite(match)
+
+                isFavorite = !isFavorite
+                displayFavoriteStatus(isFavorite)
+
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -81,6 +91,8 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
     }
 
     override fun displayMatch(match: Match) {
+        this.match = match
+
         val date = dateFormatter(match.matchDate)
         val time = match.matchTime?.split(":")
 
@@ -134,6 +146,14 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
 
     override fun displayAwayBadge(teamBadge: String?) {
         Glide.with(this).load(teamBadge).into(ivAwayTeam)
+    }
+
+    override fun displayFavoriteStatus(favorite: Boolean) {
+        isFavorite = favorite
+        if (isFavorite)
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_favorites)
+        else
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_favorites)
     }
 
     class MatchDetailAdapter(val items: List<String>?, val type: String): RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {

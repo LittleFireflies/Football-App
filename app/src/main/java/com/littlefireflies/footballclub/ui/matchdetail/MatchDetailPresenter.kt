@@ -1,6 +1,7 @@
 package com.littlefireflies.footballclub.ui.matchdetail
 
 import com.littlefireflies.footballclub.data.DataManager
+import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.ui.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -20,8 +21,20 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
                         .subscribe({
                             view?.displayMatch(it.events[0])
                             view?.hideLoading()
+                            checkIfMatchIsFavorite(it.events[0])
                         }, {
                             view?.hideLoading()
+                        })
+        )
+    }
+
+    override fun checkIfMatchIsFavorite(match: Match) {
+        disposable.add(
+                dataManager.isFavorite(match.matchId.toString())
+                        .subscribe({
+                            view?.displayFavoriteStatus(it)
+                        }, {
+
                         })
         )
     }
@@ -50,5 +63,13 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
 
                         })
         )
+    }
+
+    override fun addToFavorite(match: Match) {
+        dataManager.addToFavorite(match)
+    }
+
+    override fun removeFromFavorite(match: Match) {
+        dataManager.removeFromFavorite(match.matchId.toString())
     }
 }
