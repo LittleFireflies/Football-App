@@ -12,7 +12,7 @@ import javax.inject.Inject
 class FavoriteMatchPresenter<V: FavoriteMatchContract.View> @Inject
 constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(dataManager, disposable, schedulerProvider), FavoriteMatchContract.UserActionListener<V> {
 
-    override fun loadFavoriteMatchList() {
+    override fun getFavoriteMatchList() {
         view?.showLoading()
         disposable.add(
                 dataManager.getFavoriteMatches()

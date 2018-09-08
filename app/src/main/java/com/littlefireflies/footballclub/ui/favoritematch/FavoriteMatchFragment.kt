@@ -47,14 +47,14 @@ class FavoriteMatchFragment : BaseFragment(), FavoriteMatchContract.View {
                     ContextCompat.getColor(context!!, android.R.color.holo_red_light)
             )
             swipeRefreshLayout.onRefresh {
-                presenter.loadFavoriteMatchList()
+                presenter.getFavoriteMatchList()
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.loadFavoriteMatchList()
+        presenter.getFavoriteMatchList()
     }
 
     override fun onDestroyView() {

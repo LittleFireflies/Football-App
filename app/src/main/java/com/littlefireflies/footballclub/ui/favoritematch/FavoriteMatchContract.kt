@@ -16,6 +16,6 @@ interface FavoriteMatchContract {
     }
 
     interface UserActionListener<V: View>: IBasePresenter<V> {
-        fun loadFavoriteMatchList()
+        fun getFavoriteMatchList()
     }
 }
