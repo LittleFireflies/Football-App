@@ -62,11 +62,9 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
     }
 
     override fun displayMatchList(events: List<Match>) {
-        val adapter = NextMatchAdapter(events, object : ActionListener {
-            override fun onClick(match: Match) {
-                startActivity<MatchDetailActivity>("matchId" to "${match.matchId}")
-            }
-        })
+        val adapter = NextMatchAdapter(events) {
+            startActivity<MatchDetailActivity>("matchId" to "${it.matchId}")
+        }
         rvNextMatch.adapter = adapter
         rvNextMatch.layoutManager = LinearLayoutManager(context)
         adapter.notifyDataSetChanged()
@@ -76,7 +74,7 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
         snackbar(rvNextMatch, message)
     }
 
-    internal class NextMatchAdapter(val matches: List<Match>, val listener: ActionListener): RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
+    internal class NextMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit): RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_next_match, parent, false))
 
@@ -95,13 +93,9 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
                 itemView.tvHomeTeam.text = match.homeTeam
                 itemView.tvAwayTeam.text = match.awayTeam
                 itemView.tvDateTime.text = "$date ${time?.get(0)}:${time?.get(1)}"
-                itemView.setOnClickListener { listener.onClick(match) }
+                itemView.setOnClickListener { listener(match) }
             }
         }
-    }
-
-    interface ActionListener {
-        fun onClick(match: Match)
     }
 
 }

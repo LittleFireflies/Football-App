@@ -12,4 +12,17 @@ import javax.inject.Inject
 class FavoriteMatchPresenter<V: FavoriteMatchContract.View> @Inject
 constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(dataManager, disposable, schedulerProvider), FavoriteMatchContract.UserActionListener<V> {
 
+    override fun loadFavoriteMatchList() {
+        view?.showLoading()
+        disposable.add(
+                dataManager.getFavoriteMatches()
+                        .subscribe({
+                            view?.displayFavoriteMatchList(it)
+                            view?.hideLoading()
+                        }, {
+                            view?.hideLoading()
+                            view?.displayErrorMessages("Unable to load Favorite matches")
+                        })
+        )
+    }
 }

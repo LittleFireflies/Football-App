@@ -63,11 +63,9 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
     }
 
     override fun displayMatchList(events: List<Match>) {
-        val adapter = PreviousMatchAdapter(events, object : ActionListener {
-            override fun onClick(match: Match) {
-                startActivity<MatchDetailActivity>("matchId" to "${match.matchId}")
-            }
-        })
+        val adapter = PreviousMatchAdapter(events) {
+            startActivity<MatchDetailActivity>("matchId" to "${it.matchId}")
+        }
         rvPrevMatch.adapter = adapter
         rvPrevMatch.layoutManager = LinearLayoutManager(context)
     }
@@ -76,7 +74,7 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
         snackbar(rvPrevMatch, message)
     }
 
-    class PreviousMatchAdapter(val matches: List<Match>, val listener: ActionListener): RecyclerView.Adapter<PreviousMatchAdapter.ViewHolder>() {
+    class PreviousMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit): RecyclerView.Adapter<PreviousMatchAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_prev_match, parent, false))
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -96,14 +94,9 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
                 itemView.tvDateTime.text = "$date ${time?.get(0)}:${time?.get(1)}"
                 itemView.tvHomeScore.text = match.homeScore
                 itemView.tvAwayScore.text = match.awayScore
-
-                itemView.setOnClickListener { listener.onClick(match) }
+                itemView.setOnClickListener { listener(match) }
             }
         }
 
-    }
-
-    interface ActionListener {
-        fun onClick(match: Match)
     }
 }
