@@ -2,6 +2,7 @@ package com.littlefireflies.footballclub.ui.nextmatch
 
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import kotlinx.android.synthetic.main.item_next_match.view.*
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
@@ -32,6 +34,16 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
         if (component != null) {
             activityComponent?.inject(this)
             onAttachView()
+
+            swipeRefreshLayout.setColorSchemeColors(
+                    ContextCompat.getColor(context!!, android.R.color.holo_blue_light),
+                    ContextCompat.getColor(context!!, android.R.color.holo_green_light),
+                    ContextCompat.getColor(context!!, android.R.color.holo_orange_light),
+                    ContextCompat.getColor(context!!, android.R.color.holo_red_light)
+            )
+            swipeRefreshLayout.onRefresh {
+                presenter.getMatchList()
+            }
         }
     }
 
@@ -62,6 +74,8 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
     }
 
     override fun displayMatchList(events: List<Match>) {
+        swipeRefreshLayout.isRefreshing = false
+
         val adapter = NextMatchAdapter(events) {
             startActivity<MatchDetailActivity>("matchId" to "${it.matchId}")
         }

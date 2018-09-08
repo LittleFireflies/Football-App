@@ -3,6 +3,7 @@ package com.littlefireflies.footballclub.ui.favoritematch
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.fragment_favorite_match.*
 import kotlinx.android.synthetic.main.item_prev_match.view.*
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
@@ -37,6 +39,16 @@ class FavoriteMatchFragment : BaseFragment(), FavoriteMatchContract.View {
         if (activityComponent != null) {
             activityComponent?.inject(this)
             onAttachView()
+
+            swipeRefreshLayout.setColorSchemeColors(
+                    ContextCompat.getColor(context!!, android.R.color.holo_blue_light),
+                    ContextCompat.getColor(context!!, android.R.color.holo_green_light),
+                    ContextCompat.getColor(context!!, android.R.color.holo_orange_light),
+                    ContextCompat.getColor(context!!, android.R.color.holo_red_light)
+            )
+            swipeRefreshLayout.onRefresh {
+                presenter.loadFavoriteMatchList()
+            }
         }
     }
 
@@ -67,6 +79,8 @@ class FavoriteMatchFragment : BaseFragment(), FavoriteMatchContract.View {
     }
 
     override fun displayFavoriteMatchList(matchList: List<FavoriteMatch>) {
+        swipeRefreshLayout.isRefreshing = false
+
         val adapter = FavoriteMatchAdapter(matchList) {
             startActivity<MatchDetailActivity>("matchId" to "${it.matchId}")
         }
