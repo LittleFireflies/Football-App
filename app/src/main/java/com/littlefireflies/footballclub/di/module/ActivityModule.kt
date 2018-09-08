@@ -3,6 +3,8 @@ package com.littlefireflies.footballclub.di.module
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import com.littlefireflies.footballclub.di.scope.PerActivity
+import com.littlefireflies.footballclub.ui.favoritematch.FavoriteMatchContract
+import com.littlefireflies.footballclub.ui.favoritematch.FavoriteMatchPresenter
 import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailContract
 import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailPresenter
 import com.littlefireflies.footballclub.ui.matchschedule.MatchScheduleContract
@@ -59,4 +61,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     fun provideMatchDetailPresenter(presenter: MatchDetailPresenter<MatchDetailContract.View>): MatchDetailContract.UserActionListener<MatchDetailContract.View> = presenter
 
+    @PerActivity
+    @Provides
+    fun provideFavoriteMatchPresenter(presenter: FavoriteMatchPresenter<FavoriteMatchContract.View>): FavoriteMatchContract.UserActionListener<FavoriteMatchContract.View> = presenter
 }

@@ -2,6 +2,7 @@ package com.littlefireflies.footballclub.di.component
 
 import com.littlefireflies.footballclub.di.module.ActivityModule
 import com.littlefireflies.footballclub.di.scope.PerActivity
+import com.littlefireflies.footballclub.ui.favoritematch.FavoriteMatchFragment
 import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.ui.matchschedule.MatchScheduleActivity
 import com.littlefireflies.footballclub.ui.nextmatch.NextMatchFragment
@@ -19,5 +20,6 @@ interface ActivityComponent {
     fun inject(matchScheduleActivity: NextMatchFragment)
     fun inject(previousMatchFragment: PreviousMatchFragment)
     fun inject(matchDetailActivity: MatchDetailActivity)
+    fun inject(favoriteMatchFragment: FavoriteMatchFragment)
 
 }
