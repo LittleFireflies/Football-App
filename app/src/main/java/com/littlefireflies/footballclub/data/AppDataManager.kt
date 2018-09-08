@@ -1,5 +1,6 @@
 package com.littlefireflies.footballclub.data
 
+import com.littlefireflies.footballclub.data.database.DbHelper
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
 import com.littlefireflies.footballclub.data.model.TeamResponse
 import com.littlefireflies.footballclub.data.network.NetworkHelper
@@ -10,7 +11,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 03/09/2018.
  */
 class AppDataManager @Inject
-constructor(var networkHelper: NetworkHelper) : DataManager {
+constructor(var networkHelper: NetworkHelper, var dbHelper: DbHelper) : DataManager {
 
     override fun getNextMatches(leagueId: String): Single<ScheduleResponse> {
         return networkHelper.getNextMatches(leagueId)
