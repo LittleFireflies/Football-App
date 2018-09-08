@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.ui.matchschedule.previousmatch
+package com.littlefireflies.footballclub.ui.previousmatch
 
 
 import android.os.Bundle

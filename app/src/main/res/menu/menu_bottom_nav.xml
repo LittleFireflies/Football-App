@@ -8,4 +8,8 @@
         android:id="@+id/action_next"
         android:title="Next Match"
         android:icon="@drawable/ic_event"/>
+    <item
+        android:id="@+id/action_favorite"
+        android:title="Favorites"
+        android:icon="@drawable/ic_stars"/>
 </menu>

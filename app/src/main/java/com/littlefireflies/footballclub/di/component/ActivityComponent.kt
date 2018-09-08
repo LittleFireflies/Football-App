@@ -4,8 +4,8 @@ import com.littlefireflies.footballclub.di.module.ActivityModule
 import com.littlefireflies.footballclub.di.scope.PerActivity
 import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.ui.matchschedule.MatchScheduleActivity
-import com.littlefireflies.footballclub.ui.matchschedule.nextmatch.NextMatchFragment
-import com.littlefireflies.footballclub.ui.matchschedule.previousmatch.PreviousMatchFragment
+import com.littlefireflies.footballclub.ui.nextmatch.NextMatchFragment
+import com.littlefireflies.footballclub.ui.previousmatch.PreviousMatchFragment
 import dagger.Component
 
 

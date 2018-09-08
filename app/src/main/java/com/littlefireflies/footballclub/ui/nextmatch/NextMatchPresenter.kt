@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.ui.matchschedule.nextmatch
+package com.littlefireflies.footballclub.ui.nextmatch
 
 import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.ui.base.BasePresenter

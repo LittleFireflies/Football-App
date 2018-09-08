@@ -7,10 +7,10 @@ import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailContract
 import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailPresenter
 import com.littlefireflies.footballclub.ui.matchschedule.MatchScheduleContract
 import com.littlefireflies.footballclub.ui.matchschedule.MatchSchedulePresenter
-import com.littlefireflies.footballclub.ui.matchschedule.nextmatch.NextMatchContract
-import com.littlefireflies.footballclub.ui.matchschedule.nextmatch.NextMatchPresenter
-import com.littlefireflies.footballclub.ui.matchschedule.previousmatch.PreviousMatchContract
-import com.littlefireflies.footballclub.ui.matchschedule.previousmatch.PreviousMatchPresenter
+import com.littlefireflies.footballclub.ui.nextmatch.NextMatchContract
+import com.littlefireflies.footballclub.ui.nextmatch.NextMatchPresenter
+import com.littlefireflies.footballclub.ui.previousmatch.PreviousMatchContract
+import com.littlefireflies.footballclub.ui.previousmatch.PreviousMatchPresenter
 import com.littlefireflies.footballclub.utils.rx.AppSchedulerProvider
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import dagger.Module

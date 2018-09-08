@@ -1,13 +1,13 @@
-package com.littlefireflies.footballclub.ui.matchschedule.nextmatch
+package com.littlefireflies.footballclub.ui.previousmatch
 
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.ui.base.BaseView
 import com.littlefireflies.footballclub.ui.base.IBasePresenter
 
 /**
- * Created by widyarso.purnomo on 03/09/2018.
+ * Created by widyarso.purnomo on 04/09/2018.
  */
-interface NextMatchContract {
+interface PreviousMatchContract {
 
     interface View: BaseView {
         fun showLoading()

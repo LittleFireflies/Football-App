@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.littlefireflies.footballclub.data.AppDataManager
 import com.littlefireflies.footballclub.data.DataManager
+import com.littlefireflies.footballclub.data.database.AppDbHelper
+import com.littlefireflies.footballclub.data.database.DbHelper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -21,6 +23,12 @@ class ApplicationModule(private val application: Application) {
     @Provides
     internal fun provideApplication(): Application {
         return application
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideDbHelper(appDbHelper: AppDbHelper): DbHelper {
+        return appDbHelper
     }
 
     @Provides
