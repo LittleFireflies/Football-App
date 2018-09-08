@@ -14,6 +14,7 @@ import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.item_home_list.view.*
+import org.jetbrains.anko.design.snackbar
 import javax.inject.Inject
 
 class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
@@ -154,6 +155,14 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_favorites)
         else
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_favorites)
+    }
+
+    override fun onAddtoFavorite() {
+        snackbar(pbMatchDetail, "Added to favorite")
+    }
+
+    override fun onRemoveFromFavorite() {
+        snackbar(pbMatchDetail, "Removed from favorite")
     }
 
     class MatchDetailAdapter(val items: List<String>?, val type: String): RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {

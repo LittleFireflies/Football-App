@@ -16,6 +16,8 @@ interface MatchDetailContract {
         fun displayHomeBadge(teamBadge: String?)
         fun displayAwayBadge(teamBadge: String?)
         fun displayFavoriteStatus(favorite: Boolean)
+        fun onAddtoFavorite()
+        fun onRemoveFromFavorite()
     }
 
     interface UserActionListener<V: View>: IBasePresenter<V> {

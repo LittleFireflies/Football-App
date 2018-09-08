@@ -67,9 +67,11 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
 
     override fun addToFavorite(match: Match) {
         dataManager.addToFavorite(match)
+        view?.onAddtoFavorite()
     }
 
     override fun removeFromFavorite(match: Match) {
         dataManager.removeFromFavorite(match.matchId.toString())
+        view?.onRemoveFromFavorite()
     }
 }
