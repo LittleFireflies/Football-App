@@ -3,9 +3,7 @@ package com.littlefireflies.footballclub.ui.matchdetail
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bumptech.glide.Glide
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.Match
@@ -24,12 +22,16 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         private const val AWAY_STRING = "away"
     }
 
+    private var menuItem: Menu? = null
+    private var isFavorite: Boolean = false
+
     @Inject
     lateinit var presenter: MatchDetailPresenter<MatchDetailContract.View>
 
     override fun getLayoutId(): Int = R.layout.activity_match_detail
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         activityComponent.inject(this)
         onAttachView()
     }
@@ -38,6 +40,23 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         super.onResume()
         val intent = intent
         presenter.getMatchDetail(intent.getStringExtra("matchId"))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        menuItem = menu
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroy() {
