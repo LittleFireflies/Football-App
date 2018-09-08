@@ -1,0 +1,45 @@
+package com.littlefireflies.footballclub.data.database
+
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import com.littlefireflies.footballclub.data.model.FavoriteMatch
+import org.jetbrains.anko.db.*
+
+/**
+ * Created by widyarso.purnomo on 08/09/2018.
+ */
+class MyDatabaseOpenHelper(context: Context) : ManagedSQLiteOpenHelper(context, "FavoriteMatch.db", null, 1) {
+
+    companion object {
+        private var instance: MyDatabaseOpenHelper? = null
+
+        @Synchronized
+        fun getInstance(context: Context): MyDatabaseOpenHelper {
+            if (instance == null) {
+                instance = MyDatabaseOpenHelper(context.applicationContext)
+            }
+            return instance as MyDatabaseOpenHelper
+        }
+    }
+
+    override fun onCreate(db: SQLiteDatabase) {
+        db.createTable(FavoriteMatch.TABLE_FAVORITE, true,
+                FavoriteMatch.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                FavoriteMatch.MATCH_ID to TEXT + UNIQUE,
+                FavoriteMatch.MATCH_NAME to TEXT,
+                FavoriteMatch.MATCH_LEAGUE to TEXT,
+                FavoriteMatch.HOME_TEAM to TEXT,
+                FavoriteMatch.AWAY_TEAM to TEXT,
+                FavoriteMatch.MATCH_DATE to TEXT,
+                FavoriteMatch.MATCH_TIME to TEXT,
+                FavoriteMatch.HOME_SCORE to TEXT,
+                FavoriteMatch.AWAY_SCORE to TEXT)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.dropTable(FavoriteMatch.TABLE_FAVORITE, true)
+    }
+}
+
+val Context.database: MyDatabaseOpenHelper
+    get() = MyDatabaseOpenHelper.getInstance(applicationContext)
