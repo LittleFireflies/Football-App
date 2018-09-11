@@ -22,7 +22,6 @@ interface MatchDetailContract {
 
     interface UserActionListener<V: View>: IBasePresenter<V> {
         fun getMatchDetail(matchId: String)
-        fun checkIfMatchIsFavorite(match: Match)
         fun getHomeTeamImage(teamId: String?)
         fun getAwayTeamImage(teamId: String?)
         fun addToFavorite(match: Match)

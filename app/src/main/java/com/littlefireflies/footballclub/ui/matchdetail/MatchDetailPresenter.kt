@@ -18,24 +18,15 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
                 dataManager.getMatchDetail(matchId)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .subscribe({
+                        .doOnSuccess {
                             view?.displayMatch(it.events[0])
-                            view?.hideLoading()
-                            checkIfMatchIsFavorite(it.events[0])
-                        }, {
-                            view?.hideLoading()
-                        })
-        )
-    }
-
-    override fun checkIfMatchIsFavorite(match: Match) {
-        disposable.add(
-                dataManager.isFavorite(match.matchId.toString())
-                        .subscribe({
+                        }
+                        .flatMap { dataManager.isFavorite(it.events[0].matchId.toString()) }
+                        .doOnSuccess {
                             view?.displayFavoriteStatus(it)
-                        }, {
-
-                        })
+                            view?.hideLoading()
+                        }
+                        .subscribe()
         )
     }
 
