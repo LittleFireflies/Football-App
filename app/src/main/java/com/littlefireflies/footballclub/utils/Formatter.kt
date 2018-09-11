@@ -11,7 +11,7 @@ import java.util.*
 fun dateFormatter(inputDate: String?): String {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd")
     val outputFormat = SimpleDateFormat("E, dd MMM yyyy")
-    var beforeFormat: Date
+    val beforeFormat: Date
     var afterFormat = ""
 
     try {
