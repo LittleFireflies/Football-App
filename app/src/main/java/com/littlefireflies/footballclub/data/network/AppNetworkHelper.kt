@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 03/09/2018.
  */
 class AppNetworkHelper @Inject
-constructor(val networkService: NetworkService) : NetworkHelper {
+constructor(private val networkService: NetworkService) : NetworkHelper {
 
     override fun getNextMatches(leagueId: String): Single<ScheduleResponse> {
         return networkService.getNextMatches(leagueId)

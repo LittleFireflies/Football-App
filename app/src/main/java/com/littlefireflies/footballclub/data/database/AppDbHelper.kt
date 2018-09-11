@@ -15,7 +15,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 08/09/2018.
  */
 class AppDbHelper @Inject
-constructor(val context: Context) : DbHelper {
+constructor(private val context: Context) : DbHelper {
 
     override fun getFavoriteMatches(): Single<List<FavoriteMatch>> {
         var favoriteList: List<FavoriteMatch> = mutableListOf()

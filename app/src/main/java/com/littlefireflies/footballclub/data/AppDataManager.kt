@@ -14,7 +14,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 03/09/2018.
  */
 class AppDataManager @Inject
-constructor(var networkHelper: NetworkHelper, var dbHelper: DbHelper) : DataManager {
+constructor(private var networkHelper: NetworkHelper, private var dbHelper: DbHelper) : DataManager {
 
     override fun getNextMatches(leagueId: String): Single<ScheduleResponse> {
         return networkHelper.getNextMatches(leagueId)
