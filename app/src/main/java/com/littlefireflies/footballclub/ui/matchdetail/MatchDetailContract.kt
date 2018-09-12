@@ -13,6 +13,7 @@ interface MatchDetailContract {
         fun showLoading()
         fun hideLoading()
         fun displayMatch(match: Match)
+        fun displayErrorMessages(message: String)
         fun displayHomeBadge(teamBadge: String?)
         fun displayAwayBadge(teamBadge: String?)
         fun displayFavoriteStatus(favorite: Boolean)

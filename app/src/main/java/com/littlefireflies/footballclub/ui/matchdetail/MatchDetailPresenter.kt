@@ -21,10 +21,17 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
                         .doOnSuccess {
                             view?.displayMatch(it.events[0])
                         }
-                        .flatMap { dataManager.isFavorite(it.events[0].matchId.toString()) }
+                        .doOnError{
+                            view?.displayErrorMessages("Unable to load data")
+                        }
+                        .flatMap {
+                            dataManager.isFavorite(it.events[0].matchId.toString()) }
                         .doOnSuccess {
                             view?.displayFavoriteStatus(it)
                             view?.hideLoading()
+                        }
+                        .doOnError {
+                            view?.displayErrorMessages("Network error")
                         }
                         .subscribe()
         )

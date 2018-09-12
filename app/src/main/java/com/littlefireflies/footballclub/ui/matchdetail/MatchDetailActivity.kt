@@ -141,6 +141,10 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         rvAwaySub.layoutManager = LinearLayoutManager(this)
     }
 
+    override fun displayErrorMessages(message: String) {
+        snackbar(pbMatchDetail, message)
+    }
+
     override fun displayHomeBadge(teamBadge: String?) {
         Glide.with(this).load(teamBadge).into(ivHomeTeam)
     }
