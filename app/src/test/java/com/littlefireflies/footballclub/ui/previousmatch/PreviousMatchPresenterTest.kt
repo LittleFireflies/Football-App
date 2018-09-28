@@ -1,18 +1,15 @@
 package com.littlefireflies.footballclub.ui.previousmatch
 
-import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
 import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
-import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
 
-import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*

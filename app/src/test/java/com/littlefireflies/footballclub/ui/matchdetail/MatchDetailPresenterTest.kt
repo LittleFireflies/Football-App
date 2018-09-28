@@ -1,6 +1,5 @@
 package com.littlefireflies.footballclub.ui.matchdetail
 
-import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
@@ -10,9 +9,7 @@ import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
 
-import org.junit.Assert.*
 import org.junit.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations

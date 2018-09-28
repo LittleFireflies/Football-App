@@ -1,6 +1,5 @@
 package com.littlefireflies.footballclub.ui.matchdetail
 
-import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.domain.favoritematch.AddFavoriteMatchUseCase
 import com.littlefireflies.footballclub.domain.favoritematch.GetFavoriteMatchUseCase
@@ -16,7 +15,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 04/09/2018.
  */
 class MatchDetailPresenter<V: MatchDetailContract.View> @Inject
-constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(dataManager, disposable, schedulerProvider), MatchDetailContract.UserActionListener<V>{
+constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(disposable, schedulerProvider), MatchDetailContract.UserActionListener<V>{
 
     @Inject
     lateinit var matchDetailUseCase: MatchDetailUseCase
@@ -53,27 +52,6 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
                         }
                         .subscribe()
         )
-//        disposable.add(
-//                dataManager.getMatchDetail(matchId)
-//                        .subscribeOn(schedulerProvider.io())
-//                        .observeOn(schedulerProvider.ui())
-//                        .doOnSuccess {
-//                            view?.displayMatch(it.events[0])
-//                        }
-//                        .doOnError{
-//                            view?.displayErrorMessages("Unable to load data")
-//                        }
-//                        .flatMap {
-//                            dataManager.isFavorite(it.events[0].matchId.toString()) }
-//                        .doOnSuccess {
-//                            view?.displayFavoriteStatus(it)
-//                            view?.hideLoading()
-//                        }
-//                        .doOnError {
-//                            view?.displayErrorMessages("Network error")
-//                        }
-//                        .subscribe()
-//        )
     }
 
     override fun getHomeTeamImage(teamId: String?) {

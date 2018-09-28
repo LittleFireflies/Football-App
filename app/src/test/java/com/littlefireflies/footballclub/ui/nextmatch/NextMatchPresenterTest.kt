@@ -1,6 +1,5 @@
 package com.littlefireflies.footballclub.ui.nextmatch
 
-import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
 import com.littlefireflies.footballclub.utils.Constants
@@ -11,7 +10,6 @@ import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
 
-import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`

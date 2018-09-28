@@ -1,6 +1,5 @@
 package com.littlefireflies.footballclub.ui.favoritematch
 
-import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.domain.favoritematch.GetFavoriteMatchUseCase
 import com.littlefireflies.footballclub.ui.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
@@ -11,7 +10,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 08/09/2018.
  */
 class FavoriteMatchPresenter<V: FavoriteMatchContract.View> @Inject
-constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(dataManager, disposable, schedulerProvider), FavoriteMatchContract.UserActionListener<V> {
+constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), FavoriteMatchContract.UserActionListener<V> {
 
     @Inject
     lateinit var getFavoriteMatchUseCase: GetFavoriteMatchUseCase
@@ -30,15 +29,5 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
                             view?.displayErrorMessages("Unable to load Favorite matches")
                         })
         )
-//        disposable.add(
-//                dataManager.getFavoriteMatches()
-//                        .subscribe({
-//                            view?.displayFavoriteMatchList(it)
-//                            view?.hideLoading()
-//                        }, {
-//                            view?.hideLoading()
-//                            view?.displayErrorMessages("Unable to load Favorite matches")
-//                        })
-//        )
     }
 }
