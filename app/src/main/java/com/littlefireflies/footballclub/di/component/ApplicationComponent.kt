@@ -2,6 +2,7 @@ package com.littlefireflies.footballclub.di.component
 
 import com.littlefireflies.footballclub.App
 import com.littlefireflies.footballclub.data.DataManager
+import com.littlefireflies.footballclub.data.network.NetworkService
 import com.littlefireflies.footballclub.di.module.ApplicationModule
 import com.littlefireflies.footballclub.di.module.NetworkModule
 import dagger.Component
@@ -15,4 +16,5 @@ import javax.inject.Singleton
 interface ApplicationComponent {
     fun inject(app: App)
     val dataManager: DataManager
+    val networkService: NetworkService
 }

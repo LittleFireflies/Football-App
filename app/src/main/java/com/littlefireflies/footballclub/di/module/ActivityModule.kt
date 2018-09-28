@@ -2,7 +2,11 @@ package com.littlefireflies.footballclub.di.module
 
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
+import com.littlefireflies.footballclub.data.repository.MatchDataStore
+import com.littlefireflies.footballclub.data.repository.MatchRepository
 import com.littlefireflies.footballclub.di.scope.PerActivity
+import com.littlefireflies.footballclub.domain.matchlist.MatchListInteractor
+import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
 import com.littlefireflies.footballclub.ui.favoritematch.FavoriteMatchContract
 import com.littlefireflies.footballclub.ui.favoritematch.FavoriteMatchPresenter
 import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailContract
@@ -44,6 +48,14 @@ class ActivityModule(private val activity: AppCompatActivity) {
     fun provideSchedulerProvider(): SchedulerProvider {
         return AppSchedulerProvider()
     }
+
+    @PerActivity
+    @Provides
+    fun provideMatchListUseCase(matchListInteractor: MatchListInteractor): MatchListUseCase = matchListInteractor
+
+    @Provides
+    @PerActivity
+    fun provideMatchRepository(matchDataStore: MatchDataStore): MatchRepository = matchDataStore
 
     @PerActivity
     @Provides
