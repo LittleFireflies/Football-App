@@ -2,6 +2,7 @@ package com.littlefireflies.footballclub.ui.previousmatch
 
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
+import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
 import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
 import io.reactivex.Single
@@ -21,7 +22,7 @@ import org.mockito.MockitoAnnotations
 class PreviousMatchPresenterTest {
 
     @Mock
-    private lateinit var dataManager: DataManager
+    private lateinit var useCase: MatchListUseCase
     @Mock
     private lateinit var view: PreviousMatchContract.View
 
@@ -36,30 +37,29 @@ class PreviousMatchPresenterTest {
         testScheduler = TestScheduler()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        presenter = PreviousMatchPresenter(dataManager, disposable, testSchedulerProvider)
+        presenter = PreviousMatchPresenter(disposable, testSchedulerProvider)
         presenter.onAttach(view)
     }
 
     @Test
     fun shouldDisplayMatchListWhenGetDataSuccess() {
-        val matchList: MutableList<Match> = mutableListOf()
-        val response = ScheduleResponse(matchList)
+        val response: MutableList<Match> = mutableListOf()
 
-        `when`(dataManager.getPreviousMatches(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
+        `when`(useCase.getPreviousMatchList(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
 
         presenter.getMatchList()
 
         testScheduler.triggerActions()
 
         verify(view).showLoading()
-        verify(view).displayMatchList(response.events)
+        verify(view).displayMatchList(response)
         verify(view).hideLoading()
     }
 
     @Test
     fun shouldDisplayErrorWhenGetDataFailed() {
 
-        `when`(dataManager.getPreviousMatches(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
+        `when`(useCase.getPreviousMatchList(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
 
         presenter.getMatchList()
 

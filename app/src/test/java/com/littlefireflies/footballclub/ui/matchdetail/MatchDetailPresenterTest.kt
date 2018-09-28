@@ -2,6 +2,7 @@ package com.littlefireflies.footballclub.ui.matchdetail
 
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
+import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailUseCase
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -19,7 +20,7 @@ import org.mockito.MockitoAnnotations
  */
 class MatchDetailPresenterTest {
     @Mock
-    private lateinit var dataManager: DataManager
+    private lateinit var matchDetailUseCase: MatchDetailUseCase
     @Mock
     private lateinit var view: MatchDetailContract.View
 
@@ -33,29 +34,29 @@ class MatchDetailPresenterTest {
         testScheduler = TestScheduler()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        presenter = MatchDetailPresenter(dataManager, disposable, testSchedulerProvider)
+        presenter = MatchDetailPresenter(disposable, testSchedulerProvider)
         presenter.onAttach(view)
     }
 
     @Test
     fun shouldDisplayMatchDetail() {
         val matchList: MutableList<Match> = mutableListOf()
-        val response = ScheduleResponse(matchList)
+        val response = Match()
         val matchId = "1"
 
-        `when`(dataManager.getMatchDetail(matchId)).thenReturn(Single.just(response))
+        `when`(matchDetailUseCase.getMatchDetail(matchId)).thenReturn(Single.just(response))
 
         presenter.getMatchDetail(matchId)
         testScheduler.triggerActions()
 
         verify(view).showLoading()
-        verify(view).displayMatch(response.events[0])
+        verify(view).displayMatch(response)
     }
 
     @Test
     fun shouldDisplayError() {
         val matchId = "1"
-        `when`(dataManager.getMatchDetail(matchId)).thenReturn(Single.error(Exception("Load Error")))
+        `when`(matchDetailUseCase.getMatchDetail(matchId)).thenReturn(Single.error(Exception("Load Error")))
 
         presenter.getMatchDetail(matchId)
         testScheduler.triggerActions()

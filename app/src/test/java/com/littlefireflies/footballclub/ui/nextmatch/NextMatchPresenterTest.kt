@@ -1,7 +1,7 @@
 package com.littlefireflies.footballclub.ui.nextmatch
 
 import com.littlefireflies.footballclub.data.model.Match
-import com.littlefireflies.footballclub.data.model.ScheduleResponse
+import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
 import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
 import io.reactivex.Single
@@ -22,7 +22,7 @@ import org.mockito.MockitoAnnotations
 class NextMatchPresenterTest {
 
     @Mock
-    private lateinit var dataManager: DataManager
+    private lateinit var useCase: MatchListUseCase
     @Mock
     private lateinit var view: NextMatchContract.View
 
@@ -37,28 +37,27 @@ class NextMatchPresenterTest {
         testScheduler = TestScheduler()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        presenter = NextMatchPresenter(dataManager, disposable, testSchedulerProvider)
+        presenter = NextMatchPresenter(disposable, testSchedulerProvider)
         presenter.onAttach(view)
     }
 
     @Test
     fun shouldDisplayMatchListWhenGetDataSuccess() {
-        val matchList: MutableList<Match> = mutableListOf()
-        val response = ScheduleResponse(matchList)
+        val response: MutableList<Match> = mutableListOf()
 
-        `when`(dataManager.getNextMatches(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
+        `when`(useCase.getNextMatchList(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
 
         presenter.getMatchList()
         testScheduler.triggerActions()
 
         verify(view).showLoading()
-        verify(view).displayMatchList(response.events)
+        verify(view).displayMatchList(response)
         verify(view).hideLoading()
     }
 
     @Test
     fun shouldDisplayErrorWhenGetDataFailed() {
-        `when`(dataManager.getNextMatches(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
+        `when`(useCase.getNextMatchList(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
 
         presenter.getMatchList()
         testScheduler.triggerActions()
