@@ -2,9 +2,12 @@ package com.littlefireflies.footballclub.di.module
 
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
-import com.littlefireflies.footballclub.data.repository.MatchDataStore
-import com.littlefireflies.footballclub.data.repository.MatchRepository
+import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMatchDataStore
+import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMatchRepository
+import com.littlefireflies.footballclub.data.repository.match.MatchDataStore
+import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.di.scope.PerActivity
+import com.littlefireflies.footballclub.domain.favoritematch.*
 import com.littlefireflies.footballclub.domain.matchDetail.MatchDetailInteractor
 import com.littlefireflies.footballclub.domain.matchDetail.MatchDetailUseCase
 import com.littlefireflies.footballclub.domain.matchlist.MatchListInteractor
@@ -61,7 +64,23 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    fun provideGetFavoriteMatchUseCase(getFavoriteMatchInteractor: GetFavoriteMatchInteractor): GetFavoriteMatchUseCase = getFavoriteMatchInteractor
+
+    @Provides
+    @PerActivity
+    fun provideAddFavoriteMatchUseCase(addFavoriteMatchInteractor: AddFavoriteMatchInteractor): AddFavoriteMatchUseCase = addFavoriteMatchInteractor
+
+    @Provides
+    @PerActivity
+    fun provideRemoveFavoriteMatchUseCase(removeFavoriteMatchInteractor: RemoveFavoriteMatchInteractor): RemoveFavoriteMatchUseCase = removeFavoriteMatchInteractor
+
+    @Provides
+    @PerActivity
     fun provideMatchRepository(matchDataStore: MatchDataStore): MatchRepository = matchDataStore
+
+    @Provides
+    @PerActivity
+    fun provideFavoriteMatchRepository(favoriteMatchDataStore: FavoriteMatchDataStore): FavoriteMatchRepository = favoriteMatchDataStore
 
     @PerActivity
     @Provides

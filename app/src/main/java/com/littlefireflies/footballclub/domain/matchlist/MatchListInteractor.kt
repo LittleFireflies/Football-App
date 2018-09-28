@@ -1,7 +1,7 @@
 package com.littlefireflies.footballclub.domain.matchlist
 
 import com.littlefireflies.footballclub.data.model.Match
-import com.littlefireflies.footballclub.data.repository.MatchRepository
+import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import io.reactivex.Single
 import javax.inject.Inject
 

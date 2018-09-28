@@ -1,6 +1,7 @@
 package com.littlefireflies.footballclub.ui.favoritematch
 
 import com.littlefireflies.footballclub.data.DataManager
+import com.littlefireflies.footballclub.domain.favoritematch.GetFavoriteMatchUseCase
 import com.littlefireflies.footballclub.ui.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -12,10 +13,15 @@ import javax.inject.Inject
 class FavoriteMatchPresenter<V: FavoriteMatchContract.View> @Inject
 constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(dataManager, disposable, schedulerProvider), FavoriteMatchContract.UserActionListener<V> {
 
+    @Inject
+    lateinit var getFavoriteMatchUseCase: GetFavoriteMatchUseCase
+
     override fun getFavoriteMatchList() {
         view?.showLoading()
         disposable.add(
-                dataManager.getFavoriteMatches()
+                getFavoriteMatchUseCase.getFavoriteMatchList()
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
                         .subscribe({
                             view?.displayFavoriteMatchList(it)
                             view?.hideLoading()
@@ -24,5 +30,15 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
                             view?.displayErrorMessages("Unable to load Favorite matches")
                         })
         )
+//        disposable.add(
+//                dataManager.getFavoriteMatches()
+//                        .subscribe({
+//                            view?.displayFavoriteMatchList(it)
+//                            view?.hideLoading()
+//                        }, {
+//                            view?.hideLoading()
+//                            view?.displayErrorMessages("Unable to load Favorite matches")
+//                        })
+//        )
     }
 }

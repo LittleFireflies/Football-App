@@ -2,6 +2,9 @@ package com.littlefireflies.footballclub.ui.matchdetail
 
 import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.data.model.Match
+import com.littlefireflies.footballclub.domain.favoritematch.AddFavoriteMatchUseCase
+import com.littlefireflies.footballclub.domain.favoritematch.GetFavoriteMatchUseCase
+import com.littlefireflies.footballclub.domain.favoritematch.RemoveFavoriteMatchUseCase
 import com.littlefireflies.footballclub.domain.matchDetail.MatchDetailUseCase
 import com.littlefireflies.footballclub.ui.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
@@ -16,6 +19,12 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
 
     @Inject
     lateinit var matchDetailUseCase: MatchDetailUseCase
+    @Inject
+    lateinit var getFavoriteMatchUseCase: GetFavoriteMatchUseCase
+    @Inject
+    lateinit var addFavoriteMatchUseCase: AddFavoriteMatchUseCase
+    @Inject
+    lateinit var removeFavoriteMatchUseCase: RemoveFavoriteMatchUseCase
 
     override fun getMatchDetail(matchId: String) {
         view?.showLoading()
@@ -30,7 +39,7 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
                             view?.displayErrorMessages("Unable to load the data")
                         }
                         .flatMap {
-                            dataManager.isFavorite(it.matchId.toString())
+                            getFavoriteMatchUseCase.getFavoriteMatchStatus(it.matchId.toString())
                         }
                         .doOnSuccess {
                             view?.displayFavoriteStatus(it)
@@ -91,12 +100,12 @@ constructor(dataManager: DataManager, disposable: CompositeDisposable, scheduler
     }
 
     override fun addToFavorite(match: Match) {
-        dataManager.addToFavorite(match)
+        addFavoriteMatchUseCase.addToFavorite(match)
         view?.onAddtoFavorite()
     }
 
     override fun removeFromFavorite(match: Match) {
-        dataManager.removeFromFavorite(match.matchId.toString())
+        removeFavoriteMatchUseCase.removeFromFavorite(match.matchId.toString())
         view?.onRemoveFromFavorite()
     }
 }

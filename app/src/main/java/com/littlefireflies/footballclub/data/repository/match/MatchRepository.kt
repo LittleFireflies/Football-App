@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.data.repository
+package com.littlefireflies.footballclub.data.repository.match
 
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
 import io.reactivex.Single
