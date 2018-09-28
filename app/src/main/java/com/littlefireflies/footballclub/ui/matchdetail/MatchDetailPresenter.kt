@@ -2,6 +2,7 @@ package com.littlefireflies.footballclub.ui.matchdetail
 
 import com.littlefireflies.footballclub.data.DataManager
 import com.littlefireflies.footballclub.data.model.Match
+import com.littlefireflies.footballclub.domain.matchDetail.MatchDetailUseCase
 import com.littlefireflies.footballclub.ui.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -12,29 +13,55 @@ import javax.inject.Inject
  */
 class MatchDetailPresenter<V: MatchDetailContract.View> @Inject
 constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(dataManager, disposable, schedulerProvider), MatchDetailContract.UserActionListener<V>{
+
+    @Inject
+    lateinit var matchDetailUseCase: MatchDetailUseCase
+
     override fun getMatchDetail(matchId: String) {
         view?.showLoading()
         disposable.add(
-                dataManager.getMatchDetail(matchId)
+                matchDetailUseCase.getMatchDetail(matchId)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .doOnSuccess {
-                            view?.displayMatch(it.events[0])
+                            view?.displayMatch(it)
                         }
-                        .doOnError{
-                            view?.displayErrorMessages("Unable to load data")
+                        .doOnError {
+                            view?.displayErrorMessages("Unable to load the data")
                         }
                         .flatMap {
-                            dataManager.isFavorite(it.events[0].matchId.toString()) }
+                            dataManager.isFavorite(it.matchId.toString())
+                        }
                         .doOnSuccess {
                             view?.displayFavoriteStatus(it)
                             view?.hideLoading()
                         }
                         .doOnError {
-                            view?.displayErrorMessages("Network error")
+                            view?.displayErrorMessages("Error")
                         }
                         .subscribe()
         )
+//        disposable.add(
+//                dataManager.getMatchDetail(matchId)
+//                        .subscribeOn(schedulerProvider.io())
+//                        .observeOn(schedulerProvider.ui())
+//                        .doOnSuccess {
+//                            view?.displayMatch(it.events[0])
+//                        }
+//                        .doOnError{
+//                            view?.displayErrorMessages("Unable to load data")
+//                        }
+//                        .flatMap {
+//                            dataManager.isFavorite(it.events[0].matchId.toString()) }
+//                        .doOnSuccess {
+//                            view?.displayFavoriteStatus(it)
+//                            view?.hideLoading()
+//                        }
+//                        .doOnError {
+//                            view?.displayErrorMessages("Network error")
+//                        }
+//                        .subscribe()
+//        )
     }
 
     override fun getHomeTeamImage(teamId: String?) {

@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import com.littlefireflies.footballclub.data.repository.MatchDataStore
 import com.littlefireflies.footballclub.data.repository.MatchRepository
 import com.littlefireflies.footballclub.di.scope.PerActivity
+import com.littlefireflies.footballclub.domain.matchDetail.MatchDetailInteractor
+import com.littlefireflies.footballclub.domain.matchDetail.MatchDetailUseCase
 import com.littlefireflies.footballclub.domain.matchlist.MatchListInteractor
 import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
 import com.littlefireflies.footballclub.ui.favoritematch.FavoriteMatchContract
@@ -52,6 +54,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @PerActivity
     @Provides
     fun provideMatchListUseCase(matchListInteractor: MatchListInteractor): MatchListUseCase = matchListInteractor
+
+    @Provides
+    @PerActivity
+    fun provideMatchDetailUseCase(matchDetailInteractor: MatchDetailInteractor): MatchDetailUseCase = matchDetailInteractor
 
     @Provides
     @PerActivity
