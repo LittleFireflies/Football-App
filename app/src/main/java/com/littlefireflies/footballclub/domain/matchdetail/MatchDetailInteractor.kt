@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.domain.matchDetail
+package com.littlefireflies.footballclub.domain.matchdetail
 
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.data.repository.match.MatchRepository

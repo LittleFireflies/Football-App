@@ -21,5 +21,5 @@ interface NetworkService {
     fun getMatchDetail(@Query("id") matchId: String): Single<ScheduleResponse>
 
     @GET("v1/json/1/lookupteam.php")
-    fun getTeamDetail(@Query("id") teamId: String): Single<TeamResponse>
+    fun getTeamDetail(@Query("id") teamId: String?): Single<TeamResponse>
 }

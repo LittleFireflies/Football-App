@@ -6,12 +6,16 @@ import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMa
 import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMatchRepository
 import com.littlefireflies.footballclub.data.repository.match.MatchDataStore
 import com.littlefireflies.footballclub.data.repository.match.MatchRepository
+import com.littlefireflies.footballclub.data.repository.team.TeamDataStore
+import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.di.scope.PerActivity
 import com.littlefireflies.footballclub.domain.favoritematch.*
-import com.littlefireflies.footballclub.domain.matchDetail.MatchDetailInteractor
-import com.littlefireflies.footballclub.domain.matchDetail.MatchDetailUseCase
+import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailInteractor
+import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailUseCase
 import com.littlefireflies.footballclub.domain.matchlist.MatchListInteractor
 import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
+import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailInteractor
+import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailUseCase
 import com.littlefireflies.footballclub.ui.favoritematch.FavoriteMatchContract
 import com.littlefireflies.footballclub.ui.favoritematch.FavoriteMatchPresenter
 import com.littlefireflies.footballclub.ui.matchdetail.MatchDetailContract
@@ -76,11 +80,19 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    fun provideTeamDetailUseCase(teamDetailInteractor: TeamDetailInteractor): TeamDetailUseCase = teamDetailInteractor
+
+    @Provides
+    @PerActivity
     fun provideMatchRepository(matchDataStore: MatchDataStore): MatchRepository = matchDataStore
 
     @Provides
     @PerActivity
     fun provideFavoriteMatchRepository(favoriteMatchDataStore: FavoriteMatchDataStore): FavoriteMatchRepository = favoriteMatchDataStore
+
+    @Provides
+    @PerActivity
+    fun provideTeamRepository(teamDataStore: TeamDataStore): TeamRepository = teamDataStore
 
     @PerActivity
     @Provides
