@@ -20,4 +20,15 @@ constructor(val matchRepository: MatchRepository): MatchListUseCase{
                     Single.just(entities)
                 }
     }
+
+    override fun getPreviousMatchList(leagueId: String): Single<List<Match>> {
+        return matchRepository.getPreviousMatch(leagueId)
+                .flatMap {
+                    val entities = mutableListOf<Match>()
+                    it.events.forEach { match ->
+                        entities.add(match)
+                    }
+                    Single.just(entities)
+                }
+    }
 }

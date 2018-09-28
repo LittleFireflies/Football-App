@@ -13,4 +13,8 @@ constructor(val networkService: NetworkService): MatchRepository{
     override fun getNextMatch(leagueId: String): Single<ScheduleResponse> {
         return networkService.getNextMatches(leagueId)
     }
+
+    override fun getPreviousMatch(leagueId: String): Single<ScheduleResponse> {
+        return networkService.getPreviousMatches(leagueId)
+    }
 }

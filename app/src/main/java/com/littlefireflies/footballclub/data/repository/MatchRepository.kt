@@ -8,4 +8,5 @@ import io.reactivex.Single
  */
 interface MatchRepository {
     fun getNextMatch(leagueId: String): Single<ScheduleResponse>
+    fun getPreviousMatch(leagueId: String): Single<ScheduleResponse>
 }

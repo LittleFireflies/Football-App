@@ -1,6 +1,7 @@
 package com.littlefireflies.footballclub.ui.previousmatch
 
 import com.littlefireflies.footballclub.data.DataManager
+import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
 import com.littlefireflies.footballclub.ui.base.BasePresenter
 import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
@@ -13,19 +14,34 @@ import javax.inject.Inject
 class PreviousMatchPresenter<V: PreviousMatchContract.View> @Inject
 constructor(dataManager: DataManager, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(dataManager, disposable, schedulerProvider), PreviousMatchContract.UserActionListener<V>{
 
+    @Inject
+    lateinit var matchListUseCase: MatchListUseCase
+
     override fun getMatchList() {
         view?.showLoading()
         disposable.add(
-                dataManager.getPreviousMatches(Constants.LEAGUE_ID)
+                matchListUseCase.getPreviousMatchList(Constants.LEAGUE_ID)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({
-                            view?.displayMatchList(it.events)
+                            view?.displayMatchList(it)
                             view?.hideLoading()
                         }, {
                             view?.hideLoading()
                             view?.displayErrorMessage("Unable to load the data")
                         })
         )
+//        disposable.add(
+//                dataManager.getPreviousMatches(Constants.LEAGUE_ID)
+//                        .subscribeOn(schedulerProvider.io())
+//                        .observeOn(schedulerProvider.ui())
+//                        .subscribe({
+//                            view?.displayMatchList(it.events)
+//                            view?.hideLoading()
+//                        }, {
+//                            view?.hideLoading()
+//                            view?.displayErrorMessage("Unable to load the data")
+//                        })
+//        )
     }
 }
