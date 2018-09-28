@@ -26,6 +26,8 @@ import com.littlefireflies.footballclub.presentation.nextmatch.NextMatchContract
 import com.littlefireflies.footballclub.presentation.nextmatch.NextMatchPresenter
 import com.littlefireflies.footballclub.presentation.previousmatch.PreviousMatchContract
 import com.littlefireflies.footballclub.presentation.previousmatch.PreviousMatchPresenter
+import com.littlefireflies.footballclub.presentation.teamdetail.TeamDetailContract
+import com.littlefireflies.footballclub.presentation.teamdetail.TeamDetailPresenter
 import com.littlefireflies.footballclub.utils.rx.AppSchedulerProvider
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import dagger.Module
@@ -113,4 +115,8 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @PerActivity
     @Provides
     fun provideFavoriteMatchPresenter(presenter: FavoriteMatchPresenter<FavoriteMatchContract.View>): FavoriteMatchContract.UserActionListener<FavoriteMatchContract.View> = presenter
+
+    @Provides
+    @PerActivity
+    fun provideTeamDetailPresenter(presenter: TeamDetailPresenter<TeamDetailContract.View>): TeamDetailContract.UserActionListener<TeamDetailContract.View> = presenter
 }

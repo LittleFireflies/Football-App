@@ -8,6 +8,7 @@ import com.littlefireflies.footballclub.presentation.matchdetail.MatchDetailActi
 import com.littlefireflies.footballclub.presentation.matchschedule.MatchScheduleActivity
 import com.littlefireflies.footballclub.presentation.nextmatch.NextMatchFragment
 import com.littlefireflies.footballclub.presentation.previousmatch.PreviousMatchFragment
+import com.littlefireflies.footballclub.presentation.teamdetail.TeamDetailActivity
 import dagger.Component
 
 
@@ -24,5 +25,6 @@ interface ActivityComponent {
     fun inject(previousMatchFragment: PreviousMatchFragment)
     fun inject(matchDetailActivity: MatchDetailActivity)
     fun inject(favoriteMatchFragment: FavoriteMatchFragment)
+    fun inject(teamDetailActivity: TeamDetailActivity)
 
 }

@@ -9,12 +9,14 @@ import com.bumptech.glide.Glide
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
+import com.littlefireflies.footballclub.presentation.teamdetail.TeamDetailActivity
 import com.littlefireflies.footballclub.utils.dateFormatter
 import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.item_home_list.view.*
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
@@ -139,6 +141,13 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         rvHomeSub.layoutManager = LinearLayoutManager(this)
         rvAwaySub.adapter = MatchDetailAdapter(match.awaySubs?.split(";"), AWAY_STRING)
         rvAwaySub.layoutManager = LinearLayoutManager(this)
+
+        ivHomeTeam.setOnClickListener {
+            startActivity<TeamDetailActivity>(TeamDetailActivity.EXTRA_TEAM to match.homeTeamId)
+        }
+        ivAwayTeam.setOnClickListener {
+            startActivity<TeamDetailActivity>(TeamDetailActivity.EXTRA_TEAM to match.awayTeamId)
+        }
     }
 
     override fun displayErrorMessages(message: String) {
