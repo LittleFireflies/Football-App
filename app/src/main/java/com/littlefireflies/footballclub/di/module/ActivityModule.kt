@@ -6,6 +6,8 @@ import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMa
 import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMatchRepository
 import com.littlefireflies.footballclub.data.repository.match.MatchDataStore
 import com.littlefireflies.footballclub.data.repository.match.MatchRepository
+import com.littlefireflies.footballclub.data.repository.player.PlayerDataStore
+import com.littlefireflies.footballclub.data.repository.player.PlayerRepository
 import com.littlefireflies.footballclub.data.repository.team.TeamDataStore
 import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.di.scope.PerActivity
@@ -14,6 +16,8 @@ import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailInteractor
 import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailUseCase
 import com.littlefireflies.footballclub.domain.matchlist.MatchListInteractor
 import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
+import com.littlefireflies.footballclub.domain.playerlist.PlayerListInteractor
+import com.littlefireflies.footballclub.domain.playerlist.PlayerListUseCase
 import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailInteractor
 import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailUseCase
 import com.littlefireflies.footballclub.presentation.favoritematch.FavoriteMatchContract
@@ -28,6 +32,8 @@ import com.littlefireflies.footballclub.presentation.previousmatch.PreviousMatch
 import com.littlefireflies.footballclub.presentation.previousmatch.PreviousMatchPresenter
 import com.littlefireflies.footballclub.presentation.teamdetail.TeamDetailContract
 import com.littlefireflies.footballclub.presentation.teamdetail.TeamDetailPresenter
+import com.littlefireflies.footballclub.presentation.teamdetail.players.TeamPlayersContract
+import com.littlefireflies.footballclub.presentation.teamdetail.players.TeamPlayersPresenter
 import com.littlefireflies.footballclub.utils.rx.AppSchedulerProvider
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import dagger.Module
@@ -86,6 +92,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    fun providePlayerListUseCase(playerListInteractor: PlayerListInteractor): PlayerListUseCase = playerListInteractor
+
+    @Provides
+    @PerActivity
     fun provideMatchRepository(matchDataStore: MatchDataStore): MatchRepository = matchDataStore
 
     @Provides
@@ -95,6 +105,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     fun provideTeamRepository(teamDataStore: TeamDataStore): TeamRepository = teamDataStore
+
+    @Provides
+    @PerActivity
+    fun providePlayerRepository(playerDataStore: PlayerDataStore): PlayerRepository = playerDataStore
 
     @PerActivity
     @Provides
@@ -119,4 +133,8 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     fun provideTeamDetailPresenter(presenter: TeamDetailPresenter<TeamDetailContract.View>): TeamDetailContract.UserActionListener<TeamDetailContract.View> = presenter
+
+    @Provides
+    @PerActivity
+    fun provideTeamPlayersPresenter(presenter: TeamPlayersPresenter<TeamPlayersContract.View>): TeamPlayersContract.UserActionListener<TeamPlayersContract.View> = presenter
 }

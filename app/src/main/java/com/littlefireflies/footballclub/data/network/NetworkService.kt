@@ -1,5 +1,6 @@
 package com.littlefireflies.footballclub.data.network
 
+import com.littlefireflies.footballclub.data.model.PlayerResponse
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
 import com.littlefireflies.footballclub.data.model.TeamResponse
 import io.reactivex.Single
@@ -22,4 +23,7 @@ interface NetworkService {
 
     @GET("v1/json/1/lookupteam.php")
     fun getTeamDetail(@Query("id") teamId: String?): Single<TeamResponse>
+
+    @GET("v1/json/1/lookup_all_players.php?")
+    fun getPlayersByTeam(@Query("id") teamId: String?): Single<PlayerResponse>
 }
