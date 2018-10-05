@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".presentation.teamdetail.overview.TeamOverviewFragment">
+    tools:context=".presentation.ui.teamdetail.overview.TeamOverviewFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

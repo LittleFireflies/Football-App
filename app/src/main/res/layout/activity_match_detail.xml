@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.matchdetail.MatchDetailActivity">
+    tools:context="com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

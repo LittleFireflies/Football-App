@@ -3,13 +3,13 @@ package com.littlefireflies.footballclub.di.component
 import com.littlefireflies.footballclub.data.network.NetworkService
 import com.littlefireflies.footballclub.di.module.ActivityModule
 import com.littlefireflies.footballclub.di.scope.PerActivity
-import com.littlefireflies.footballclub.presentation.favoritematch.FavoriteMatchFragment
-import com.littlefireflies.footballclub.presentation.matchdetail.MatchDetailActivity
-import com.littlefireflies.footballclub.presentation.matchschedule.MatchScheduleActivity
-import com.littlefireflies.footballclub.presentation.nextmatch.NextMatchFragment
-import com.littlefireflies.footballclub.presentation.previousmatch.PreviousMatchFragment
-import com.littlefireflies.footballclub.presentation.teamdetail.TeamDetailActivity
-import com.littlefireflies.footballclub.presentation.teamdetail.players.TeamPlayersFragment
+import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchFragment
+import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
+import com.littlefireflies.footballclub.presentation.ui.matchschedule.MatchScheduleActivity
+import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchFragment
+import com.littlefireflies.footballclub.presentation.ui.previousmatch.PreviousMatchFragment
+import com.littlefireflies.footballclub.presentation.ui.teamdetail.TeamDetailActivity
+import com.littlefireflies.footballclub.presentation.ui.teamdetail.players.TeamPlayersFragment
 import dagger.Component
 
 

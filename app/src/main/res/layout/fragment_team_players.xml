@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".presentation.teamdetail.players.TeamPlayersFragment">
+    tools:context=".presentation.ui.teamdetail.players.TeamPlayersFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPlayerlist"
