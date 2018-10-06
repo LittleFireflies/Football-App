@@ -23,3 +23,19 @@ fun dateFormatter(inputDate: String?): String {
 
     return afterFormat
 }
+
+fun bornDateFormatter(inputDate: String?): String {
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd")
+    val outputFormat = SimpleDateFormat("dd MMMM yyyy")
+    val beforeFormat: Date
+    var afterFormat = ""
+
+    try {
+        beforeFormat = inputFormat.parse(inputDate)
+        afterFormat = outputFormat.format(beforeFormat)
+    } catch ( e: ParseException) {
+        e.printStackTrace()
+    }
+
+    return afterFormat
+}

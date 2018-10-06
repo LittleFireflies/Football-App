@@ -16,6 +16,8 @@ import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailInteractor
 import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailUseCase
 import com.littlefireflies.footballclub.domain.matchlist.MatchListInteractor
 import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
+import com.littlefireflies.footballclub.domain.playerdetail.PlayerDetailInteractor
+import com.littlefireflies.footballclub.domain.playerdetail.PlayerDetailUseCase
 import com.littlefireflies.footballclub.domain.playerlist.PlayerListInteractor
 import com.littlefireflies.footballclub.domain.playerlist.PlayerListUseCase
 import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailInteractor
@@ -93,6 +95,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     fun providePlayerListUseCase(playerListInteractor: PlayerListInteractor): PlayerListUseCase = playerListInteractor
+
+    @Provides
+    @PerActivity
+    fun providePlayerDetailUseCase(playerDetailInteractor: PlayerDetailInteractor): PlayerDetailUseCase = playerDetailInteractor
 
     @Provides
     @PerActivity

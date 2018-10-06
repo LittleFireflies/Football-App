@@ -13,12 +13,14 @@ import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.Player
 import com.littlefireflies.footballclub.data.model.Team
 import com.littlefireflies.footballclub.presentation.base.BaseFragment
+import com.littlefireflies.footballclub.presentation.ui.playerdetail.PlayerDetailActivity
 import com.littlefireflies.footballclub.presentation.ui.teamdetail.TeamDetailActivity
 import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.fragment_team_players.*
 import kotlinx.android.synthetic.main.item_player_list.view.*
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.support.v4.startActivity
 import javax.inject.Inject
 
 class TeamPlayersFragment : BaseFragment(), TeamPlayersContract.View, TeamDetailActivity.DataListener {
@@ -64,7 +66,9 @@ class TeamPlayersFragment : BaseFragment(), TeamPlayersContract.View, TeamDetail
     }
 
     override fun displayPlayerList(players: List<Player>) {
-        rvPlayerlist.adapter = PlayerAdapter(context, players)
+        rvPlayerlist.adapter = PlayerAdapter(context, players) {
+            startActivity<PlayerDetailActivity>("playerId" to it.playerId)
+        }
         rvPlayerlist.layoutManager = LinearLayoutManager(context)
     }
 
@@ -72,7 +76,7 @@ class TeamPlayersFragment : BaseFragment(), TeamPlayersContract.View, TeamDetail
         snackbar(pbTeamPlayers, message)
     }
 
-    inner class PlayerAdapter(val context: Context?, val players: List<Player>) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
+    inner class PlayerAdapter(val context: Context?, val players: List<Player>, val listener: (Player) -> Unit) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_player_list, parent, false))
 
         override fun getItemCount(): Int = players.size
@@ -86,6 +90,7 @@ class TeamPlayersFragment : BaseFragment(), TeamPlayersContract.View, TeamDetail
                 Glide.with(context!!).load(player.imageCutout).into(itemView.ivPicture)
                 itemView.tvPlayerName.text = player.playerName
                 itemView.tvPlayerPosition.text = player.position
+                itemView.setOnClickListener { listener(player) }
             }
         }
     }

@@ -13,4 +13,8 @@ constructor(val networkService: NetworkService) : PlayerRepository{
     override fun getPlayers(teamId: String): Single<PlayerResponse> {
         return networkService.getPlayersByTeam(teamId)
     }
+
+    override fun getPlayerDetail(playerId: String): Single<PlayerResponse> {
+        return networkService.getPlayerDetail(playerId)
+    }
 }

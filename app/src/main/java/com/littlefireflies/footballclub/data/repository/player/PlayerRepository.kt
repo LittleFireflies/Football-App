@@ -8,4 +8,5 @@ import io.reactivex.Single
  */
 interface PlayerRepository {
     fun getPlayers(teamId: String): Single<PlayerResponse>
+    fun getPlayerDetail(playerId: String): Single<PlayerResponse>
 }

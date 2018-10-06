@@ -12,15 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.littlefireflies.footballclub.presentation.ui.matchschedule.MatchScheduleActivity">
+        <activity android:name=".presentation.ui.matchschedule.MatchScheduleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity" />
-        <activity android:name="com.littlefireflies.footballclub.presentation.ui.teamdetail.TeamDetailActivity"></activity>
+        <activity android:name=".presentation.ui.matchdetail.MatchDetailActivity" />
+        <activity android:name=".presentation.ui.teamdetail.TeamDetailActivity" />
+        <activity android:name=".presentation.ui.playerdetail.PlayerDetailActivity"></activity>
     </application>
 
 </manifest>

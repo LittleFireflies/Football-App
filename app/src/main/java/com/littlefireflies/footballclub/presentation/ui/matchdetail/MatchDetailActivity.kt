@@ -57,7 +57,7 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             android.R.id.home -> {
-                finish()
+                onBackPressed()
                 true
             }
             R.id.add_to_favorite -> {

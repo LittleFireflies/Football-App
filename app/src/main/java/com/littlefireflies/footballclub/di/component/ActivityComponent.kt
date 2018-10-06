@@ -7,6 +7,7 @@ import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMa
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.presentation.ui.matchschedule.MatchScheduleActivity
 import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchFragment
+import com.littlefireflies.footballclub.presentation.ui.playerdetail.PlayerDetailActivity
 import com.littlefireflies.footballclub.presentation.ui.previousmatch.PreviousMatchFragment
 import com.littlefireflies.footballclub.presentation.ui.teamdetail.TeamDetailActivity
 import com.littlefireflies.footballclub.presentation.ui.teamdetail.players.TeamPlayersFragment
@@ -28,5 +29,6 @@ interface ActivityComponent {
     fun inject(favoriteMatchFragment: FavoriteMatchFragment)
     fun inject(teamDetailActivity: TeamDetailActivity)
     fun inject(teamPlayersFragment: TeamPlayersFragment)
+    fun inject(playerDetailActivity: PlayerDetailActivity)
 
 }
