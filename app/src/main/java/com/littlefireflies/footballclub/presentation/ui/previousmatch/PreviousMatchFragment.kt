@@ -8,8 +8,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 
 import com.littlefireflies.footballclub.R
+import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.presentation.base.BaseFragment
@@ -28,11 +31,15 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
     @Inject
     lateinit var presenter: PreviousMatchPresenter<PreviousMatchContract.View>
 
+    override var selectedLeague: League
+        get() = spPrevMatchList.selectedItem as League
+        set(value) {}
+
     override fun getLayoutId(): Int = R.layout.fragment_previous_match
 
     override fun onLoadFragment(saveInstance: Bundle?) {
         val component = activityComponent
-        if (component !=  null) {
+        if (component != null) {
             activityComponent?.inject(this)
             onAttachView()
 
@@ -45,12 +52,23 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
             swipeRefreshLayout.onRefresh {
                 presenter.getMatchList()
             }
+
+            spPrevMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    selectedLeague = parent?.getItemAtPosition(position) as League
+                    presenter.getMatchList()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.getMatchList()
+        presenter.getLeagueList()
     }
 
     override fun onDestroyView() {
@@ -72,6 +90,12 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
 
     override fun hideLoading() {
         pbPrevMatch.hide()
+    }
+
+    override fun displayLeagueList(leagues: List<League>) {
+        val spinnerAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, leagues)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spPrevMatchList.adapter = spinnerAdapter
     }
 
     override fun displayMatchList(events: List<Match>) {

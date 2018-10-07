@@ -1,5 +1,6 @@
 package com.littlefireflies.footballclub.presentation.ui.previousmatch
 
+import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
 import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
 import com.littlefireflies.footballclub.utils.Constants
@@ -15,11 +16,26 @@ constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvide
 
     @Inject
     lateinit var matchListUseCase: MatchListUseCase
+    @Inject
+    lateinit var leagueListUseCase: LeagueListUseCase
+
+    override fun getLeagueList() {
+        disposable.add(
+                leagueListUseCase.getSoccerLeagueList()
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribe({
+                            view?.displayLeagueList(it)
+                        }, {
+                            view?.displayErrorMessage("Unable to load league data")
+                        })
+        )
+    }
 
     override fun getMatchList() {
         view?.showLoading()
         disposable.add(
-                matchListUseCase.getPreviousMatchList(Constants.LEAGUE_ID)
+                matchListUseCase.getPreviousMatchList(view?.selectedLeague?.leagueId)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({

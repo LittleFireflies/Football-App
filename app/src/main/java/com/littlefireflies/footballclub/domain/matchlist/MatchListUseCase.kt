@@ -8,5 +8,5 @@ import io.reactivex.Single
  */
 interface MatchListUseCase {
     fun getNextMatchList(leagueId: String?): Single<List<Match>>
-    fun getPreviousMatchList(leagueId: String): Single<List<Match>>
+    fun getPreviousMatchList(leagueId: String?): Single<List<Match>>
 }
