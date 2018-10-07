@@ -8,7 +8,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.littlefireflies.footballclub.R
+import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.presentation.base.BaseFragment
@@ -27,6 +30,10 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
     @Inject
     lateinit var presenter: NextMatchPresenter<NextMatchContract.View>
 
+    override var selectedLeague: League
+        get() = spNextMatchList.selectedItem as League
+        set(value) {}
+
     override fun getLayoutId(): Int = R.layout.fragment_next_match
 
     override fun onLoadFragment(saveInstance: Bundle?) {
@@ -44,12 +51,22 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
             swipeRefreshLayout.onRefresh {
                 presenter.getMatchList()
             }
+
+            spNextMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    selectedLeague = parent?.getItemAtPosition(position) as League
+                    presenter.getMatchList()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.getMatchList()
+        presenter.getLeagueList()
     }
 
     override fun onDestroyView() {
@@ -73,6 +90,12 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
         pbNextMatch?.hide()
     }
 
+    override fun displayLeagueList(leagues: List<League>) {
+        val spinnerAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, leagues)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spNextMatchList.adapter = spinnerAdapter
+    }
+
     override fun displayMatchList(events: List<Match>) {
         swipeRefreshLayout.isRefreshing = false
 
@@ -88,7 +111,7 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
         snackbar(rvNextMatch, message)
     }
 
-    internal class NextMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit): RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
+    internal class NextMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_next_match, parent, false))
 
@@ -98,7 +121,7 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
             holder.bindItem(matches[position])
         }
 
-        inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             fun bindItem(match: Match) {
                 val date = dateFormatter(match.matchDate)

@@ -7,6 +7,6 @@ import io.reactivex.Single
  * Created by widyarso.purnomo on 28/09/2018.
  */
 interface MatchListUseCase {
-    fun getNextMatchList(leagueId: String): Single<List<Match>>
+    fun getNextMatchList(leagueId: String?): Single<List<Match>>
     fun getPreviousMatchList(leagueId: String): Single<List<Match>>
 }

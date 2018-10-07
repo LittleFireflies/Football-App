@@ -1,5 +1,6 @@
 package com.littlefireflies.footballclub.data.network
 
+import com.littlefireflies.footballclub.data.model.LeagueResponse
 import com.littlefireflies.footballclub.data.model.PlayerResponse
 import com.littlefireflies.footballclub.data.model.ScheduleResponse
 import com.littlefireflies.footballclub.data.model.TeamResponse
@@ -29,4 +30,7 @@ interface NetworkService {
 
     @GET("v1/json/1/lookupplayer.php")
     fun getPlayerDetail(@Query("id") playerId: String): Single<PlayerResponse>
+
+    @GET("v1/json/1/all_leagues.php")
+    fun getLeagues(): Single<LeagueResponse>
 }

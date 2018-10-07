@@ -4,6 +4,8 @@ import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMatchDataStore
 import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMatchRepository
+import com.littlefireflies.footballclub.data.repository.league.LeagueDataStore
+import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
 import com.littlefireflies.footballclub.data.repository.match.MatchDataStore
 import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.data.repository.player.PlayerDataStore
@@ -12,6 +14,8 @@ import com.littlefireflies.footballclub.data.repository.team.TeamDataStore
 import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.di.scope.PerActivity
 import com.littlefireflies.footballclub.domain.favoritematch.*
+import com.littlefireflies.footballclub.domain.leaguelist.LeagueListInteractor
+import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
 import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailInteractor
 import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailUseCase
 import com.littlefireflies.footballclub.domain.matchlist.MatchListInteractor
@@ -102,6 +106,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     @PerActivity
+    fun provideLeagueListUseCase(leagueListInteractor: LeagueListInteractor): LeagueListUseCase = leagueListInteractor
+
+    @Provides
+    @PerActivity
     fun provideMatchRepository(matchDataStore: MatchDataStore): MatchRepository = matchDataStore
 
     @Provides
@@ -115,6 +123,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     fun providePlayerRepository(playerDataStore: PlayerDataStore): PlayerRepository = playerDataStore
+
+    @Provides
+    @PerActivity
+    fun provideLeagueRepository(leagueDataStore: LeagueDataStore): LeagueRepository = leagueDataStore
 
     @PerActivity
     @Provides

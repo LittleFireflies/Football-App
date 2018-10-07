@@ -3,6 +3,7 @@ package com.littlefireflies.footballclub.data.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.littlefireflies.footballclub.data.model.FavoriteMatch
+import com.littlefireflies.footballclub.data.model.League
 import org.jetbrains.anko.db.*
 
 /**
@@ -34,10 +35,16 @@ class MyDatabaseOpenHelper(context: Context) : ManagedSQLiteOpenHelper(context, 
                 FavoriteMatch.MATCH_TIME to TEXT,
                 FavoriteMatch.HOME_SCORE to TEXT,
                 FavoriteMatch.AWAY_SCORE to TEXT)
+
+        db.createTable(League.TABLE_LEAGUE, true,
+                League.LEAGUE_ID to TEXT + PRIMARY_KEY,
+                League.LEAGUE_NAME to TEXT,
+                League.LEAGUE_SPORT to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.dropTable(FavoriteMatch.TABLE_FAVORITE, true)
+        db.dropTable(League.TABLE_LEAGUE, true)
     }
 }
 

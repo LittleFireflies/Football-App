@@ -10,8 +10,9 @@ import javax.inject.Inject
  */
 class MatchListInteractor @Inject
 constructor(val matchRepository: MatchRepository): MatchListUseCase{
-    override fun getNextMatchList(leagueId: String): Single<List<Match>> {
-        return matchRepository.getNextMatch(leagueId)
+
+    override fun getNextMatchList(leagueId: String?): Single<List<Match>> {
+        return matchRepository.getNextMatch(leagueId.toString())
                 .flatMap {
                     val entities = mutableListOf<Match>()
                     it.events.forEach { match ->
