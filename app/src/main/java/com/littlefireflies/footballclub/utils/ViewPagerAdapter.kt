@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter
 /**
  * Created by widyarso.purnomo on 03/09/2018.
  */
-class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class ViewPagerAdapter(fragmentManager: FragmentManager?) : FragmentPagerAdapter(fragmentManager) {
 
     private val fragmentList = ArrayList<Fragment>()
     private val fragmentTitleList = ArrayList<String>()

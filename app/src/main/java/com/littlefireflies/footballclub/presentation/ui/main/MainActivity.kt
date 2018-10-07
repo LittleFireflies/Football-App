@@ -1,20 +1,19 @@
-package com.littlefireflies.footballclub.presentation.ui.matchschedule
+package com.littlefireflies.footballclub.presentation.ui.main
 
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import com.littlefireflies.footballclub.R
-import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchFragment
-import com.littlefireflies.footballclub.presentation.ui.previousmatch.PreviousMatchFragment
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
 import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchFragment
+import com.littlefireflies.footballclub.presentation.ui.match.MatchFragment
 import com.littlefireflies.footballclub.utils.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_match_schedule.*
 import javax.inject.Inject
 
-class MatchScheduleActivity : BaseActivity(), MatchScheduleContract.View {
+class MainActivity : BaseActivity(), MainContract.View {
 
     @Inject
-    lateinit var presenter: MatchScheduleContract.UserActionListener<MatchScheduleContract.View>
+    lateinit var presenter: MainContract.UserActionListener<MainContract.View>
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
         activityComponent.inject(this)
@@ -30,9 +29,8 @@ class MatchScheduleActivity : BaseActivity(), MatchScheduleContract.View {
     fun bottomNavListener() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.action_prev -> viewPager.setCurrentItem(0)
-                R.id.action_next -> viewPager.setCurrentItem(1)
-                R.id.action_favorite -> viewPager.setCurrentItem(2)
+                R.id.action_match -> viewPager.setCurrentItem(0)
+                R.id.action_favorite -> viewPager.setCurrentItem(1)
             }
 
             false
@@ -56,8 +54,7 @@ class MatchScheduleActivity : BaseActivity(), MatchScheduleContract.View {
 
     fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(PreviousMatchFragment(), "Prev. Match")
-        adapter.addFragment(NextMatchFragment(), "Next Match")
+        adapter.addFragment(MatchFragment(), "Match")
         adapter.addFragment(FavoriteMatchFragment(), "Favorite Match")
         viewPager.adapter = adapter
     }

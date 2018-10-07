@@ -5,7 +5,8 @@ import com.littlefireflies.footballclub.di.module.ActivityModule
 import com.littlefireflies.footballclub.di.scope.PerActivity
 import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchFragment
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
-import com.littlefireflies.footballclub.presentation.ui.matchschedule.MatchScheduleActivity
+import com.littlefireflies.footballclub.presentation.ui.main.MainActivity
+import com.littlefireflies.footballclub.presentation.ui.match.MatchFragment
 import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchFragment
 import com.littlefireflies.footballclub.presentation.ui.playerdetail.PlayerDetailActivity
 import com.littlefireflies.footballclub.presentation.ui.previousmatch.PreviousMatchFragment
@@ -22,7 +23,7 @@ import dagger.Component
 interface ActivityComponent {
     val networkService: NetworkService
 
-    fun inject(matchScheduleActivity: MatchScheduleActivity)
+    fun inject(mainActivity: MainActivity)
     fun inject(matchScheduleActivity: NextMatchFragment)
     fun inject(previousMatchFragment: PreviousMatchFragment)
     fun inject(matchDetailActivity: MatchDetailActivity)
@@ -30,5 +31,6 @@ interface ActivityComponent {
     fun inject(teamDetailActivity: TeamDetailActivity)
     fun inject(teamPlayersFragment: TeamPlayersFragment)
     fun inject(playerDetailActivity: PlayerDetailActivity)
+    fun inject(matchFragment: MatchFragment)
 
 }

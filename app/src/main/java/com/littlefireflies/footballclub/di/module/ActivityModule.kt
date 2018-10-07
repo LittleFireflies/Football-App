@@ -26,8 +26,8 @@ import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMa
 import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchPresenter
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailContract
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailPresenter
-import com.littlefireflies.footballclub.presentation.ui.matchschedule.MatchScheduleContract
-import com.littlefireflies.footballclub.presentation.ui.matchschedule.MatchSchedulePresenter
+import com.littlefireflies.footballclub.presentation.ui.main.MainContract
+import com.littlefireflies.footballclub.presentation.ui.main.MainPresenter
 import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchContract
 import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchPresenter
 import com.littlefireflies.footballclub.presentation.ui.previousmatch.PreviousMatchContract
@@ -118,7 +118,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @PerActivity
     @Provides
-    fun provideMatchSchedulePresenter(presenter: MatchSchedulePresenter<MatchScheduleContract.View>): MatchScheduleContract.UserActionListener<MatchScheduleContract.View> = presenter
+    fun provideMatchSchedulePresenter(presenter: MainPresenter<MainContract.View>): MainContract.UserActionListener<MainContract.View> = presenter
 
     @PerActivity
     @Provides

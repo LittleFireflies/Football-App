@@ -1,4 +1,4 @@
-package com.littlefireflies.footballclub.presentation.ui.matchschedule
+package com.littlefireflies.footballclub.presentation.ui.main
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.Espresso.pressBack
@@ -18,9 +18,9 @@ import org.junit.runner.RunWith
  * Created by widyarso.purnomo on 12/09/2018.
  */
 @RunWith(AndroidJUnit4::class)
-class MatchScheduleActivityTest {
+class MainActivityTest {
     @Rule
-    @JvmField var activityRule = ActivityTestRule(MatchScheduleActivity::class.java)
+    @JvmField var activityRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
     fun testAppBehaviour() {
