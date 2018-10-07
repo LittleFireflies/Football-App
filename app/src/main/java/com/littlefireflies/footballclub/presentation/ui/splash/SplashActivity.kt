@@ -38,6 +38,7 @@ class SplashActivity : BaseActivity(), SplashContract.View {
 
     override fun openActivity() {
         startActivity<MainActivity>()
+        finish()
     }
 
     override fun displayErrorMessage(message: String) {
