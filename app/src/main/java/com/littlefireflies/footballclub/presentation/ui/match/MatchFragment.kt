@@ -25,7 +25,7 @@ class MatchFragment : BaseFragment() {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = ViewPagerAdapter(fragmentManager)
+        val adapter = ViewPagerAdapter(childFragmentManager)
         adapter.addFragment(PreviousMatchFragment(), "Last")
         adapter.addFragment(NextMatchFragment(), "Next")
         viewPager.adapter = adapter

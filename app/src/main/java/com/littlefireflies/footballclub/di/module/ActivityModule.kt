@@ -26,6 +26,8 @@ import com.littlefireflies.footballclub.domain.playerlist.PlayerListInteractor
 import com.littlefireflies.footballclub.domain.playerlist.PlayerListUseCase
 import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailInteractor
 import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailUseCase
+import com.littlefireflies.footballclub.domain.teamlist.TeamListInteractor
+import com.littlefireflies.footballclub.domain.teamlist.TeamListUseCase
 import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchContract
 import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchPresenter
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailContract
@@ -91,6 +93,10 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     fun provideRemoveFavoriteMatchUseCase(removeFavoriteMatchInteractor: RemoveFavoriteMatchInteractor): RemoveFavoriteMatchUseCase = removeFavoriteMatchInteractor
+
+    @Provides
+    @PerActivity
+    fun provideTeamListUseCase(teamListInteractor: TeamListInteractor): TeamListUseCase = teamListInteractor
 
     @Provides
     @PerActivity

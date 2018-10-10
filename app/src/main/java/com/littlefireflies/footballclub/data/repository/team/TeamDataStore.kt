@@ -10,6 +10,10 @@ import javax.inject.Inject
  */
 class TeamDataStore @Inject
 constructor(val networkService: NetworkService): TeamRepository{
+    override fun getTeamList(leagueId: String): Single<TeamResponse> {
+        return networkService.getTeamList(leagueId)
+    }
+
     override fun getTeamDetail(teamId: String?): Single<TeamResponse> {
         return networkService.getTeamDetail(teamId)
     }

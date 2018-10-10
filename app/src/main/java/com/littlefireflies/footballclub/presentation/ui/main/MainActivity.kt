@@ -6,6 +6,7 @@ import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
 import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchFragment
 import com.littlefireflies.footballclub.presentation.ui.match.MatchFragment
+import com.littlefireflies.footballclub.presentation.ui.teamlist.TeamListFragment
 import com.littlefireflies.footballclub.utils.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_match_schedule.*
 import javax.inject.Inject
@@ -30,7 +31,8 @@ class MainActivity : BaseActivity(), MainContract.View {
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.action_match -> viewPager.setCurrentItem(0)
-                R.id.action_favorite -> viewPager.setCurrentItem(1)
+                R.id.action_team -> viewPager.setCurrentItem(1)
+                R.id.action_favorite -> viewPager.setCurrentItem(2)
             }
 
             false
@@ -55,7 +57,8 @@ class MainActivity : BaseActivity(), MainContract.View {
     fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(MatchFragment(), "Match")
-        adapter.addFragment(FavoriteMatchFragment(), "Favorite Match")
+        adapter.addFragment(TeamListFragment(), "Team")
+        adapter.addFragment(FavoriteMatchFragment(), "Favorite")
         viewPager.adapter = adapter
     }
 

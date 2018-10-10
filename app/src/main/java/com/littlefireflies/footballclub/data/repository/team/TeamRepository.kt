@@ -8,5 +8,6 @@ import io.reactivex.Single
  */
 
 interface TeamRepository {
+    fun getTeamList(leagueId: String): Single<TeamResponse>
     fun getTeamDetail(teamId: String?): Single<TeamResponse>
 }

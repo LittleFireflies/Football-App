@@ -28,7 +28,7 @@ constructor(val networkService: NetworkService, val context: Context) : LeagueRe
     }
 
     override fun getNetworkLeagueList(): Single<LeagueResponse> {
-        return networkService.getLeagues()
+        return networkService.getLeagueList()
     }
 
     override fun getLocalLeagueList(): List<League> {

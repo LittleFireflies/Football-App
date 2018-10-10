@@ -22,6 +22,9 @@ interface NetworkService {
     @GET("v1/json/1/lookupevent.php")
     fun getMatchDetail(@Query("id") matchId: String): Single<ScheduleResponse>
 
+    @GET("v1/json/1/lookup_all_teams.php")
+    fun getTeamList(@Query("id") leagueId: String): Single<TeamResponse>
+
     @GET("v1/json/1/lookupteam.php")
     fun getTeamDetail(@Query("id") teamId: String?): Single<TeamResponse>
 
@@ -32,5 +35,5 @@ interface NetworkService {
     fun getPlayerDetail(@Query("id") playerId: String): Single<PlayerResponse>
 
     @GET("v1/json/1/all_leagues.php")
-    fun getLeagues(): Single<LeagueResponse>
+    fun getLeagueList(): Single<LeagueResponse>
 }

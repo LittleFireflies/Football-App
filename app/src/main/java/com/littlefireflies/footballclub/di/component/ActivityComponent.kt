@@ -13,6 +13,7 @@ import com.littlefireflies.footballclub.presentation.ui.previousmatch.PreviousMa
 import com.littlefireflies.footballclub.presentation.ui.splash.SplashActivity
 import com.littlefireflies.footballclub.presentation.ui.teamdetail.TeamDetailActivity
 import com.littlefireflies.footballclub.presentation.ui.teamdetail.players.TeamPlayersFragment
+import com.littlefireflies.footballclub.presentation.ui.teamlist.TeamListFragment
 import dagger.Component
 
 
@@ -34,5 +35,6 @@ interface ActivityComponent {
     fun inject(playerDetailActivity: PlayerDetailActivity)
     fun inject(matchFragment: MatchFragment)
     fun inject(splashActivity: SplashActivity)
+    fun inject(teamListFragment: TeamListFragment)
 
 }

@@ -9,6 +9,7 @@ import com.littlefireflies.footballclub.data.model.Team
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
 import com.littlefireflies.footballclub.presentation.ui.teamdetail.overview.TeamOverviewFragment
 import com.littlefireflies.footballclub.presentation.ui.teamdetail.players.TeamPlayersFragment
+import com.littlefireflies.footballclub.utils.ViewPagerAdapter
 import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.activity_team_detail.*
