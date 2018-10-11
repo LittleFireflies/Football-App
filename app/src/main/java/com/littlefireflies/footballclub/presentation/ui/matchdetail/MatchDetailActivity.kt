@@ -55,7 +55,7 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
@@ -178,29 +178,29 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         snackbar(pbMatchDetail, "Removed from favorite")
     }
 
-    class MatchDetailAdapter(val items: List<String>?, val type: String): RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {
+    class MatchDetailAdapter(val items: List<String>?, val type: String) : RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return when(viewType) {
+            return when (viewType) {
                 1 -> ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_home_list, parent, false))
                 else -> ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_away_list, parent, false))
             }
         }
 
-        override fun getItemCount(): Int = if (items!=null) items.size else 0
+        override fun getItemCount(): Int = if (items != null) items.size else 0
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bindItem(items?.get(position))
         }
 
         override fun getItemViewType(position: Int): Int {
-            return when(type) {
+            return when (type) {
                 "home" -> 1
                 else -> 0
             }
         }
 
-        class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             fun bindItem(item: String?) {
                 itemView.tvItem.text = item?.trim()
             }

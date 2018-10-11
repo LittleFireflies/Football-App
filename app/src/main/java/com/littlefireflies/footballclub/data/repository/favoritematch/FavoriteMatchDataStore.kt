@@ -20,7 +20,7 @@ constructor(val context: Context): FavoriteMatchRepository{
         var favoriteList: List<FavoriteMatch> = mutableListOf()
 
         context.database.use {
-            val result = select(FavoriteMatch.TABLE_FAVORITE)
+            val result = select(FavoriteMatch.TABLE_MATCH_FAVORITE)
             favoriteList = result.parseList(classParser())
         }
 
@@ -31,7 +31,7 @@ constructor(val context: Context): FavoriteMatchRepository{
         var isFavorite = false
 
         context.database.use {
-            val result = select(FavoriteMatch.TABLE_FAVORITE).whereArgs("(MATCH_ID = {id})", "id" to matchId)
+            val result = select(FavoriteMatch.TABLE_MATCH_FAVORITE).whereArgs("(MATCH_ID = {id})", "id" to matchId)
             val favorite = result.parseList(classParser<FavoriteMatch>())
             if (!favorite.isEmpty()) isFavorite = true
         }
@@ -41,7 +41,7 @@ constructor(val context: Context): FavoriteMatchRepository{
 
     override fun addToFavorite(match: Match) {
         context.database.use {
-            insert(FavoriteMatch.TABLE_FAVORITE,
+            insert(FavoriteMatch.TABLE_MATCH_FAVORITE,
                     FavoriteMatch.MATCH_ID to match.matchId,
                     FavoriteMatch.MATCH_NAME to match.matchName,
                     FavoriteMatch.MATCH_LEAGUE to match.league,
@@ -56,7 +56,7 @@ constructor(val context: Context): FavoriteMatchRepository{
 
     override fun removeFromFavorite(matchId: String) {
         context.database.use {
-            delete(FavoriteMatch.TABLE_FAVORITE, "(MATCH_ID = {id})", "id" to matchId)
+            delete(FavoriteMatch.TABLE_MATCH_FAVORITE, "(MATCH_ID = {id})", "id" to matchId)
         }
     }
 }

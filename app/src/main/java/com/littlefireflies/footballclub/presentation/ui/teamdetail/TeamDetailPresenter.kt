@@ -1,5 +1,9 @@
 package com.littlefireflies.footballclub.presentation.ui.teamdetail
 
+import com.littlefireflies.footballclub.data.model.Team
+import com.littlefireflies.footballclub.domain.favoriteteam.AddFavoriteTeamUseCase
+import com.littlefireflies.footballclub.domain.favoriteteam.GetFavoriteTeamUseCase
+import com.littlefireflies.footballclub.domain.favoriteteam.RemoveFavoriteTeamUseCase
 import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailUseCase
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
@@ -14,6 +18,12 @@ constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvide
 
     @Inject
     lateinit var teamDetailUseCase: TeamDetailUseCase
+    @Inject
+    lateinit var getFavoriteTeamUseCase: GetFavoriteTeamUseCase
+    @Inject
+    lateinit var addFavoriteTeamUseCase: AddFavoriteTeamUseCase
+    @Inject
+    lateinit var removeFavoriteTeamUseCase: RemoveFavoriteTeamUseCase
 
     override fun getTeamDetail(teamId: String) {
         view?.showLoading()
@@ -21,13 +31,32 @@ constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvide
                 teamDetailUseCase.getTeamDetail(teamId)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .subscribe({
+                        .doOnSuccess {
                             view?.displayTeam(it)
+                        }
+                        .doOnError {
+                            view?.displayErrorMessage("Unable to load the data")
+                        }
+                        .flatMap {
+                            getFavoriteTeamUseCase.getFavoriteTeamStatus(it.teamId.toString())
+                        }
+                        .subscribe({
+                            view?.displayFavoriteStatus(it)
                             view?.hideLoading()
                         }, {
                             view?.hideLoading()
                             view?.displayErrorMessage("Unable to load the data")
                         })
         )
+    }
+
+    override fun addToFavorite(team: Team) {
+        addFavoriteTeamUseCase.addToFavorite(team)
+        view?.onAddToFavorite()
+    }
+
+    override fun removeFromFavorite(team: Team) {
+        removeFavoriteTeamUseCase.removeFavoriteTeam(team.teamId.toString())
+        view?.onRemoveFromFavorite()
     }
 }

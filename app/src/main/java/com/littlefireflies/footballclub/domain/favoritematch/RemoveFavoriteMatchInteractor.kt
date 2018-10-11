@@ -7,7 +7,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 28/09/2018.
  */
 class RemoveFavoriteMatchInteractor @Inject
-constructor(val favoriteMatchRepository: FavoriteMatchRepository): RemoveFavoriteMatchUseCase{
+constructor(val favoriteMatchRepository: FavoriteMatchRepository): RemoveFavoriteMatchUseCase {
     override fun removeFromFavorite(matchId: String) {
         return favoriteMatchRepository.removeFromFavorite(matchId)
     }

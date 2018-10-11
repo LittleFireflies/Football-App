@@ -3,7 +3,9 @@ package com.littlefireflies.footballclub.data.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.littlefireflies.footballclub.data.model.FavoriteMatch
+import com.littlefireflies.footballclub.data.model.FavoriteTeam
 import com.littlefireflies.footballclub.data.model.League
+import com.littlefireflies.footballclub.data.model.Team
 import org.jetbrains.anko.db.*
 
 /**
@@ -24,7 +26,7 @@ class MyDatabaseOpenHelper(context: Context) : ManagedSQLiteOpenHelper(context, 
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.createTable(FavoriteMatch.TABLE_FAVORITE, true,
+        db.createTable(FavoriteMatch.TABLE_MATCH_FAVORITE, true,
                 FavoriteMatch.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                 FavoriteMatch.MATCH_ID to TEXT + UNIQUE,
                 FavoriteMatch.MATCH_NAME to TEXT,
@@ -40,10 +42,16 @@ class MyDatabaseOpenHelper(context: Context) : ManagedSQLiteOpenHelper(context, 
                 League.LEAGUE_ID to TEXT + PRIMARY_KEY,
                 League.LEAGUE_NAME to TEXT,
                 League.LEAGUE_SPORT to TEXT)
+
+        db.createTable(FavoriteTeam.TABLE_TEAM_FAVORITE, true,
+                FavoriteTeam.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                FavoriteTeam.TEAM_ID to TEXT + UNIQUE,
+                FavoriteTeam.TEAM_NAME to TEXT,
+                FavoriteTeam.TEAM_BADGE to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.dropTable(FavoriteMatch.TABLE_FAVORITE, true)
+        db.dropTable(FavoriteMatch.TABLE_MATCH_FAVORITE, true)
         db.dropTable(League.TABLE_LEAGUE, true)
     }
 }

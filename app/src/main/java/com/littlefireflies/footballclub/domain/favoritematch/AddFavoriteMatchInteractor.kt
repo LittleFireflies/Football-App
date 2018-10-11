@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 28/09/2018.
  */
 class AddFavoriteMatchInteractor @Inject
-constructor(val favoriteMatchRepository: FavoriteMatchRepository): AddFavoriteMatchUseCase{
+constructor(val favoriteMatchRepository: FavoriteMatchRepository): AddFavoriteMatchUseCase {
     override fun addToFavorite(match: Match) {
         return favoriteMatchRepository.addToFavorite(match)
     }

@@ -14,6 +14,7 @@ import com.littlefireflies.footballclub.data.repository.team.TeamDataStore
 import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.di.scope.PerActivity
 import com.littlefireflies.footballclub.domain.favoritematch.*
+import com.littlefireflies.footballclub.domain.favoriteteam.*
 import com.littlefireflies.footballclub.domain.leaguelist.LeagueListInteractor
 import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
 import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailInteractor
@@ -28,18 +29,6 @@ import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailInteractor
 import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailUseCase
 import com.littlefireflies.footballclub.domain.teamlist.TeamListInteractor
 import com.littlefireflies.footballclub.domain.teamlist.TeamListUseCase
-import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchContract
-import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchPresenter
-import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailContract
-import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailPresenter
-import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchContract
-import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchPresenter
-import com.littlefireflies.footballclub.presentation.ui.previousmatch.PreviousMatchContract
-import com.littlefireflies.footballclub.presentation.ui.previousmatch.PreviousMatchPresenter
-import com.littlefireflies.footballclub.presentation.ui.teamdetail.TeamDetailContract
-import com.littlefireflies.footballclub.presentation.ui.teamdetail.TeamDetailPresenter
-import com.littlefireflies.footballclub.presentation.ui.teamdetail.players.TeamPlayersContract
-import com.littlefireflies.footballclub.presentation.ui.teamdetail.players.TeamPlayersPresenter
 import com.littlefireflies.footballclub.utils.rx.AppSchedulerProvider
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import dagger.Module
@@ -111,6 +100,18 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     fun provideLeagueListUseCase(leagueListInteractor: LeagueListInteractor): LeagueListUseCase = leagueListInteractor
+
+    @Provides
+    @PerActivity
+    fun provideAddFavoriteTeamUseCase(addFavoriteTeamInteractor: AddFavoriteTeamInteractor): AddFavoriteTeamUseCase = addFavoriteTeamInteractor
+
+    @Provides
+    @PerActivity
+    fun provideGetFavoriteTeamUseCase(getFavoriteTeamInteractor: GetFavoriteTeamInteractor): GetFavoriteTeamUseCase = getFavoriteTeamInteractor
+
+    @Provides
+    @PerActivity
+    fun provideRemoveFavoriteTeamUseCase(removeFavoriteTeamInteractor: RemoveFavoriteTeamInteractor): RemoveFavoriteTeamUseCase = removeFavoriteTeamInteractor
 
     @Provides
     @PerActivity

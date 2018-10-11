@@ -1,7 +1,9 @@
 package com.littlefireflies.footballclub.presentation.ui.teamdetail
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
+import android.view.Menu
 import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.littlefireflies.footballclub.R
@@ -12,6 +14,7 @@ import com.littlefireflies.footballclub.presentation.ui.teamdetail.players.TeamP
 import com.littlefireflies.footballclub.utils.ViewPagerAdapter
 import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
+import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.activity_team_detail.*
 import org.jetbrains.anko.design.snackbar
 import javax.inject.Inject
@@ -21,7 +24,9 @@ class TeamDetailActivity : BaseActivity(), TeamDetailContract.View {
     @Inject
     lateinit var presenter: TeamDetailPresenter<TeamDetailContract.View>
 
-    var team: Team? = null
+    private var menuItem: Menu? = null
+    private var isFavorite: Boolean = false
+    private lateinit var team: Team
 
     companion object {
         const val EXTRA_TEAM = "teamId"
@@ -50,10 +55,28 @@ class TeamDetailActivity : BaseActivity(), TeamDetailContract.View {
         viewPager.adapter = adapter
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        menuItem = menu
+
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 finish()
+                true
+            }
+            R.id.add_to_favorite -> {
+                if (isFavorite)
+                    presenter.removeFromFavorite(team)
+                else
+                    presenter.addToFavorite(team)
+
+                isFavorite = !isFavorite
+                displayFavoriteStatus(isFavorite)
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -82,7 +105,7 @@ class TeamDetailActivity : BaseActivity(), TeamDetailContract.View {
     }
 
     override fun displayTeam(team: Team) {
-        setTitle("")
+        this.team = team
         tvTeamName.text = team.teamName
         tvFormedYear.text = team.teamFormedYear
         tvStadium.text = team.teamStadium
@@ -93,6 +116,22 @@ class TeamDetailActivity : BaseActivity(), TeamDetailContract.View {
 
     override fun displayErrorMessage(message: String) {
         snackbar(pbTeamDetail, message)
+    }
+
+    override fun displayFavoriteStatus(favorite: Boolean) {
+        isFavorite = favorite
+        if (isFavorite)
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_favorites)
+        else
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_favorites)
+    }
+
+    override fun onAddToFavorite() {
+        snackbar(pbTeamDetail, "Added to favorite")
+    }
+
+    override fun onRemoveFromFavorite() {
+        snackbar(pbTeamDetail, "Removed from favorite")
     }
 
     private var teamDataListener: DataListener? = null

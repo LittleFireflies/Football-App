@@ -61,12 +61,9 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
             }
-        }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.getLeagueList()
+            presenter.getLeagueList()
+        }
     }
 
     override fun onDestroyView() {

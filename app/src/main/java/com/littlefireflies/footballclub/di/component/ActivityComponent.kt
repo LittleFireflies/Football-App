@@ -4,6 +4,7 @@ import com.littlefireflies.footballclub.data.network.NetworkService
 import com.littlefireflies.footballclub.di.module.ActivityModule
 import com.littlefireflies.footballclub.di.scope.PerActivity
 import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchFragment
+import com.littlefireflies.footballclub.presentation.ui.favoriteteam.FavoriteTeamFragment
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.presentation.ui.main.MainActivity
 import com.littlefireflies.footballclub.presentation.ui.match.MatchFragment
@@ -36,5 +37,6 @@ interface ActivityComponent {
     fun inject(matchFragment: MatchFragment)
     fun inject(splashActivity: SplashActivity)
     fun inject(teamListFragment: TeamListFragment)
+    fun inject(favoriteTeamFragment: FavoriteTeamFragment)
 
 }
