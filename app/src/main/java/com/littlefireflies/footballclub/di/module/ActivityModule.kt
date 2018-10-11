@@ -32,8 +32,6 @@ import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMa
 import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchPresenter
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailContract
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailPresenter
-import com.littlefireflies.footballclub.presentation.ui.main.MainContract
-import com.littlefireflies.footballclub.presentation.ui.main.MainPresenter
 import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchContract
 import com.littlefireflies.footballclub.presentation.ui.nextmatch.NextMatchPresenter
 import com.littlefireflies.footballclub.presentation.ui.previousmatch.PreviousMatchContract
@@ -134,31 +132,4 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @PerActivity
     fun provideLeagueRepository(leagueDataStore: LeagueDataStore): LeagueRepository = leagueDataStore
 
-    @PerActivity
-    @Provides
-    fun provideMatchSchedulePresenter(presenter: MainPresenter<MainContract.View>): MainContract.UserActionListener<MainContract.View> = presenter
-
-    @PerActivity
-    @Provides
-    fun provideNextMatchPresenter(presenter: NextMatchPresenter<NextMatchContract.View>): NextMatchContract.UserActionListener<NextMatchContract.View> = presenter
-
-    @PerActivity
-    @Provides
-    fun providePreviousMatchPresenter(presenter: PreviousMatchPresenter<PreviousMatchContract.View>): PreviousMatchContract.UserActionListener<PreviousMatchContract.View> = presenter
-
-    @PerActivity
-    @Provides
-    fun provideMatchDetailPresenter(presenter: MatchDetailPresenter<MatchDetailContract.View>): MatchDetailContract.UserActionListener<MatchDetailContract.View> = presenter
-
-    @PerActivity
-    @Provides
-    fun provideFavoriteMatchPresenter(presenter: FavoriteMatchPresenter<FavoriteMatchContract.View>): FavoriteMatchContract.UserActionListener<FavoriteMatchContract.View> = presenter
-
-    @Provides
-    @PerActivity
-    fun provideTeamDetailPresenter(presenter: TeamDetailPresenter<TeamDetailContract.View>): TeamDetailContract.UserActionListener<TeamDetailContract.View> = presenter
-
-    @Provides
-    @PerActivity
-    fun provideTeamPlayersPresenter(presenter: TeamPlayersPresenter<TeamPlayersContract.View>): TeamPlayersContract.UserActionListener<TeamPlayersContract.View> = presenter
 }

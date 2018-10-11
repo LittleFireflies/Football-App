@@ -16,10 +16,6 @@ class MatchFragment : BaseFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_match
 
     override fun onLoadFragment(saveInstance: Bundle?) {
-        if (activityComponent != null) {
-            activityComponent?.inject(this)
-        }
-
         setupViewPager(viewPagerMatch)
         tabLayoutMatch.setupWithViewPager(viewPagerMatch)
     }

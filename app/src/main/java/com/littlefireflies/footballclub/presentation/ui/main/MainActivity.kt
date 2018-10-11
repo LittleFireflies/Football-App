@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.view.ViewPager
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
+import com.littlefireflies.footballclub.presentation.ui.favorite.FavoriteFragment
 import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchFragment
 import com.littlefireflies.footballclub.presentation.ui.match.MatchFragment
 import com.littlefireflies.footballclub.presentation.ui.teamlist.TeamListFragment
@@ -11,18 +12,13 @@ import com.littlefireflies.footballclub.utils.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_match_schedule.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainContract.View {
-
-    @Inject
-    lateinit var presenter: MainContract.UserActionListener<MainContract.View>
+class MainActivity : BaseActivity() {
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
         activityComponent.inject(this)
-        onAttachView()
 
         setupViewPager(viewPager)
         bottomNavListener()
-        viewPagerListener()
     }
 
     override fun getLayoutId(): Int = R.layout.activity_match_schedule
@@ -35,44 +31,16 @@ class MainActivity : BaseActivity(), MainContract.View {
                 R.id.action_favorite -> viewPager.setCurrentItem(2)
             }
 
-            false
+            true
         }
-    }
-
-    fun viewPagerListener() {
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                bottomNavigationView.menu.getItem(position).setChecked(true)
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-        })
     }
 
     fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(MatchFragment(), "Match")
         adapter.addFragment(TeamListFragment(), "Team")
-        adapter.addFragment(FavoriteMatchFragment(), "Favorite")
+        adapter.addFragment(FavoriteFragment(), "Favorite")
         viewPager.adapter = adapter
-    }
-
-    override fun onDestroy() {
-        onDetachView()
-        super.onDestroy()
-    }
-
-    override fun onAttachView() {
-        presenter.onAttach(this)
-    }
-
-    override fun onDetachView() {
-        presenter.onDetach()
     }
 
 }
