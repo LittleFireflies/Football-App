@@ -8,4 +8,5 @@ import io.reactivex.Single
  */
 interface TeamListUseCase {
     fun getTeamList(leagueId: String?): Single<List<Team>>
+    fun getTeamSearchResult(teamName: String): Single<List<Team>>
 }

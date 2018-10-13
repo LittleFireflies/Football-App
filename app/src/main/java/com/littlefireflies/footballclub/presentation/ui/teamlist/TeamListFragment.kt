@@ -2,13 +2,13 @@ package com.littlefireflies.footballclub.presentation.ui.teamlist
 
 
 import android.os.Bundle
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.SearchView
 import com.bumptech.glide.Glide
 
 import com.littlefireflies.footballclub.R
@@ -40,6 +40,7 @@ class TeamListFragment : BaseFragment(), TeamListContract.View {
         if (activityComponent != null) {
             activityComponent?.inject(this)
             onAttachView()
+            setHasOptionsMenu(true)
 
             spTeamList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -53,6 +54,30 @@ class TeamListFragment : BaseFragment(), TeamListContract.View {
             }
             presenter.getLeagueList()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_search, menu)
+
+        val searchView = MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as SearchView
+        searchView.queryHint = "Search team..."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (query.isNullOrEmpty()) {
+                    presenter.getTeamList()
+                    spTeamList.show()
+                } else {
+                    presenter.searchTeam(query.toString())
+                    spTeamList.hide()
+                }
+                return true
+            }
+        })
     }
 
     override fun onDestroyView() {

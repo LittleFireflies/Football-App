@@ -21,5 +21,6 @@ interface TeamListContract {
     interface UserActionListener<V: View> : IBasePresenter<V> {
         fun getLeagueList()
         fun getTeamList()
+        fun searchTeam(teamName: String)
     }
 }

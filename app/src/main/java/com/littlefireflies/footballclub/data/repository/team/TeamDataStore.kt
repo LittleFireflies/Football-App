@@ -26,6 +26,10 @@ constructor(val networkService: NetworkService, val context: Context): TeamRepos
         return networkService.getTeamDetail(teamId)
     }
 
+    override fun getTeamSearchResult(teamName: String): Single<TeamResponse> {
+        return networkService.searchTeamName(teamName)
+    }
+
     override fun getFavoriteTeamList(): Single<List<FavoriteTeam>> {
         var teamList: List<FavoriteTeam> = mutableListOf()
 

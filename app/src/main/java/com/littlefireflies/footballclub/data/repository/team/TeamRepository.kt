@@ -12,6 +12,7 @@ import io.reactivex.Single
 interface TeamRepository {
     fun getTeamList(leagueId: String): Single<TeamResponse>
     fun getTeamDetail(teamId: String?): Single<TeamResponse>
+    fun getTeamSearchResult(teamName: String): Single<TeamResponse>
     fun getFavoriteTeamList(): Single<List<FavoriteTeam>>
     fun isFavorite(teamId: String): Single<Boolean>
     fun addtoFavorite(team: Team)

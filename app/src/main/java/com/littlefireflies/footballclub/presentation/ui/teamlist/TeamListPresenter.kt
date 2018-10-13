@@ -46,4 +46,20 @@ constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvide
                         })
         )
     }
+
+    override fun searchTeam(teamName: String) {
+        view?.showLoading()
+        disposable.add(
+                teamListUseCase.getTeamSearchResult(teamName)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribe({
+                            view?.displayTeamList(it)
+                            view?.hideLoading()
+                        }, {
+                            view?.hideLoading()
+                            view?.displayErrorMessage("Unable to load search results")
+                        })
+        )
+    }
 }

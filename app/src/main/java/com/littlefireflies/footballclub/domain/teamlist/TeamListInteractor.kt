@@ -20,4 +20,17 @@ constructor(val teamRepository: TeamRepository) : TeamListUseCase{
                     Single.just(entities)
                 }
     }
+
+    override fun getTeamSearchResult(teamName: String): Single<List<Team>> {
+        return teamRepository.getTeamSearchResult(teamName)
+                .flatMap {
+                    val entities = mutableListOf<Team>()
+                    if (it.teams != null) {
+                        it.teams.forEach { team ->
+                            entities.add(team)
+                        }
+                    }
+                    Single.just(entities)
+                }
+    }
 }
