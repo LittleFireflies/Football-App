@@ -32,4 +32,17 @@ constructor(val matchRepository: MatchRepository): MatchListUseCase{
                     Single.just(entities)
                 }
     }
+
+    override fun getMatchSearchResult(matchName: String): Single<List<Match>> {
+        return matchRepository.getMatchSearchResult(matchName)
+                .flatMap {
+                    val entities = mutableListOf<Match>()
+                    if (it.event != null) {
+                        it.event.forEach {match ->
+                            entities.add(match)
+                        }
+                    }
+                    Single.just(entities)
+                }
+    }
 }

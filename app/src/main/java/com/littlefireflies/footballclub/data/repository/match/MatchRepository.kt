@@ -10,4 +10,5 @@ interface MatchRepository {
     fun getNextMatch(leagueId: String): Single<ScheduleResponse>
     fun getPreviousMatch(leagueId: String): Single<ScheduleResponse>
     fun getMatchDetail(matchId: String): Single<ScheduleResponse>
+    fun getMatchSearchResult(matchName: String): Single<ScheduleResponse>
 }

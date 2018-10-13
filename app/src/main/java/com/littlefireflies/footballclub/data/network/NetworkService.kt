@@ -39,4 +39,7 @@ interface NetworkService {
 
     @GET("v1/json/1/searchteams.php")
     fun searchTeamName(@Query("t") teamName: String): Single<TeamResponse>
+
+    @GET("v1/json/1/searchevents.php")
+    fun searchMatch(@Query("e") matchName: String): Single<ScheduleResponse>
 }

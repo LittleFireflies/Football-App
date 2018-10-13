@@ -22,6 +22,7 @@ import javax.inject.Inject
 class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
 
     companion object {
+        const val EXTRA_TEAM_ID = "matchId"
         private const val HOME_STRING = "home"
         private const val AWAY_STRING = "away"
     }

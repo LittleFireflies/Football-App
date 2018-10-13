@@ -21,4 +21,8 @@ constructor(val networkService: NetworkService): MatchRepository {
     override fun getMatchDetail(matchId: String): Single<ScheduleResponse> {
         return networkService.getMatchDetail(matchId)
     }
+
+    override fun getMatchSearchResult(matchName: String): Single<ScheduleResponse> {
+        return networkService.searchMatch(matchName)
+    }
 }
