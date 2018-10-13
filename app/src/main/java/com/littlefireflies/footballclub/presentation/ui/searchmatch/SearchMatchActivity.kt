@@ -10,8 +10,10 @@ import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
+import com.littlefireflies.footballclub.utils.dateFormatter
 import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
+import com.littlefireflies.footballclub.utils.timeFormatter
 import kotlinx.android.synthetic.main.activity_search_match.*
 import kotlinx.android.synthetic.main.item_next_match.view.*
 import org.jetbrains.anko.startActivity
@@ -101,7 +103,11 @@ class SearchMatchActivity : BaseActivity(), SearchMatchContract.View {
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             fun bindItem(match: Match) {
-                itemView.tvDateTime.text = match.matchDate
+                val date = dateFormatter(match.matchDate)
+                val time = timeFormatter(match.matchTime)
+
+                itemView.ivNotification.hide()
+                itemView.tvDateTime.text = "$date $time"
                 itemView.tvHomeTeam.text = match.homeTeam
                 itemView.tvAwayTeam.text = match.awayTeam
                 itemView.setOnClickListener { listener(match) }

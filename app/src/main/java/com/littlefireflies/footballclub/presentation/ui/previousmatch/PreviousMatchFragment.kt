@@ -19,6 +19,7 @@ import com.littlefireflies.footballclub.presentation.base.BaseFragment
 import com.littlefireflies.footballclub.utils.dateFormatter
 import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
+import com.littlefireflies.footballclub.utils.timeFormatter
 import kotlinx.android.synthetic.main.fragment_previous_match.*
 import kotlinx.android.synthetic.main.item_prev_match.view.*
 import org.jetbrains.anko.design.snackbar
@@ -122,11 +123,11 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
 
             fun bindItem(match: Match) {
                 val date = dateFormatter(match.matchDate)
-                val time = match.matchTime?.split(":")
+                val time = timeFormatter(match.matchTime)
 
                 itemView.tvHomeTeam.text = match.homeTeam
                 itemView.tvAwayTeam.text = match.awayTeam
-                itemView.tvDateTime.text = "$date ${time?.get(0)}:${time?.get(1)}"
+                itemView.tvDateTime.text = "$date $time"
                 itemView.tvHomeScore.text = match.homeScore
                 itemView.tvAwayScore.text = match.awayScore
                 itemView.setOnClickListener { listener(match) }

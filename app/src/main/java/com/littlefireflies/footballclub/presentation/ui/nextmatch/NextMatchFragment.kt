@@ -1,7 +1,9 @@
 package com.littlefireflies.footballclub.presentation.ui.nextmatch
 
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,14 +17,13 @@ import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.presentation.base.BaseFragment
-import com.littlefireflies.footballclub.utils.dateFormatter
-import com.littlefireflies.footballclub.utils.hide
-import com.littlefireflies.footballclub.utils.show
+import com.littlefireflies.footballclub.utils.*
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import kotlinx.android.synthetic.main.item_next_match.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivity
+import java.util.*
 import javax.inject.Inject
 
 class NextMatchFragment : BaseFragment(), NextMatchContract.View {
@@ -96,9 +97,26 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
     override fun displayMatchList(events: List<Match>) {
         swipeRefreshLayout.isRefreshing = false
 
-        val adapter = NextMatchAdapter(events) {
+        val adapter = NextMatchAdapter(events, {
             startActivity<MatchDetailActivity>("matchId" to "${it.matchId}")
-        }
+        }, {
+            val intent = Intent(Intent.ACTION_INSERT)
+            intent.setType("vnd.android.cursor.item/event")
+
+            val date = dateFormatter(it.matchDate)
+            val time = timeFormatter(it.matchTime)
+            val startTime = getTimeMillis("$date $time")
+            val endTime = startTime + 1000 * 60 * 60 * 2
+
+            intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime)
+            intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
+            intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false)
+            intent.putExtra(CalendarContract.Events.TITLE, it.matchName)
+
+            startActivity(intent)
+        })
+
+
         rvNextMatch.adapter = adapter
         rvNextMatch.layoutManager = LinearLayoutManager(context)
         adapter.notifyDataSetChanged()
@@ -108,7 +126,7 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
         snackbar(rvNextMatch, message)
     }
 
-    internal class NextMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
+    internal class NextMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit, val notificationListener: (Match) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_next_match, parent, false))
 
@@ -122,11 +140,12 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
 
             fun bindItem(match: Match) {
                 val date = dateFormatter(match.matchDate)
-                val time = match.matchTime?.split(":")
+                val time = timeFormatter(match.matchTime)
 
                 itemView.tvHomeTeam.text = match.homeTeam
                 itemView.tvAwayTeam.text = match.awayTeam
-                itemView.tvDateTime.text = "$date ${time?.get(0)}:${time?.get(1)}"
+                itemView.tvDateTime.text = "$date $time"
+                itemView.ivNotification.setOnClickListener {notificationListener(match)}
                 itemView.setOnClickListener { listener(match) }
             }
         }
