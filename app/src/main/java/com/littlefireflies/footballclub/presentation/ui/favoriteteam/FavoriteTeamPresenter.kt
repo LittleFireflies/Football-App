@@ -10,10 +10,7 @@ import javax.inject.Inject
  * Created by Widyarso Joko Purnomo on 11/10/18
  */
 class FavoriteTeamPresenter<V : FavoriteTeamContract.View> @Inject
-constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), FavoriteTeamContract.UserActionListener<V> {
-
-    @Inject
-    lateinit var getFavoriteTeamUseCase: GetFavoriteTeamUseCase
+constructor(private val getFavoriteTeamUseCase: GetFavoriteTeamUseCase, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), FavoriteTeamContract.UserActionListener<V> {
 
     override fun getFavoriteTeamList() {
         view?.showLoading()

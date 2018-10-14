@@ -10,10 +10,7 @@ import javax.inject.Inject
  * Created by Widyarso Joko Purnomo on 13/10/18
  */
 class SearchMatchPresenter<V: SearchMatchContract.View> @Inject
-constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), SearchMatchContract.UserActionListener<V>{
-
-    @Inject
-    lateinit var matchListUseCase: MatchListUseCase
+constructor(private val matchListUseCase: MatchListUseCase, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), SearchMatchContract.UserActionListener<V>{
 
     override fun searchMatch(matchName: String) {
         view?.showLoading()

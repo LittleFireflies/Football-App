@@ -13,12 +13,7 @@ import javax.inject.Inject
  */
 
 class NextMatchPresenter<V : NextMatchContract.View> @Inject
-constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), NextMatchContract.UserActionListener<V> {
-
-    @Inject
-    lateinit var matchListUseCase: MatchListUseCase
-    @Inject
-    lateinit var leagueListUseCase: LeagueListUseCase
+constructor(private val matchListUseCase: MatchListUseCase, val leagueListUseCase: LeagueListUseCase, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), NextMatchContract.UserActionListener<V> {
 
     override fun getLeagueList() {
         disposable.add(
@@ -35,8 +30,9 @@ constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvide
 
     override fun getMatchList() {
         view?.showLoading()
+        val leagueId = view?.selectedLeague?.leagueId
         disposable.add(
-                matchListUseCase.getNextMatchList(view?.selectedLeague?.leagueId)
+                matchListUseCase.getNextMatchList(leagueId)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({

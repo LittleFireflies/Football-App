@@ -2,7 +2,7 @@ package com.littlefireflies.footballclub.data.network
 
 import com.littlefireflies.footballclub.data.model.LeagueResponse
 import com.littlefireflies.footballclub.data.model.PlayerResponse
-import com.littlefireflies.footballclub.data.model.ScheduleResponse
+import com.littlefireflies.footballclub.data.model.MatchResponse
 import com.littlefireflies.footballclub.data.model.TeamResponse
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -14,13 +14,13 @@ import retrofit2.http.Query
 interface NetworkService {
 
     @GET("v1/json/1/eventspastleague.php")
-    fun getPreviousMatches(@Query("id") leagueId: String): Single<ScheduleResponse>
+    fun getPreviousMatches(@Query("id") leagueId: String): Single<MatchResponse>
 
     @GET("v1/json/1/eventsnextleague.php")
-    fun getNextMatches(@Query("id") leagueId: String): Single<ScheduleResponse>
+    fun getNextMatches(@Query("id") leagueId: String): Single<MatchResponse>
 
     @GET("v1/json/1/lookupevent.php")
-    fun getMatchDetail(@Query("id") matchId: String): Single<ScheduleResponse>
+    fun getMatchDetail(@Query("id") matchId: String): Single<MatchResponse>
 
     @GET("v1/json/1/lookup_all_teams.php")
     fun getTeamList(@Query("id") leagueId: String): Single<TeamResponse>
@@ -41,5 +41,5 @@ interface NetworkService {
     fun searchTeamName(@Query("t") teamName: String): Single<TeamResponse>
 
     @GET("v1/json/1/searchevents.php")
-    fun searchMatch(@Query("e") matchName: String): Single<ScheduleResponse>
+    fun searchMatch(@Query("e") matchName: String): Single<MatchResponse>
 }

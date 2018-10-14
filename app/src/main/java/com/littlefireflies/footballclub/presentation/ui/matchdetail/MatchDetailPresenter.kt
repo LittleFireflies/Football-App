@@ -14,19 +14,16 @@ import javax.inject.Inject
 /**
  * Created by widyarso.purnomo on 04/09/2018.
  */
-class MatchDetailPresenter<V: MatchDetailContract.View> @Inject
-constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(disposable, schedulerProvider), MatchDetailContract.UserActionListener<V>{
-
-    @Inject
-    lateinit var matchDetailUseCase: MatchDetailUseCase
-    @Inject
-    lateinit var getFavoriteMatchUseCase: GetFavoriteMatchUseCase
-    @Inject
-    lateinit var addFavoriteMatchUseCase: AddFavoriteMatchUseCase
-    @Inject
-    lateinit var removeFavoriteMatchUseCase: RemoveFavoriteMatchUseCase
-    @Inject
-    lateinit var teamDetailUseCase: TeamDetailUseCase
+class MatchDetailPresenter<V : MatchDetailContract.View> @Inject
+constructor(
+        private val matchDetailUseCase: MatchDetailUseCase,
+        private val getFavoriteMatchUseCase: GetFavoriteMatchUseCase,
+        private val addFavoriteMatchUseCase: AddFavoriteMatchUseCase,
+        private val removeFavoriteMatchUseCase: RemoveFavoriteMatchUseCase,
+        private val teamDetailUseCase: TeamDetailUseCase,
+        disposable: CompositeDisposable,
+        schedulerProvider: SchedulerProvider)
+    : BasePresenter<V>(disposable, schedulerProvider), MatchDetailContract.UserActionListener<V> {
 
     override fun getMatchDetail(matchId: String) {
         view?.showLoading()

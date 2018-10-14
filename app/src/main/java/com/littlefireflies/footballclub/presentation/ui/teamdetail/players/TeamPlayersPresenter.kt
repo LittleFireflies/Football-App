@@ -10,10 +10,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 30/09/2018.
  */
 class TeamPlayersPresenter<V: TeamPlayersContract.View> @Inject
-constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(disposable, schedulerProvider), TeamPlayersContract.UserActionListener<V>{
-
-    @Inject
-    lateinit var playerListUseCase: PlayerListUseCase
+constructor(private val playerListUseCase: PlayerListUseCase, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(disposable, schedulerProvider), TeamPlayersContract.UserActionListener<V>{
 
     override fun getPlayerList(teamId: String?) {
         view?.showLoading()

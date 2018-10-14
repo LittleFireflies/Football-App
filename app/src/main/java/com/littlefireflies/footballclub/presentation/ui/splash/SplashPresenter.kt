@@ -10,10 +10,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 07/10/2018.
  */
 class SplashPresenter<V: SplashContract.View> @Inject
-constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(disposable, schedulerProvider), SplashContract.UserActionListener<V>{
-
-    @Inject
-    lateinit var leagueListUseCase: LeagueListUseCase
+constructor(private val leagueListUseCase: LeagueListUseCase, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(disposable, schedulerProvider), SplashContract.UserActionListener<V>{
 
     override fun getLeagueList() {
         disposable.add(

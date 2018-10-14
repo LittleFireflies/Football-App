@@ -12,12 +12,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 04/09/2018.
  */
 class PreviousMatchPresenter<V: PreviousMatchContract.View> @Inject
-constructor(disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(disposable, schedulerProvider), PreviousMatchContract.UserActionListener<V>{
-
-    @Inject
-    lateinit var matchListUseCase: MatchListUseCase
-    @Inject
-    lateinit var leagueListUseCase: LeagueListUseCase
+constructor(private val matchListUseCase: MatchListUseCase, val leagueListUseCase: LeagueListUseCase, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider): BasePresenter<V>(disposable, schedulerProvider), PreviousMatchContract.UserActionListener<V>{
 
     override fun getLeagueList() {
         disposable.add(

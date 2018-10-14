@@ -1,6 +1,8 @@
 package com.littlefireflies.footballclub.presentation.ui.nextmatch
 
+import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Match
+import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
 import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
 import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
@@ -24,7 +26,11 @@ class NextMatchPresenterTest {
     @Mock
     private lateinit var useCase: MatchListUseCase
     @Mock
+    private lateinit var leagueUseCase: LeagueListUseCase
+    @Mock
     private lateinit var view: NextMatchContract.View
+
+    lateinit var leagueMock: League
 
     private lateinit var testScheduler: TestScheduler
     private lateinit var presenter: NextMatchPresenter<NextMatchContract.View>
@@ -37,13 +43,17 @@ class NextMatchPresenterTest {
         testScheduler = TestScheduler()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        presenter = NextMatchPresenter(disposable, testSchedulerProvider)
+        presenter = NextMatchPresenter(useCase, leagueUseCase, disposable, testSchedulerProvider)
         presenter.onAttach(view)
+
+        leagueMock = League(leagueId = Constants.LEAGUE_ID)
     }
 
     @Test
     fun shouldDisplayMatchListWhenGetDataSuccess() {
         val response: MutableList<Match> = mutableListOf()
+
+        `when`(view.selectedLeague).thenReturn(leagueMock)
 
         `when`(useCase.getNextMatchList(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
 
@@ -57,6 +67,8 @@ class NextMatchPresenterTest {
 
     @Test
     fun shouldDisplayErrorWhenGetDataFailed() {
+        `when`(view.selectedLeague).thenReturn(leagueMock)
+
         `when`(useCase.getNextMatchList(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
 
         presenter.getMatchList()
