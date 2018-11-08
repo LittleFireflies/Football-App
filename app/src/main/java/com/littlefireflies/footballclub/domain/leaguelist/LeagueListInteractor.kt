@@ -1,7 +1,6 @@
 package com.littlefireflies.footballclub.domain.leaguelist
 
 import com.littlefireflies.footballclub.data.model.League
-import com.littlefireflies.footballclub.data.model.LeagueResponse
 import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
 import io.reactivex.Single
 import javax.inject.Inject
@@ -12,7 +11,7 @@ import javax.inject.Inject
 class LeagueListInteractor @Inject
 constructor(val leagueRepository: LeagueRepository) : LeagueListUseCase{
     override fun getSoccerLeagueList(): Single<List<League>> {
-        return if (leagueRepository.getLocalLeagueList().size <= 0) {
+        return if (leagueRepository.getLocalLeagueList().isEmpty()) {
             leagueRepository.getNetworkLeagueList()
                     .flatMap {
                         val entities = it.leagues.filter {league ->

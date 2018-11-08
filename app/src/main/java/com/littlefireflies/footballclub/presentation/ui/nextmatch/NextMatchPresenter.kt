@@ -3,7 +3,6 @@ package com.littlefireflies.footballclub.presentation.ui.nextmatch
 import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
 import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
-import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject

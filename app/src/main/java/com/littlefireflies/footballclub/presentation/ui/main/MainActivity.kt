@@ -5,12 +5,10 @@ import android.support.v4.view.ViewPager
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
 import com.littlefireflies.footballclub.presentation.ui.favorite.FavoriteFragment
-import com.littlefireflies.footballclub.presentation.ui.favoritematch.FavoriteMatchFragment
 import com.littlefireflies.footballclub.presentation.ui.match.MatchFragment
 import com.littlefireflies.footballclub.presentation.ui.teamlist.TeamListFragment
 import com.littlefireflies.footballclub.utils.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_match_schedule.*
-import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 

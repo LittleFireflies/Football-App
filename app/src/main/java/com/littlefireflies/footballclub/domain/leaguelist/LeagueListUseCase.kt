@@ -1,7 +1,6 @@
 package com.littlefireflies.footballclub.domain.leaguelist
 
 import com.littlefireflies.footballclub.data.model.League
-import com.littlefireflies.footballclub.data.model.LeagueResponse
 import io.reactivex.Single
 
 /**
@@ -9,6 +8,5 @@ import io.reactivex.Single
  */
 interface LeagueListUseCase {
     fun getSoccerLeagueList(): Single<List<League>>
-//    fun getLeagueListFromApi(): Single<LeagueResponse>
     fun saveSoccerLeagueList(leagues: List<League>)
 }

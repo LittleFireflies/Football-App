@@ -11,7 +11,7 @@ import javax.inject.Singleton
  * Created by widyarso.purnomo on 03/09/2018.
  */
 @Singleton
-@Component(modules = arrayOf(ApplicationModule::class, NetworkModule::class))
+@Component(modules = [ApplicationModule::class, NetworkModule::class])
 interface ApplicationComponent {
     fun inject(app: App)
     val networkService: NetworkService

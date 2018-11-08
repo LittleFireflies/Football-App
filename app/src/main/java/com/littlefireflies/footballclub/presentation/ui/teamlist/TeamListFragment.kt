@@ -10,7 +10,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SearchView
 import com.bumptech.glide.Glide
-
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Team
@@ -19,7 +18,6 @@ import com.littlefireflies.footballclub.presentation.ui.teamdetail.TeamDetailAct
 import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.fragment_team_list.*
-import kotlinx.android.synthetic.main.item_team_list.*
 import kotlinx.android.synthetic.main.item_team_list.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity

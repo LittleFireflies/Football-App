@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase
 import com.littlefireflies.footballclub.data.model.FavoriteMatch
 import com.littlefireflies.footballclub.data.model.FavoriteTeam
 import com.littlefireflies.footballclub.data.model.League
-import com.littlefireflies.footballclub.data.model.Team
 import org.jetbrains.anko.db.*
 
 /**

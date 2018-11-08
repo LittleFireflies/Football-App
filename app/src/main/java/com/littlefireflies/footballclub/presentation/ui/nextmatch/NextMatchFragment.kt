@@ -15,15 +15,14 @@ import android.widget.ArrayAdapter
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Match
-import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.presentation.base.BaseFragment
+import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.utils.*
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import kotlinx.android.synthetic.main.item_next_match.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivity
-import java.util.*
 import javax.inject.Inject
 
 class NextMatchFragment : BaseFragment(), NextMatchContract.View {

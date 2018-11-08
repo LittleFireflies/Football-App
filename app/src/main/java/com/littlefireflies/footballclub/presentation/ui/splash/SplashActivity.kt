@@ -1,8 +1,6 @@
 package com.littlefireflies.footballclub.presentation.ui.splash
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
 import com.littlefireflies.footballclub.presentation.ui.main.MainActivity

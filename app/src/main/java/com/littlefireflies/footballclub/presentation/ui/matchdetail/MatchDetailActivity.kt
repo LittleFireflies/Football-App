@@ -186,7 +186,7 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
             }
         }
 
-        override fun getItemCount(): Int = if (items != null) items.size else 0
+        override fun getItemCount(): Int = items?.size ?: 0
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bindItem(items?.get(position))

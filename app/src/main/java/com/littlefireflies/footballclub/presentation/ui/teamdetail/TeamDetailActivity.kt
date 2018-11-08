@@ -14,7 +14,6 @@ import com.littlefireflies.footballclub.presentation.ui.teamdetail.players.TeamP
 import com.littlefireflies.footballclub.utils.ViewPagerAdapter
 import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
-import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.activity_team_detail.*
 import org.jetbrains.anko.design.snackbar
 import javax.inject.Inject

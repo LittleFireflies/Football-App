@@ -1,8 +1,6 @@
 package com.littlefireflies.footballclub.data.model
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by widyarso.purnomo on 03/09/2018.
