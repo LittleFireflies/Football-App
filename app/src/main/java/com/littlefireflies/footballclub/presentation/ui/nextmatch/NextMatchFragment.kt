@@ -101,7 +101,7 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
             startActivity<MatchDetailActivity>("matchId" to "${it.matchId}")
         }, {
             val intent = Intent(Intent.ACTION_INSERT)
-            intent.setType("vnd.android.cursor.item/event")
+            intent.type = "vnd.android.cursor.item/event"
 
             val date = dateFormatter(it.matchDate)
             val time = timeFormatter(it.matchTime)
@@ -144,7 +144,7 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
 
                 itemView.tvHomeTeam.text = match.homeTeam
                 itemView.tvAwayTeam.text = match.awayTeam
-                itemView.tvDateTime.text = "$date $time"
+                itemView.tvDateTime.text = toGmtFormat("$date $time")
                 itemView.ivNotification.setOnClickListener {notificationListener(match)}
                 itemView.setOnClickListener { listener(match) }
             }

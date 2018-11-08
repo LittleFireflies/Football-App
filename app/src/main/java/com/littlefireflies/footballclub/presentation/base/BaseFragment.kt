@@ -19,8 +19,7 @@ abstract class BaseFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is BaseActivity) {
-            val activity = context
-            this.activity = activity
+            this.activity = context
         }
     }
 

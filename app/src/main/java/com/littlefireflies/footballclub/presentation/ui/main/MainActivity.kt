@@ -26,9 +26,9 @@ class MainActivity : BaseActivity() {
     fun bottomNavListener() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.action_match -> viewPager.setCurrentItem(0)
-                R.id.action_team -> viewPager.setCurrentItem(1)
-                R.id.action_favorite -> viewPager.setCurrentItem(2)
+                R.id.action_match -> viewPager.currentItem = 0
+                R.id.action_team -> viewPager.currentItem = 1
+                R.id.action_favorite -> viewPager.currentItem = 2
             }
 
             true

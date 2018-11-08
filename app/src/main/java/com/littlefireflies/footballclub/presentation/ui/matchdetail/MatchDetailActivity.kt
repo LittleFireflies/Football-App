@@ -10,9 +10,7 @@ import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
 import com.littlefireflies.footballclub.presentation.ui.teamdetail.TeamDetailActivity
-import com.littlefireflies.footballclub.utils.dateFormatter
-import com.littlefireflies.footballclub.utils.hide
-import com.littlefireflies.footballclub.utils.show
+import com.littlefireflies.footballclub.utils.*
 import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.item_home_list.view.*
 import org.jetbrains.anko.design.snackbar
@@ -98,12 +96,12 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         this.match = match
 
         val date = dateFormatter(match.matchDate)
-        val time = match.matchTime?.split(":")
+        val time = timeFormatter(match.matchTime)
 
         presenter.getHomeTeamImage(match.homeTeamId)
         presenter.getAwayTeamImage(match.awayTeamId)
 
-        tvDateTime.text = "$date ${time?.get(0)}:${time?.get(1)}"
+        tvDateTime.text = toGmtFormat("$date $time")
         tvHomeTeam.text = match.homeTeam
         tvAwayTeam.text = match.awayTeam
         tvHomeScore.text = match.homeScore

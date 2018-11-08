@@ -16,10 +16,7 @@ import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.presentation.base.BaseFragment
-import com.littlefireflies.footballclub.utils.dateFormatter
-import com.littlefireflies.footballclub.utils.hide
-import com.littlefireflies.footballclub.utils.show
-import com.littlefireflies.footballclub.utils.timeFormatter
+import com.littlefireflies.footballclub.utils.*
 import kotlinx.android.synthetic.main.fragment_previous_match.*
 import kotlinx.android.synthetic.main.item_prev_match.view.*
 import org.jetbrains.anko.design.snackbar
@@ -127,7 +124,7 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
 
                 itemView.tvHomeTeam.text = match.homeTeam
                 itemView.tvAwayTeam.text = match.awayTeam
-                itemView.tvDateTime.text = "$date $time"
+                itemView.tvDateTime.text = toGmtFormat("$date $time")
                 itemView.tvHomeScore.text = match.homeScore
                 itemView.tvAwayScore.text = match.awayScore
                 itemView.setOnClickListener { listener(match) }

@@ -23,7 +23,7 @@ import dagger.Component
  * Created by widyarso.purnomo on 03/09/2018.
  */
 @PerActivity
-@Component(dependencies = arrayOf(ApplicationComponent::class), modules = arrayOf(ActivityModule::class))
+@Component(dependencies = [ApplicationComponent::class], modules = [ActivityModule::class])
 interface ActivityComponent {
     val networkService: NetworkService
 
