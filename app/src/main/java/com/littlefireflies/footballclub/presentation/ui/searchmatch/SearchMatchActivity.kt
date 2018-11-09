@@ -10,10 +10,7 @@ import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.presentation.base.BaseActivity
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
-import com.littlefireflies.footballclub.utils.dateFormatter
-import com.littlefireflies.footballclub.utils.hide
-import com.littlefireflies.footballclub.utils.show
-import com.littlefireflies.footballclub.utils.timeFormatter
+import com.littlefireflies.footballclub.utils.*
 import kotlinx.android.synthetic.main.activity_search_match.*
 import kotlinx.android.synthetic.main.item_next_match.view.*
 import org.jetbrains.anko.startActivity
@@ -87,7 +84,11 @@ class SearchMatchActivity : BaseActivity(), SearchMatchContract.View {
 
     override fun displayMatch(matchList: List<Match>) {
         rvSearchMatch.adapter = SearchAdapter(matchList) {
-            startActivity<MatchDetailActivity>(MatchDetailActivity.EXTRA_TEAM_ID to it.matchId)
+            startActivity<MatchDetailActivity>(
+                    MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
+                    MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
+                    MatchDetailActivity.EXTRA_AWAY_TEAM_ID to it. awayTeamId
+            )
         }
         rvSearchMatch.layoutManager = LinearLayoutManager(this)
     }
@@ -107,7 +108,7 @@ class SearchMatchActivity : BaseActivity(), SearchMatchContract.View {
                 val time = timeFormatter(match.matchTime)
 
                 itemView.ivNotification.hide()
-                itemView.tvDateTime.text = "$date $time"
+                itemView.tvDateTime.text = toGmtFormat("$date $time")
                 itemView.tvHomeTeam.text = match.homeTeam
                 itemView.tvAwayTeam.text = match.awayTeam
                 itemView.setOnClickListener { listener(match) }

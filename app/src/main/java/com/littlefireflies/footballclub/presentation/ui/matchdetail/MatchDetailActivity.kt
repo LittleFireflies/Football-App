@@ -20,7 +20,9 @@ import javax.inject.Inject
 class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
 
     companion object {
-        const val EXTRA_TEAM_ID = "matchId"
+        const val EXTRA_MATCH_ID = "matchId"
+        const val EXTRA_HOME_TEAM_ID = "homeTeamId"
+        const val EXTRA_AWAY_TEAM_ID = "awayTeamId"
         private const val HOME_STRING = "home"
         private const val AWAY_STRING = "away"
     }
@@ -43,7 +45,9 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
     override fun onResume() {
         super.onResume()
         val intent = intent
-        presenter.getMatchDetail(intent.getStringExtra("matchId"))
+        presenter.getMatchDetail(intent.getStringExtra(EXTRA_MATCH_ID))
+        presenter.getHomeTeamImage(intent.getStringExtra(EXTRA_HOME_TEAM_ID))
+        presenter.getAwayTeamImage(intent.getStringExtra(EXTRA_AWAY_TEAM_ID))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -97,9 +101,6 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
 
         val date = dateFormatter(match.matchDate)
         val time = timeFormatter(match.matchTime)
-
-        presenter.getHomeTeamImage(match.homeTeamId)
-        presenter.getAwayTeamImage(match.awayTeamId)
 
         tvDateTime.text = toGmtFormat("$date $time")
         tvHomeTeam.text = match.homeTeam

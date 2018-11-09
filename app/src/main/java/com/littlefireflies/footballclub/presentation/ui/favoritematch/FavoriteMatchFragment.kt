@@ -14,9 +14,7 @@ import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.FavoriteMatch
 import com.littlefireflies.footballclub.presentation.base.BaseFragment
 import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
-import com.littlefireflies.footballclub.utils.dateFormatter
-import com.littlefireflies.footballclub.utils.hide
-import com.littlefireflies.footballclub.utils.show
+import com.littlefireflies.footballclub.utils.*
 import kotlinx.android.synthetic.main.fragment_favorite_match.*
 import kotlinx.android.synthetic.main.item_prev_match.view.*
 import org.jetbrains.anko.design.snackbar
@@ -82,7 +80,11 @@ class FavoriteMatchFragment : BaseFragment(), FavoriteMatchContract.View {
         swipeRefreshLayout.isRefreshing = false
 
         val adapter = FavoriteMatchAdapter(matchList) {
-            startActivity<MatchDetailActivity>("matchId" to "${it.matchId}")
+            startActivity<MatchDetailActivity>(
+                    MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
+                    MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
+                    MatchDetailActivity.EXTRA_AWAY_TEAM_ID to it.awayTeamId
+            )
         }
 
         rvFavorite.adapter = adapter
@@ -107,11 +109,11 @@ class FavoriteMatchFragment : BaseFragment(), FavoriteMatchContract.View {
 
             fun bindItem(match: FavoriteMatch) {
                 val date = dateFormatter(match.matchDate)
-                val time = match.matchTime?.split(":")
+                val time = timeFormatter(match.matchTime)
 
                 itemView.tvHomeTeam.text = match.homeTeam
                 itemView.tvAwayTeam.text = match.awayTeam
-                itemView.tvDateTime.text = "$date ${time?.get(0)}:${time?.get(1)}"
+                itemView.tvDateTime.text = toGmtFormat("$date $time")
                 itemView.tvHomeScore.text = match.homeScore
                 itemView.tvAwayScore.text = match.awayScore
                 itemView.setOnClickListener { listener(match) }

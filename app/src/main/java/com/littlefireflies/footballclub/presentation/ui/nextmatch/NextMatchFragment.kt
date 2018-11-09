@@ -97,7 +97,11 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
         swipeRefreshLayout.isRefreshing = false
 
         val adapter = NextMatchAdapter(events, {
-            startActivity<MatchDetailActivity>("matchId" to "${it.matchId}")
+            startActivity<MatchDetailActivity>(
+                    MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
+                    MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
+                    MatchDetailActivity.EXTRA_AWAY_TEAM_ID to it.awayTeamId
+            )
         }, {
             val intent = Intent(Intent.ACTION_INSERT)
             intent.type = "vnd.android.cursor.item/event"

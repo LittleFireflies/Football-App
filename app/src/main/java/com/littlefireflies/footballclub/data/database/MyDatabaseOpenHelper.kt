@@ -30,7 +30,9 @@ class MyDatabaseOpenHelper(context: Context) : ManagedSQLiteOpenHelper(context, 
                 FavoriteMatch.MATCH_ID to TEXT + UNIQUE,
                 FavoriteMatch.MATCH_NAME to TEXT,
                 FavoriteMatch.MATCH_LEAGUE to TEXT,
+                FavoriteMatch.HOME_TEAM_ID to TEXT,
                 FavoriteMatch.HOME_TEAM to TEXT,
+                FavoriteMatch.AWAY_TEAM_ID to TEXT,
                 FavoriteMatch.AWAY_TEAM to TEXT,
                 FavoriteMatch.MATCH_DATE to TEXT,
                 FavoriteMatch.MATCH_TIME to TEXT,
@@ -52,6 +54,7 @@ class MyDatabaseOpenHelper(context: Context) : ManagedSQLiteOpenHelper(context, 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.dropTable(FavoriteMatch.TABLE_MATCH_FAVORITE, true)
         db.dropTable(League.TABLE_LEAGUE, true)
+        db.dropTable(FavoriteTeam.TABLE_TEAM_FAVORITE, true)
     }
 }
 

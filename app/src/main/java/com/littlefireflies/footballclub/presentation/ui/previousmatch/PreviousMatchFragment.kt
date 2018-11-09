@@ -97,7 +97,11 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
         swipeRefreshLayout.isRefreshing = false
 
         val adapter = PreviousMatchAdapter(events) {
-            startActivity<MatchDetailActivity>("matchId" to "${it.matchId}")
+            startActivity<MatchDetailActivity>(
+                    MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
+                    MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
+                    MatchDetailActivity.EXTRA_AWAY_TEAM_ID to it.awayTeamId
+            )
         }
         rvPrevMatch.adapter = adapter
         rvPrevMatch.layoutManager = LinearLayoutManager(context)
@@ -107,7 +111,7 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
         snackbar(rvPrevMatch, message)
     }
 
-    class PreviousMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit): RecyclerView.Adapter<PreviousMatchAdapter.ViewHolder>() {
+    class PreviousMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit) : RecyclerView.Adapter<PreviousMatchAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_prev_match, parent, false))
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -116,7 +120,7 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
 
         override fun getItemCount(): Int = matches.size
 
-        inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             fun bindItem(match: Match) {
                 val date = dateFormatter(match.matchDate)
