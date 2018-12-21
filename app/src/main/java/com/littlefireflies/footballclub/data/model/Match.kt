@@ -91,5 +91,8 @@ data class Match(
         var awayForward: String? = null,
 
         @SerializedName("strAwayLineupSubstitutes")
-        var awaySubs: String? = null
+        var awaySubs: String? = null,
+
+        @SerializedName("strSport")
+        var sport: String? = null
 )

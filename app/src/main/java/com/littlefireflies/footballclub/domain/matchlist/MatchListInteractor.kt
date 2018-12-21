@@ -37,10 +37,10 @@ constructor(val matchRepository: MatchRepository): MatchListUseCase{
         return matchRepository.getMatchSearchResult(matchName)
                 .flatMap {
                     val entities = mutableListOf<Match>()
-                    if (it.event != null) {
-                        it.event.forEach {match ->
-                            entities.add(match)
-                        }
+                    it.event.filter { match ->
+                        match.sport == "Soccer"
+                    }.forEach {match ->
+                        entities.add(match)
                     }
                     Single.just(entities)
                 }
