@@ -1,10 +1,7 @@
 package com.littlefireflies.footballclub.presentation.ui.teamdetail
 
 import com.littlefireflies.footballclub.data.model.Team
-import com.littlefireflies.footballclub.domain.favoriteteam.AddFavoriteTeamUseCase
-import com.littlefireflies.footballclub.domain.favoriteteam.GetFavoriteTeamUseCase
-import com.littlefireflies.footballclub.domain.favoriteteam.RemoveFavoriteTeamUseCase
-import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailUseCase
+import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -15,10 +12,7 @@ import javax.inject.Inject
  */
 class TeamDetailPresenter<V : TeamDetailContract.View> @Inject
 constructor(
-        private val teamDetailUseCase: TeamDetailUseCase,
-        private val getFavoriteTeamUseCase: GetFavoriteTeamUseCase,
-        private val addFavoriteTeamUseCase: AddFavoriteTeamUseCase,
-        private val removeFavoriteTeamUseCase: RemoveFavoriteTeamUseCase,
+        private val teamRepository: TeamRepository,
         disposable: CompositeDisposable,
         schedulerProvider: SchedulerProvider
 ) : BasePresenter<V>(disposable, schedulerProvider), TeamDetailContract.UserActionListener<V> {
@@ -26,7 +20,7 @@ constructor(
     override fun getTeamDetail(teamId: String) {
         view?.showLoading()
         disposable.add(
-                teamDetailUseCase.getTeamDetail(teamId)
+                teamRepository.getTeamDetail(teamId)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .doOnSuccess {
@@ -36,7 +30,7 @@ constructor(
                             view?.displayErrorMessage("Unable to load the data")
                         }
                         .flatMap {
-                            getFavoriteTeamUseCase.getFavoriteTeamStatus(it.teamId.toString())
+                            teamRepository.isFavorite(it.teamId.toString())
                         }
                         .subscribe({
                             view?.displayFavoriteStatus(it)
@@ -49,12 +43,12 @@ constructor(
     }
 
     override fun addToFavorite(team: Team) {
-        addFavoriteTeamUseCase.addToFavorite(team)
+        teamRepository.addtoFavorite(team)
         view?.onAddToFavorite()
     }
 
     override fun removeFromFavorite(team: Team) {
-        removeFavoriteTeamUseCase.removeFavoriteTeam(team.teamId.toString())
+        teamRepository.removeFromFavorite(team.teamId.toString())
         view?.onRemoveFromFavorite()
     }
 }

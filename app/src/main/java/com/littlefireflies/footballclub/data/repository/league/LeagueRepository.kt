@@ -1,7 +1,6 @@
 package com.littlefireflies.footballclub.data.repository.league
 
 import com.littlefireflies.footballclub.data.model.League
-import com.littlefireflies.footballclub.data.model.LeagueResponse
 import io.reactivex.Single
 
 /**
@@ -9,6 +8,7 @@ import io.reactivex.Single
  */
 interface LeagueRepository {
     fun saveLeagueList(leagues: List<League>)
-    fun getNetworkLeagueList() : Single<LeagueResponse>
+    fun getSoccerLeagueList(): Single<List<League>>
+    fun getNetworkLeagueList(): Single<List<League>>
     fun getLocalLeagueList() : List<League>
 }

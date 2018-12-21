@@ -2,8 +2,6 @@ package com.littlefireflies.footballclub.di.module
 
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
-import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMatchDataStore
-import com.littlefireflies.footballclub.data.repository.favoritematch.FavoriteMatchRepository
 import com.littlefireflies.footballclub.data.repository.league.LeagueDataStore
 import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
 import com.littlefireflies.footballclub.data.repository.match.MatchDataStore
@@ -13,22 +11,6 @@ import com.littlefireflies.footballclub.data.repository.player.PlayerRepository
 import com.littlefireflies.footballclub.data.repository.team.TeamDataStore
 import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.di.scope.PerActivity
-import com.littlefireflies.footballclub.domain.favoritematch.*
-import com.littlefireflies.footballclub.domain.favoriteteam.*
-import com.littlefireflies.footballclub.domain.leaguelist.LeagueListInteractor
-import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
-import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailInteractor
-import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailUseCase
-import com.littlefireflies.footballclub.domain.matchlist.MatchListInteractor
-import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
-import com.littlefireflies.footballclub.domain.playerdetail.PlayerDetailInteractor
-import com.littlefireflies.footballclub.domain.playerdetail.PlayerDetailUseCase
-import com.littlefireflies.footballclub.domain.playerlist.PlayerListInteractor
-import com.littlefireflies.footballclub.domain.playerlist.PlayerListUseCase
-import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailInteractor
-import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailUseCase
-import com.littlefireflies.footballclub.domain.teamlist.TeamListInteractor
-import com.littlefireflies.footballclub.domain.teamlist.TeamListUseCase
 import com.littlefireflies.footballclub.utils.rx.AppSchedulerProvider
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import dagger.Module
@@ -61,65 +43,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
         return AppSchedulerProvider()
     }
 
-    @PerActivity
-    @Provides
-    fun provideMatchListUseCase(matchListInteractor: MatchListInteractor): MatchListUseCase = matchListInteractor
-
-    @Provides
-    @PerActivity
-    fun provideMatchDetailUseCase(matchDetailInteractor: MatchDetailInteractor): MatchDetailUseCase = matchDetailInteractor
-
-    @Provides
-    @PerActivity
-    fun provideGetFavoriteMatchUseCase(getFavoriteMatchInteractor: GetFavoriteMatchInteractor): GetFavoriteMatchUseCase = getFavoriteMatchInteractor
-
-    @Provides
-    @PerActivity
-    fun provideAddFavoriteMatchUseCase(addFavoriteMatchInteractor: AddFavoriteMatchInteractor): AddFavoriteMatchUseCase = addFavoriteMatchInteractor
-
-    @Provides
-    @PerActivity
-    fun provideRemoveFavoriteMatchUseCase(removeFavoriteMatchInteractor: RemoveFavoriteMatchInteractor): RemoveFavoriteMatchUseCase = removeFavoriteMatchInteractor
-
-    @Provides
-    @PerActivity
-    fun provideTeamListUseCase(teamListInteractor: TeamListInteractor): TeamListUseCase = teamListInteractor
-
-    @Provides
-    @PerActivity
-    fun provideTeamDetailUseCase(teamDetailInteractor: TeamDetailInteractor): TeamDetailUseCase = teamDetailInteractor
-
-    @Provides
-    @PerActivity
-    fun providePlayerListUseCase(playerListInteractor: PlayerListInteractor): PlayerListUseCase = playerListInteractor
-
-    @Provides
-    @PerActivity
-    fun providePlayerDetailUseCase(playerDetailInteractor: PlayerDetailInteractor): PlayerDetailUseCase = playerDetailInteractor
-
-    @Provides
-    @PerActivity
-    fun provideLeagueListUseCase(leagueListInteractor: LeagueListInteractor): LeagueListUseCase = leagueListInteractor
-
-    @Provides
-    @PerActivity
-    fun provideAddFavoriteTeamUseCase(addFavoriteTeamInteractor: AddFavoriteTeamInteractor): AddFavoriteTeamUseCase = addFavoriteTeamInteractor
-
-    @Provides
-    @PerActivity
-    fun provideGetFavoriteTeamUseCase(getFavoriteTeamInteractor: GetFavoriteTeamInteractor): GetFavoriteTeamUseCase = getFavoriteTeamInteractor
-
-    @Provides
-    @PerActivity
-    fun provideRemoveFavoriteTeamUseCase(removeFavoriteTeamInteractor: RemoveFavoriteTeamInteractor): RemoveFavoriteTeamUseCase = removeFavoriteTeamInteractor
-
     @Provides
     @PerActivity
     fun provideMatchRepository(matchDataStore: MatchDataStore): MatchRepository = matchDataStore
-
-    @Provides
-    @PerActivity
-    fun provideFavoriteMatchRepository(favoriteMatchDataStore: FavoriteMatchDataStore): FavoriteMatchRepository = favoriteMatchDataStore
 
     @Provides
     @PerActivity

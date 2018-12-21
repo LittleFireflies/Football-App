@@ -2,8 +2,8 @@ package com.littlefireflies.footballclub.presentation.ui.teamlist
 
 import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Team
-import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
-import com.littlefireflies.footballclub.domain.teamlist.TeamListUseCase
+import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
+import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
 import io.reactivex.Single
@@ -23,9 +23,9 @@ import org.mockito.MockitoAnnotations
 class TeamListPresenterTest {
 
     @Mock
-    private lateinit var teamListUseCase: TeamListUseCase
+    private lateinit var teamRepository: TeamRepository
     @Mock
-    private lateinit var leagueListUseCase: LeagueListUseCase
+    private lateinit var leagueRepository: LeagueRepository
     @Mock
     private lateinit var view: TeamListContract.View
 
@@ -42,7 +42,7 @@ class TeamListPresenterTest {
         testScheduler = TestScheduler()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        presenter = TeamListPresenter(leagueListUseCase, teamListUseCase, disposable, testSchedulerProvider)
+        presenter = TeamListPresenter(leagueRepository, teamRepository, disposable, testSchedulerProvider)
         presenter.onAttach(view)
 
         leagueMock = League(leagueId = Constants.LEAGUE_ID)
@@ -53,7 +53,7 @@ class TeamListPresenterTest {
         val response: MutableList<Team> = mutableListOf()
 
         `when`(view.selectedLeague).thenReturn(leagueMock)
-        `when`(teamListUseCase.getTeamList(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
+        `when`(teamRepository.getTeamList(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
 
         presenter.getTeamList()
 
@@ -67,7 +67,7 @@ class TeamListPresenterTest {
     @Test
     fun shouldDisplayErrorWhenGetDataFailed() {
         `when`(view.selectedLeague).thenReturn(leagueMock)
-        `when`(teamListUseCase.getTeamList(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
+        `when`(teamRepository.getTeamList(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
 
         presenter.getTeamList()
 

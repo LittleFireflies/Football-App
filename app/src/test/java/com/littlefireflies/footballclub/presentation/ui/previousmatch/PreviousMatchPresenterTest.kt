@@ -2,8 +2,8 @@ package com.littlefireflies.footballclub.presentation.ui.previousmatch
 
 import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Match
-import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
-import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
+import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
+import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
 import io.reactivex.Single
@@ -11,10 +11,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
-
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 /**
@@ -23,9 +23,9 @@ import org.mockito.MockitoAnnotations
 class PreviousMatchPresenterTest {
 
     @Mock
-    private lateinit var useCase: MatchListUseCase
+    private lateinit var matchRepository: MatchRepository
     @Mock
-    private lateinit var leagueUseCase: LeagueListUseCase
+    private lateinit var leagueRepository: LeagueRepository
     @Mock
     private lateinit var view: PreviousMatchContract.View
 
@@ -42,7 +42,7 @@ class PreviousMatchPresenterTest {
         testScheduler = TestScheduler()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        presenter = PreviousMatchPresenter(useCase, leagueUseCase, disposable, testSchedulerProvider)
+        presenter = PreviousMatchPresenter(matchRepository, leagueRepository, disposable, testSchedulerProvider)
         presenter.onAttach(view)
 
         leagueMock = League(leagueId = Constants.LEAGUE_ID)
@@ -53,7 +53,7 @@ class PreviousMatchPresenterTest {
         val response: MutableList<Match> = mutableListOf()
 
         `when`(view.selectedLeague).thenReturn(leagueMock)
-        `when`(useCase.getPreviousMatchList(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
+        `when`(matchRepository.getPreviousMatch(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
 
         presenter.getMatchList()
 
@@ -68,7 +68,7 @@ class PreviousMatchPresenterTest {
     fun shouldDisplayErrorWhenGetDataFailed() {
 
         `when`(view.selectedLeague).thenReturn(leagueMock)
-        `when`(useCase.getPreviousMatchList(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
+        `when`(matchRepository.getPreviousMatch(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
 
         presenter.getMatchList()
 

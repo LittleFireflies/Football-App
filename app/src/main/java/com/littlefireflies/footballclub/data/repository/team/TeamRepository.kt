@@ -2,7 +2,6 @@ package com.littlefireflies.footballclub.data.repository.team
 
 import com.littlefireflies.footballclub.data.model.FavoriteTeam
 import com.littlefireflies.footballclub.data.model.Team
-import com.littlefireflies.footballclub.data.model.TeamResponse
 import io.reactivex.Single
 
 /**
@@ -10,9 +9,9 @@ import io.reactivex.Single
  */
 
 interface TeamRepository {
-    fun getTeamList(leagueId: String): Single<TeamResponse>
-    fun getTeamDetail(teamId: String?): Single<TeamResponse>
-    fun getTeamSearchResult(teamName: String): Single<TeamResponse>
+    fun getTeamList(leagueId: String): Single<List<Team>>
+    fun getTeamDetail(teamId: String?): Single<Team>
+    fun getTeamSearchResult(teamName: String): Single<List<Team>>
     fun getFavoriteTeamList(): Single<List<FavoriteTeam>>
     fun isFavorite(teamId: String): Single<Boolean>
     fun addtoFavorite(team: Team)

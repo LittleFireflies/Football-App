@@ -1,11 +1,8 @@
 package com.littlefireflies.footballclub.presentation.ui.matchdetail
 
 import com.littlefireflies.footballclub.data.model.Match
-import com.littlefireflies.footballclub.domain.favoritematch.AddFavoriteMatchUseCase
-import com.littlefireflies.footballclub.domain.favoritematch.GetFavoriteMatchUseCase
-import com.littlefireflies.footballclub.domain.favoritematch.RemoveFavoriteMatchUseCase
-import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailUseCase
-import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailUseCase
+import com.littlefireflies.footballclub.data.repository.match.MatchRepository
+import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -16,11 +13,8 @@ import javax.inject.Inject
  */
 class MatchDetailPresenter<V : MatchDetailContract.View> @Inject
 constructor(
-        private val matchDetailUseCase: MatchDetailUseCase,
-        private val getFavoriteMatchUseCase: GetFavoriteMatchUseCase,
-        private val addFavoriteMatchUseCase: AddFavoriteMatchUseCase,
-        private val removeFavoriteMatchUseCase: RemoveFavoriteMatchUseCase,
-        private val teamDetailUseCase: TeamDetailUseCase,
+        private val matchRepository: MatchRepository,
+        private val teamRepository: TeamRepository,
         disposable: CompositeDisposable,
         schedulerProvider: SchedulerProvider)
     : BasePresenter<V>(disposable, schedulerProvider), MatchDetailContract.UserActionListener<V> {
@@ -28,7 +22,7 @@ constructor(
     override fun getMatchDetail(matchId: String) {
         view?.showLoading()
         disposable.add(
-                matchDetailUseCase.getMatchDetail(matchId)
+                matchRepository.getMatchDetail(matchId)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .doOnSuccess {
@@ -38,7 +32,7 @@ constructor(
                             view?.displayErrorMessages("Unable to load the data")
                         }
                         .flatMap {
-                            getFavoriteMatchUseCase.getFavoriteMatchStatus(it.matchId.toString())
+                            matchRepository.isFavorite(it.matchId.toString())
                         }
                         .doOnSuccess {
                             view?.displayFavoriteStatus(it)
@@ -53,7 +47,7 @@ constructor(
 
     override fun getHomeTeamImage(teamId: String?) {
         disposable.add(
-                teamDetailUseCase.getTeamDetail(teamId)
+                teamRepository.getTeamDetail(teamId)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({
@@ -66,7 +60,7 @@ constructor(
 
     override fun getAwayTeamImage(teamId: String?) {
         disposable.add(
-                teamDetailUseCase.getTeamDetail(teamId)
+                teamRepository.getTeamDetail(teamId)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({
@@ -78,12 +72,12 @@ constructor(
     }
 
     override fun addToFavorite(match: Match) {
-        addFavoriteMatchUseCase.addToFavorite(match)
+        matchRepository.addToFavorite(match)
         view?.onAddtoFavorite()
     }
 
     override fun removeFromFavorite(match: Match) {
-        removeFavoriteMatchUseCase.removeFromFavorite(match.matchId.toString())
+        matchRepository.removeFromFavorite(match.matchId.toString())
         view?.onRemoveFromFavorite()
     }
 }

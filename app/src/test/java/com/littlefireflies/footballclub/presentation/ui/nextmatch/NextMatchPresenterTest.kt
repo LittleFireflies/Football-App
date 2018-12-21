@@ -2,8 +2,8 @@ package com.littlefireflies.footballclub.presentation.ui.nextmatch
 
 import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Match
-import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
-import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
+import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
+import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.utils.Constants
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
 import io.reactivex.Single
@@ -24,9 +24,9 @@ import org.mockito.MockitoAnnotations
 class NextMatchPresenterTest {
 
     @Mock
-    private lateinit var useCase: MatchListUseCase
+    private lateinit var matchRepository: MatchRepository
     @Mock
-    private lateinit var leagueUseCase: LeagueListUseCase
+    private lateinit var leagueRepository: LeagueRepository
     @Mock
     private lateinit var view: NextMatchContract.View
 
@@ -43,7 +43,7 @@ class NextMatchPresenterTest {
         testScheduler = TestScheduler()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        presenter = NextMatchPresenter(useCase, leagueUseCase, disposable, testSchedulerProvider)
+        presenter = NextMatchPresenter(matchRepository, leagueRepository, disposable, testSchedulerProvider)
         presenter.onAttach(view)
 
         leagueMock = League(leagueId = Constants.LEAGUE_ID)
@@ -55,7 +55,7 @@ class NextMatchPresenterTest {
 
         `when`(view.selectedLeague).thenReturn(leagueMock)
 
-        `when`(useCase.getNextMatchList(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
+        `when`(matchRepository.getNextMatch(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
 
         presenter.getMatchList()
         testScheduler.triggerActions()
@@ -69,7 +69,7 @@ class NextMatchPresenterTest {
     fun shouldDisplayErrorWhenGetDataFailed() {
         `when`(view.selectedLeague).thenReturn(leagueMock)
 
-        `when`(useCase.getNextMatchList(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
+        `when`(matchRepository.getNextMatch(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
 
         presenter.getMatchList()
         testScheduler.triggerActions()

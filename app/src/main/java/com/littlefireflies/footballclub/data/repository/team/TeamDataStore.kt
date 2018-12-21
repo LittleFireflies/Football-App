@@ -4,7 +4,6 @@ import android.content.Context
 import com.littlefireflies.footballclub.data.database.database
 import com.littlefireflies.footballclub.data.model.FavoriteTeam
 import com.littlefireflies.footballclub.data.model.Team
-import com.littlefireflies.footballclub.data.model.TeamResponse
 import com.littlefireflies.footballclub.data.network.NetworkService
 import io.reactivex.Single
 import org.jetbrains.anko.db.classParser
@@ -18,16 +17,33 @@ import javax.inject.Inject
  */
 class TeamDataStore @Inject
 constructor(val networkService: NetworkService, val context: Context): TeamRepository{
-    override fun getTeamList(leagueId: String): Single<TeamResponse> {
+    override fun getTeamList(leagueId: String): Single<List<Team>> {
         return networkService.getTeamList(leagueId)
+                .flatMap {
+                    val entities = mutableListOf<Team>()
+                    it.teams.forEach { team ->
+                        entities.add(team)
+                    }
+                    Single.just(entities)
+                }
     }
 
-    override fun getTeamDetail(teamId: String?): Single<TeamResponse> {
+    override fun getTeamDetail(teamId: String?): Single<Team> {
         return networkService.getTeamDetail(teamId)
+                .flatMap {
+                    Single.just(it.teams[0])
+                }
     }
 
-    override fun getTeamSearchResult(teamName: String): Single<TeamResponse> {
+    override fun getTeamSearchResult(teamName: String): Single<List<Team>> {
         return networkService.searchTeamName(teamName)
+                .flatMap {
+                    val entities = mutableListOf<Team>()
+                    it.teams.forEach { team ->
+                        entities.add(team)
+                    }
+                    Single.just(entities)
+                }
     }
 
     override fun getFavoriteTeamList(): Single<List<FavoriteTeam>> {

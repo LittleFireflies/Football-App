@@ -3,7 +3,6 @@ package com.littlefireflies.footballclub.data.repository.league
 import android.content.Context
 import com.littlefireflies.footballclub.data.database.database
 import com.littlefireflies.footballclub.data.model.League
-import com.littlefireflies.footballclub.data.model.LeagueResponse
 import com.littlefireflies.footballclub.data.network.NetworkService
 import io.reactivex.Single
 import org.jetbrains.anko.db.classParser
@@ -27,8 +26,14 @@ constructor(val networkService: NetworkService, val context: Context) : LeagueRe
         }
     }
 
-    override fun getNetworkLeagueList(): Single<LeagueResponse> {
+    override fun getNetworkLeagueList(): Single<List<League>> {
         return networkService.getLeagueList()
+                .flatMap {
+                    val entities = it.leagues.filter { league ->
+                        league.sport == "Soccer"
+                    }
+                    Single.just(entities)
+                }
     }
 
     override fun getLocalLeagueList(): List<League> {
@@ -40,5 +45,13 @@ constructor(val networkService: NetworkService, val context: Context) : LeagueRe
         }
 
         return leagues
+    }
+
+    override fun getSoccerLeagueList(): Single<List<League>> {
+        return if (getLocalLeagueList().isEmpty()) {
+            getNetworkLeagueList()
+        } else {
+            Single.just(getLocalLeagueList())
+        }
     }
 }

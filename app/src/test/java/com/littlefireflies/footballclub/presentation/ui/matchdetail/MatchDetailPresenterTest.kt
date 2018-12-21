@@ -1,21 +1,18 @@
 package com.littlefireflies.footballclub.presentation.ui.matchdetail
 
 import com.littlefireflies.footballclub.data.model.Match
-import com.littlefireflies.footballclub.domain.favoritematch.AddFavoriteMatchUseCase
-import com.littlefireflies.footballclub.domain.favoritematch.GetFavoriteMatchUseCase
-import com.littlefireflies.footballclub.domain.favoritematch.RemoveFavoriteMatchUseCase
-import com.littlefireflies.footballclub.domain.matchdetail.MatchDetailUseCase
-import com.littlefireflies.footballclub.domain.teamdetail.TeamDetailUseCase
+import com.littlefireflies.footballclub.data.repository.match.MatchRepository
+import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.utils.TestSchedulerProvider
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
-
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 /**
@@ -23,15 +20,9 @@ import org.mockito.MockitoAnnotations
  */
 class MatchDetailPresenterTest {
     @Mock
-    private lateinit var matchDetailUseCase: MatchDetailUseCase
+    private lateinit var matchDetailUseCase: MatchRepository
     @Mock
-    private lateinit var getFavoriteMatchUseCase: GetFavoriteMatchUseCase
-    @Mock
-    private lateinit var addFavoriteMatchUseCase: AddFavoriteMatchUseCase
-    @Mock
-    private lateinit var removeFavoriteMatchUseCase: RemoveFavoriteMatchUseCase
-    @Mock
-    private lateinit var teamDetailUseCase: TeamDetailUseCase
+    private lateinit var teamRepository: TeamRepository
     @Mock
     private lateinit var view: MatchDetailContract.View
 
@@ -45,7 +36,7 @@ class MatchDetailPresenterTest {
         testScheduler = TestScheduler()
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
-        presenter = MatchDetailPresenter(matchDetailUseCase, getFavoriteMatchUseCase, addFavoriteMatchUseCase, removeFavoriteMatchUseCase, teamDetailUseCase, disposable, testSchedulerProvider)
+        presenter = MatchDetailPresenter(matchDetailUseCase, teamRepository, disposable, testSchedulerProvider)
         presenter.onAttach(view)
     }
 

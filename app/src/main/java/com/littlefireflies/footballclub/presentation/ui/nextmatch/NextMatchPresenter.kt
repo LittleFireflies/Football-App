@@ -1,7 +1,7 @@
 package com.littlefireflies.footballclub.presentation.ui.nextmatch
 
-import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
-import com.littlefireflies.footballclub.domain.matchlist.MatchListUseCase
+import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
+import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -12,11 +12,11 @@ import javax.inject.Inject
  */
 
 class NextMatchPresenter<V : NextMatchContract.View> @Inject
-constructor(private val matchListUseCase: MatchListUseCase, private val leagueListUseCase: LeagueListUseCase, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), NextMatchContract.UserActionListener<V> {
+constructor(private val matchRepository: MatchRepository, private val leagueRepository: LeagueRepository, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), NextMatchContract.UserActionListener<V> {
 
     override fun getLeagueList() {
         disposable.add(
-                leagueListUseCase.getSoccerLeagueList()
+                leagueRepository.getSoccerLeagueList()
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({
@@ -31,7 +31,7 @@ constructor(private val matchListUseCase: MatchListUseCase, private val leagueLi
         view?.showLoading()
         val leagueId = view?.selectedLeague?.leagueId
         disposable.add(
-                matchListUseCase.getNextMatchList(leagueId)
+                matchRepository.getNextMatch(leagueId.toString())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({

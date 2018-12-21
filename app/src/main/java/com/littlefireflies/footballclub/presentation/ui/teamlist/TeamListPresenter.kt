@@ -1,7 +1,7 @@
 package com.littlefireflies.footballclub.presentation.ui.teamlist
 
-import com.littlefireflies.footballclub.domain.leaguelist.LeagueListUseCase
-import com.littlefireflies.footballclub.domain.teamlist.TeamListUseCase
+import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
+import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -11,11 +11,11 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 10/10/2018.
  */
 class TeamListPresenter<V: TeamListContract.View> @Inject
-constructor(private val leagueListUseCase: LeagueListUseCase, private val teamListUseCase: TeamListUseCase, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider):BasePresenter<V>(disposable, schedulerProvider), TeamListContract.UserActionListener<V>{
+constructor(private val leagueRepository: LeagueRepository, private val teamRepository: TeamRepository, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), TeamListContract.UserActionListener<V> {
 
     override fun getLeagueList() {
         disposable.add(
-                leagueListUseCase.getSoccerLeagueList()
+                leagueRepository.getSoccerLeagueList()
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({
@@ -29,7 +29,7 @@ constructor(private val leagueListUseCase: LeagueListUseCase, private val teamLi
     override fun getTeamList() {
         view?.showLoading()
         disposable.add(
-                teamListUseCase.getTeamList(view?.selectedLeague?.leagueId)
+                teamRepository.getTeamList(view?.selectedLeague?.leagueId.toString())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({
@@ -45,7 +45,7 @@ constructor(private val leagueListUseCase: LeagueListUseCase, private val teamLi
     override fun searchTeam(teamName: String) {
         view?.showLoading()
         disposable.add(
-                teamListUseCase.getTeamSearchResult(teamName)
+                teamRepository.getTeamSearchResult(teamName)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribe({
