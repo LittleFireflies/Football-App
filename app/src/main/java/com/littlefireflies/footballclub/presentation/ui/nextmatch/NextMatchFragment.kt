@@ -43,10 +43,10 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
             onAttachView()
 
             swipeRefreshLayout.setColorSchemeColors(
-                    ContextCompat.getColor(context!!, android.R.color.holo_blue_light),
-                    ContextCompat.getColor(context!!, android.R.color.holo_green_light),
-                    ContextCompat.getColor(context!!, android.R.color.holo_orange_light),
-                    ContextCompat.getColor(context!!, android.R.color.holo_red_light)
+                    ContextCompat.getColor(requireContext(), android.R.color.holo_blue_light),
+                    ContextCompat.getColor(requireContext(), android.R.color.holo_green_light),
+                    ContextCompat.getColor(requireContext(), android.R.color.holo_orange_light),
+                    ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
             )
             swipeRefreshLayout.onRefresh {
                 presenter.getMatchList()

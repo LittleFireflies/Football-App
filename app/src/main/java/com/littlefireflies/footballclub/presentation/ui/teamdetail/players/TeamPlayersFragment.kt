@@ -87,7 +87,7 @@ class TeamPlayersFragment : BaseFragment(), TeamPlayersContract.View, TeamDetail
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             fun bindItem(player: Player) {
-                Glide.with(context!!).load(player.imageCutout).into(itemView.ivPicture)
+                Glide.with(requireContext()).load(player.imageCutout).into(itemView.ivPicture)
                 itemView.tvPlayerName.text = player.playerName
                 itemView.tvPlayerPosition.text = player.position
                 itemView.setOnClickListener { listener(player) }

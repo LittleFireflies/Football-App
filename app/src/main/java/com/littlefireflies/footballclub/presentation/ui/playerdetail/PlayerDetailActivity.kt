@@ -66,8 +66,8 @@ class PlayerDetailActivity : BaseActivity(), PlayerDetailContract.View {
     override fun displayPlayer(player: Player) {
         title = player.playerName
         Glide.with(this).load(player.picture).into(ivThumbnail)
-        tvWeight.text = if (player.weight?.isNotEmpty()!!) player.weight else "-"
-        tvHeight.text = if (player.height?.isNotEmpty()!!) player.height else "-"
+        tvWeight.text = player.weight ?: "-"
+        tvHeight.text = player.height ?: "-"
         tvDateBorn.text = bornDateFormatter(player.bornDate)
         tvNationality.text = player.nationality
         tvPosition.text = player.position

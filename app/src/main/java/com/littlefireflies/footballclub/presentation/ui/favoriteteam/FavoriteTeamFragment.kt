@@ -35,10 +35,10 @@ class FavoriteTeamFragment : BaseFragment(), FavoriteTeamContract.View {
             onAttachView()
 
             swipeRefreshLayout.setColorSchemeColors(
-                    ContextCompat.getColor(context!!, android.R.color.holo_blue_light),
-                    ContextCompat.getColor(context!!, android.R.color.holo_green_light),
-                    ContextCompat.getColor(context!!, android.R.color.holo_orange_light),
-                    ContextCompat.getColor(context!!, android.R.color.holo_red_light)
+                    ContextCompat.getColor(requireContext(), android.R.color.holo_blue_light),
+                    ContextCompat.getColor(requireContext(), android.R.color.holo_green_light),
+                    ContextCompat.getColor(requireContext(), android.R.color.holo_orange_light),
+                    ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
             )
             swipeRefreshLayout.onRefresh {
                 presenter.getFavoriteTeamList()
@@ -94,7 +94,7 @@ class FavoriteTeamFragment : BaseFragment(), FavoriteTeamContract.View {
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             fun bindItem(team: FavoriteTeam) {
-                Glide.with(context!!).load(team.teamBadge).into(itemView.ivBadge)
+                Glide.with(requireContext()).load(team.teamBadge).into(itemView.ivBadge)
                 itemView.tvTeamName.text = team.teamName
                 itemView.setOnClickListener { listener(team) }
             }

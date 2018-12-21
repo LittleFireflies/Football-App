@@ -127,7 +127,7 @@ class TeamListFragment : BaseFragment(), TeamListContract.View {
 
         inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
             fun bindItem(team: Team) {
-                Glide.with(context!!).load(team.teamBadge).into(itemView.ivBadge)
+                Glide.with(requireContext()).load(team.teamBadge).into(itemView.ivBadge)
                 itemView.tvTeamName.text = team.teamName
                 itemView.setOnClickListener { listener(team) }
             }
