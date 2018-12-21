@@ -80,10 +80,10 @@ class FavoriteTeamFragment : BaseFragment(), FavoriteTeamContract.View {
     }
 
     override fun displayErrorMessage(message: String) {
-        snackbar(pbFavoriteTeam, message)
+        pbFavoriteTeam.snackbar(message)
     }
 
-    inner class FavoriteTeamAdapter(val teams: List<FavoriteTeam>, val listener : (FavoriteTeam) -> Unit) : RecyclerView.Adapter<FavoriteTeamAdapter.ViewHolder>() {
+    inner class FavoriteTeamAdapter(private val teams: List<FavoriteTeam>, val listener: (FavoriteTeam) -> Unit) : RecyclerView.Adapter<FavoriteTeamAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_team_list, parent, false))
 
         override fun getItemCount(): Int = teams.size

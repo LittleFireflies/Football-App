@@ -47,7 +47,7 @@ class TeamDetailActivity : BaseActivity(), TeamDetailContract.View {
         presenter.getTeamDetail(intent.getStringExtra(EXTRA_TEAM))
     }
 
-    fun setupViewPager(viewPager: ViewPager) {
+    private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(TeamOverviewFragment(), "OVERVIEW")
         adapter.addFragment(TeamPlayersFragment(), "PLAYERS")
@@ -114,7 +114,7 @@ class TeamDetailActivity : BaseActivity(), TeamDetailContract.View {
     }
 
     override fun displayErrorMessage(message: String) {
-        snackbar(pbTeamDetail, message)
+        pbTeamDetail.snackbar(message)
     }
 
     override fun displayFavoriteStatus(favorite: Boolean) {
@@ -126,11 +126,11 @@ class TeamDetailActivity : BaseActivity(), TeamDetailContract.View {
     }
 
     override fun onAddToFavorite() {
-        snackbar(pbTeamDetail, "Added to favorite")
+        pbTeamDetail.snackbar("Added to favorite")
     }
 
     override fun onRemoveFromFavorite() {
-        snackbar(pbTeamDetail, "Removed from favorite")
+        pbTeamDetail.snackbar("Removed from favorite")
     }
 
     private var teamDataListener: DataListener? = null

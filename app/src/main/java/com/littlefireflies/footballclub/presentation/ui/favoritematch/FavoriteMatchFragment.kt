@@ -92,10 +92,10 @@ class FavoriteMatchFragment : BaseFragment(), FavoriteMatchContract.View {
     }
 
     override fun displayErrorMessages(message: String) {
-        snackbar(rvFavorite, message)
+        rvFavorite.snackbar(message)
     }
 
-    internal class FavoriteMatchAdapter(val matches: List<FavoriteMatch>, val listener: (FavoriteMatch) -> Unit) : RecyclerView.Adapter<FavoriteMatchAdapter.ViewHolder>() {
+    internal class FavoriteMatchAdapter(private val matches: List<FavoriteMatch>, val listener: (FavoriteMatch) -> Unit) : RecyclerView.Adapter<FavoriteMatchAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_prev_match, parent, false))
 

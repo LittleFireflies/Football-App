@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 28/09/2018.
  */
 class MatchListInteractor @Inject
-constructor(val matchRepository: MatchRepository): MatchListUseCase{
+constructor(private val matchRepository: MatchRepository) : MatchListUseCase {
 
     override fun getNextMatchList(leagueId: String?): Single<List<Match>> {
         return matchRepository.getNextMatch(leagueId.toString())

@@ -93,7 +93,7 @@ class SearchMatchActivity : BaseActivity(), SearchMatchContract.View {
         rvSearchMatch.layoutManager = LinearLayoutManager(this)
     }
 
-    inner class SearchAdapter(val matchList: List<Match>, val listener : (Match) -> Unit) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+    inner class SearchAdapter(private val matchList: List<Match>, val listener: (Match) -> Unit) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_next_match, parent, false))
 
         override fun getItemCount(): Int = matchList.size

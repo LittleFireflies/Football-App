@@ -43,15 +43,15 @@ fun timeFormatter(inputTime: String?): String {
 }
 
 fun toGmtFormat(datetime: String): String {
-    try {
+    return try {
         val formatter = SimpleDateFormat("dd MMMM yyyy HH:mm")
         formatter.timeZone = TimeZone.getTimeZone("UTC")
         val gmtTime = formatter.parse(datetime)
         formatter.timeZone = TimeZone.getDefault()
 
-        return formatter.format(gmtTime)
+        formatter.format(gmtTime)
     } catch (e: java.lang.Exception) {
-        return "Date Invalid/Not Found"
+        "Date Invalid/Not Found"
     }
 }
 

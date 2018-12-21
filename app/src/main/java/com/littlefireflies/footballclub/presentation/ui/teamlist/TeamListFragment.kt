@@ -113,10 +113,10 @@ class TeamListFragment : BaseFragment(), TeamListContract.View {
     }
 
     override fun displayErrorMessage(message: String) {
-        snackbar(pbTeamList, message)
+        pbTeamList.snackbar(message)
     }
 
-    inner class TeamAdapter(val teams: List<Team>, val listener : (Team) -> Unit) : RecyclerView.Adapter<TeamAdapter.ViewHolder>(){
+    inner class TeamAdapter(private val teams: List<Team>, val listener: (Team) -> Unit) : RecyclerView.Adapter<TeamAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_team_list, parent, false))
 
         override fun getItemCount(): Int = teams.size

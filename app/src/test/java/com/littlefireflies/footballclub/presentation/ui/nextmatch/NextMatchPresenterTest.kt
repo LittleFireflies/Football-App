@@ -30,7 +30,7 @@ class NextMatchPresenterTest {
     @Mock
     private lateinit var view: NextMatchContract.View
 
-    lateinit var leagueMock: League
+    private lateinit var leagueMock: League
 
     private lateinit var testScheduler: TestScheduler
     private lateinit var presenter: NextMatchPresenter<NextMatchContract.View>

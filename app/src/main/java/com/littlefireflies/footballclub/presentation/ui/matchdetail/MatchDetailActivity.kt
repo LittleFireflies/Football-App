@@ -151,7 +151,7 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
     }
 
     override fun displayErrorMessages(message: String) {
-        snackbar(pbMatchDetail, message)
+        pbMatchDetail.snackbar(message)
     }
 
     override fun displayHomeBadge(teamBadge: String?) {
@@ -171,14 +171,14 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
     }
 
     override fun onAddtoFavorite() {
-        snackbar(pbMatchDetail, "Added to favorite")
+        pbMatchDetail.snackbar("Added to favorite")
     }
 
     override fun onRemoveFromFavorite() {
-        snackbar(pbMatchDetail, "Removed from favorite")
+        pbMatchDetail.snackbar("Removed from favorite")
     }
 
-    class MatchDetailAdapter(val items: List<String>?, val type: String) : RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {
+    class MatchDetailAdapter(private val items: List<String>?, val type: String) : RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return when (viewType) {

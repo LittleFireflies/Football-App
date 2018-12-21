@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 06/10/2018.
  */
 class PlayerDetailInteractor @Inject
-constructor(val playerRepository: PlayerRepository): PlayerDetailUseCase {
+constructor(private val playerRepository: PlayerRepository) : PlayerDetailUseCase {
     override fun getPlayerDetail(playerId: String): Single<Player> {
         return playerRepository.getPlayerDetail(playerId)
                 .flatMap {

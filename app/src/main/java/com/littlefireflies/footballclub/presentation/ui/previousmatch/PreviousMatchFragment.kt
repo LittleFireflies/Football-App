@@ -10,12 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-
 import com.littlefireflies.footballclub.R
 import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.model.Match
-import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.presentation.base.BaseFragment
+import com.littlefireflies.footballclub.presentation.ui.matchdetail.MatchDetailActivity
 import com.littlefireflies.footballclub.utils.*
 import kotlinx.android.synthetic.main.fragment_previous_match.*
 import kotlinx.android.synthetic.main.item_prev_match.view.*
@@ -108,10 +107,10 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
     }
 
     override fun displayErrorMessage(message: String) {
-        snackbar(rvPrevMatch, message)
+        rvPrevMatch.snackbar(message)
     }
 
-    class PreviousMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit) : RecyclerView.Adapter<PreviousMatchAdapter.ViewHolder>() {
+    class PreviousMatchAdapter(private val matches: List<Match>, val listener: (Match) -> Unit) : RecyclerView.Adapter<PreviousMatchAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_prev_match, parent, false))
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {

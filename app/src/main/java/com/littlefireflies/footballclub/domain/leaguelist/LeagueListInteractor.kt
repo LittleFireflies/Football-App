@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 07/10/2018.
  */
 class LeagueListInteractor @Inject
-constructor(val leagueRepository: LeagueRepository) : LeagueListUseCase{
+constructor(private val leagueRepository: LeagueRepository) : LeagueListUseCase {
     override fun getSoccerLeagueList(): Single<List<League>> {
         return if (leagueRepository.getLocalLeagueList().isEmpty()) {
             leagueRepository.getNetworkLeagueList()

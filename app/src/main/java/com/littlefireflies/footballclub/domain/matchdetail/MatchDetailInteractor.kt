@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 28/09/2018.
  */
 class MatchDetailInteractor @Inject
-constructor(val matchRepository: MatchRepository): MatchDetailUseCase{
+constructor(private val matchRepository: MatchRepository) : MatchDetailUseCase {
     override fun getMatchDetail(matchId: String): Single<Match> {
         return matchRepository.getMatchDetail(matchId)
                 .flatMap {

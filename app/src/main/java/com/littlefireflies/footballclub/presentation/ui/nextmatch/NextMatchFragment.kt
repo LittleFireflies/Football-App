@@ -126,10 +126,10 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
     }
 
     override fun displayErrorMessage(message: String) {
-        snackbar(rvNextMatch, message)
+        rvNextMatch.snackbar(message)
     }
 
-    internal class NextMatchAdapter(val matches: List<Match>, val listener: (Match) -> Unit, val notificationListener: (Match) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
+    internal class NextMatchAdapter(private val matches: List<Match>, val listener: (Match) -> Unit, val notificationListener: (Match) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_next_match, parent, false))
 

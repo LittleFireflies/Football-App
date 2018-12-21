@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by widyarso.purnomo on 28/09/2018.
  */
 class GetFavoriteMatchInteractor @Inject
-constructor(val favoriteMatchRepository: FavoriteMatchRepository): GetFavoriteMatchUseCase {
+constructor(private val favoriteMatchRepository: FavoriteMatchRepository) : GetFavoriteMatchUseCase {
     override fun getFavoriteMatchList(): Single<List<FavoriteMatch>> {
         return favoriteMatchRepository.getFavoriteMatches()
     }

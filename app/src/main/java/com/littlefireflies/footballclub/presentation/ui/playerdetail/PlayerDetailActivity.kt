@@ -75,6 +75,6 @@ class PlayerDetailActivity : BaseActivity(), PlayerDetailContract.View {
     }
 
     override fun displayErrorMessage(message: String) {
-        snackbar(pbPlayerDetail, message)
+        pbPlayerDetail.snackbar(message)
     }
 }

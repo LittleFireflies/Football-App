@@ -21,7 +21,7 @@ class MainActivity : BaseActivity() {
 
     override fun getLayoutId(): Int = R.layout.activity_match_schedule
 
-    fun bottomNavListener() {
+    private fun bottomNavListener() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.action_match -> viewPager.currentItem = 0
@@ -33,7 +33,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun setupViewPager(viewPager: ViewPager) {
+    private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(MatchFragment(), "Match")
         adapter.addFragment(TeamListFragment(), "Team")

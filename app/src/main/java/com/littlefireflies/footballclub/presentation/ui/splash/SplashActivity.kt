@@ -41,6 +41,6 @@ class SplashActivity : BaseActivity(), SplashContract.View {
     }
 
     override fun displayErrorMessage(message: String) {
-        snackbar(pbSplash, message)
+        pbSplash.snackbar(message)
     }
 }

@@ -73,7 +73,7 @@ class TeamPlayersFragment : BaseFragment(), TeamPlayersContract.View, TeamDetail
     }
 
     override fun displayErrorMessage(message: String) {
-        snackbar(pbTeamPlayers, message)
+        pbTeamPlayers.snackbar(message)
     }
 
     inner class PlayerAdapter(val context: Context?, val players: List<Player>, val listener: (Player) -> Unit) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
