@@ -1,41 +1,41 @@
 package com.littlefireflies.footballclub.data.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 /**
  * Created by widyarso.purnomo on 29/09/2018.
  */
 data class Player(
-        @SerializedName("idPlayer")
+        @field:Json(name = "idPlayer")
         var playerId: String? = null,
 
-        @SerializedName("strTeam")
+        @field:Json(name = "strTeam")
         var team: String? = null,
 
-        @SerializedName("strPlayer")
+        @field:Json(name = "strPlayer")
         var playerName: String? = null,
 
-        @SerializedName("strNationality")
+        @field:Json(name = "strNationality")
         var nationality: String? = null,
 
-        @SerializedName("dateBorn")
+        @field:Json(name = "dateBorn")
         var bornDate: String? = null,
 
-        @SerializedName("strDescriptionEN")
+        @field:Json(name = "strDescriptionEN")
         var description: String? = null,
 
-        @SerializedName("strPosition")
+        @field:Json(name = "strPosition")
         var position: String? = null,
 
-        @SerializedName("strHeight")
+        @field:Json(name = "strHeight")
         var height: String? = null,
 
-        @SerializedName("strWeight")
+        @field:Json(name = "strWeight")
         var weight: String? = null,
 
-        @SerializedName("strThumb")
+        @field:Json(name = "strThumb")
         var picture: String? = null,
 
-        @SerializedName("strCutout")
+        @field:Json(name = "strCutout")
         var imageCutout: String? = null
 )

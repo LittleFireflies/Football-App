@@ -1,98 +1,98 @@
 package com.littlefireflies.footballclub.data.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 /**
  * Created by widyarso.purnomo on 03/09/2018.
  */
 data class Match(
-        @SerializedName("idEvent")
+        @field:Json(name = "idEvent")
         var matchId: String? = null,
 
-        @SerializedName("strEvent")
+        @field:Json(name = "strEvent")
         var matchName: String? = null,
 
-        @SerializedName("strLeague")
+        @field:Json(name = "strLeague")
         var league: String? = null,
 
-        @SerializedName("idHomeTeam")
+        @field:Json(name = "idHomeTeam")
         var homeTeamId: String? = null,
 
-        @SerializedName("idAwayTeam")
+        @field:Json(name = "idAwayTeam")
         var awayTeamId: String? = null,
 
-        @SerializedName("strHomeTeam")
+        @field:Json(name = "strHomeTeam")
         var homeTeam: String? = null,
 
-        @SerializedName("strAwayTeam")
+        @field:Json(name = "strAwayTeam")
         var awayTeam: String? = null,
 
-        @SerializedName("dateEvent")
+        @field:Json(name = "dateEvent")
         var matchDate: String? = null,
 
-        @SerializedName("strTime")
+        @field:Json(name = "strTime")
         var matchTime: String? = null,
 
-        @SerializedName("intHomeScore")
+        @field:Json(name = "intHomeScore")
         var homeScore: String? = null,
 
-        @SerializedName("intAwayScore")
+        @field:Json(name = "intAwayScore")
         var awayScore: String? = null,
 
-        @SerializedName("strHomeGoalDetails")
+        @field:Json(name = "strHomeGoalDetails")
         var homeGoals: String? = null,
 
-        @SerializedName("strAwayGoalDetails")
+        @field:Json(name = "strAwayGoalDetails")
         var awayGoals: String? = null,
 
-        @SerializedName("strHomeRedCards")
+        @field:Json(name = "strHomeRedCards")
         var homeRedCards: String? = null,
 
-        @SerializedName("strAwayRedCards")
+        @field:Json(name = "strAwayRedCards")
         var awayRedCards: String? = null,
 
-        @SerializedName("strHomeYellowCards")
+        @field:Json(name = "strHomeYellowCards")
         var homeYellowCards: String? = null,
 
-        @SerializedName("strAwayYellowCards")
+        @field:Json(name = "strAwayYellowCards")
         var awayYellowCards: String? = null,
 
-        @SerializedName("strHomeFormation")
+        @field:Json(name = "strHomeFormation")
         var homeFormation: String? = null,
 
-        @SerializedName("strAwayFormation")
+        @field:Json(name = "strAwayFormation")
         var awayFormation: String? = null,
 
-        @SerializedName("strHomeLineupGoalkeeper")
+        @field:Json(name = "strHomeLineupGoalkeeper")
         var homeGK: String? = null,
 
-        @SerializedName("strHomeLineupDefense")
+        @field:Json(name = "strHomeLineupDefense")
         var homeDefense: String? = null,
 
-        @SerializedName("strHomeLineupMidfield")
+        @field:Json(name = "strHomeLineupMidfield")
         var homeMidfield: String? = null,
 
-        @SerializedName("strHomeLineupForward")
+        @field:Json(name = "strHomeLineupForward")
         var homeForward: String? = null,
 
-        @SerializedName("strHomeLineupSubstitutes")
+        @field:Json(name = "strHomeLineupSubstitutes")
         var homeSubs: String? = null,
 
-        @SerializedName("strAwayLineupGoalkeeper")
+        @field:Json(name = "strAwayLineupGoalkeeper")
         var awayGK: String? = null,
 
-        @SerializedName("strAwayLineupDefense")
+        @field:Json(name = "strAwayLineupDefense")
         var awayDefense: String? = null,
 
-        @SerializedName("strAwayLineupMidfield")
+        @field:Json(name = "strAwayLineupMidfield")
         var awayMidfield: String? = null,
 
-        @SerializedName("strAwayLineupForward")
+        @field:Json(name = "strAwayLineupForward")
         var awayForward: String? = null,
 
-        @SerializedName("strAwayLineupSubstitutes")
+        @field:Json(name = "strAwayLineupSubstitutes")
         var awaySubs: String? = null,
 
-        @SerializedName("strSport")
+        @field:Json(name = "strSport")
         var sport: String? = null
 )

@@ -1,18 +1,19 @@
 package com.littlefireflies.footballclub.data.model
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+
 
 /**
  * Created by widyarso.purnomo on 07/10/2018.
  */
 data class League(
-        @SerializedName("idLeague")
+        @field:Json(name = "idLeague")
         var leagueId: String? = null,
 
-        @SerializedName("strLeague")
+        @field:Json(name = "strLeague")
         var leagueName: String? = null,
 
-        @SerializedName("strSport")
+        @field:Json(name = "strSport")
         var sport: String? = null) {
 
     companion object {
