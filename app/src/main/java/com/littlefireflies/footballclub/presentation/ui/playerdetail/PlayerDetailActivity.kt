@@ -1,5 +1,7 @@
 package com.littlefireflies.footballclub.presentation.ui.playerdetail
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.MenuItem
 import com.bumptech.glide.Glide
@@ -17,19 +19,26 @@ class PlayerDetailActivity : BaseActivity(), PlayerDetailContract.View {
 
     @Inject
     lateinit var presenter: PlayerDetailPresenter<PlayerDetailContract.View>
+    @Inject
+    lateinit var factory: PlayerDetailViewModelFactory
+
+    lateinit var viewModel: PlayerDetailViewModel
 
     override fun getLayoutId(): Int = R.layout.activity_player_detail
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         activityComponent.inject(this)
+        viewModel = ViewModelProviders.of(this, factory).get(PlayerDetailViewModel::class.java)
         onAttachView()
+        displayPlayer()
     }
 
     override fun onResume() {
         super.onResume()
         val intent =  intent
-        presenter.getPlayerDetail(intent.getStringExtra("playerId"))
+//        presenter.getPlayerDetail(intent.getStringExtra("playerId"))
+        viewModel.getPlayerDetail(intent.getStringExtra("playerId"))
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -65,13 +74,26 @@ class PlayerDetailActivity : BaseActivity(), PlayerDetailContract.View {
 
     override fun displayPlayer(player: Player) {
         title = player.playerName
-        Glide.with(this).load(player.picture).into(ivThumbnail)
+        Glide.with(this@PlayerDetailActivity).load(player.picture).into(ivThumbnail)
         tvWeight.text = player.weight ?: "-"
         tvHeight.text = player.height ?: "-"
         tvDateBorn.text = bornDateFormatter(player.bornDate)
         tvNationality.text = player.nationality
         tvPosition.text = player.position
         tvDescription.text = player.description
+    }
+
+    fun displayPlayer() {
+        viewModel.playerData.observe(this, Observer { player ->
+            title = player?.playerName
+            Glide.with(this@PlayerDetailActivity).load(player?.picture).into(ivThumbnail)
+            tvWeight.text = player?.weight ?: "-"
+            tvHeight.text = player?.height ?: "-"
+            tvDateBorn.text = bornDateFormatter(player?.bornDate)
+            tvNationality.text = player?.nationality
+            tvPosition.text = player?.position
+            tvDescription.text = player?.description
+        })
     }
 
     override fun displayErrorMessage(message: String) {

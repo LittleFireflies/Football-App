@@ -71,4 +71,6 @@ dependencies {
     //Dagger
     implementation 'com.google.dagger:dagger:2.18'
     kapt 'com.google.dagger:dagger-compiler:2.18'
+    //Live Data
+    implementation "android.arch.lifecycle:extensions:1.1.1"
 }
