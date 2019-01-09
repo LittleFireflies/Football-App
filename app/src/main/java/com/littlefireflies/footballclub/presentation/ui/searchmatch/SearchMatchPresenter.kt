@@ -4,12 +4,11 @@ import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
 /**
  * Created by Widyarso Joko Purnomo on 13/10/18
  */
-class SearchMatchPresenter<V: SearchMatchContract.View> @Inject
+class SearchMatchPresenter<V : SearchMatchContract.View>
 constructor(private val matchRepository: MatchRepository, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), SearchMatchContract.UserActionListener<V> {
 
     override fun searchMatch(matchName: String) {

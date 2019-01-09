@@ -13,8 +13,6 @@ import kotlinx.android.synthetic.main.activity_match_schedule.*
 class MainActivity : BaseActivity() {
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
-        activityComponent.inject(this)
-
         setupViewPager(viewPager)
         bottomNavListener()
     }

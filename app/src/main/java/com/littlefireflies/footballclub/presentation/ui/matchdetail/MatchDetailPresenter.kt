@@ -6,12 +6,11 @@ import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
 /**
  * Created by widyarso.purnomo on 04/09/2018.
  */
-class MatchDetailPresenter<V : MatchDetailContract.View> @Inject
+class MatchDetailPresenter<V : MatchDetailContract.View>
 constructor(
         private val matchRepository: MatchRepository,
         private val teamRepository: TeamRepository,

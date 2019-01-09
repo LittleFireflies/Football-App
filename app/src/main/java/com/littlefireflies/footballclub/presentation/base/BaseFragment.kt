@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.littlefireflies.footballclub.di.component.ActivityComponent
-
 /**
  * Created by widyarso.purnomo on 03/09/2018.
  */
@@ -34,13 +32,6 @@ abstract class BaseFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         onLoadFragment(savedInstanceState)
-    }
-
-    val activityComponent: ActivityComponent?
-    get() {
-        return if (activity != null) {
-            activity?.activityComponent
-        } else null
     }
 
 }

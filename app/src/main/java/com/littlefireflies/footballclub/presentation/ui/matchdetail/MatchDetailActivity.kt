@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_match_detail.*
 import kotlinx.android.synthetic.main.item_home_list.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.startActivity
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
 
@@ -31,14 +31,12 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
     private var isFavorite: Boolean = false
     private lateinit var match: Match
 
-    @Inject
-    lateinit var presenter: MatchDetailPresenter<MatchDetailContract.View>
+    val presenter: MatchDetailPresenter<MatchDetailContract.View> by inject()
 
     override fun getLayoutId(): Int = R.layout.activity_match_detail
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        activityComponent.inject(this)
         onAttachView()
     }
 

@@ -21,12 +21,11 @@ import kotlinx.android.synthetic.main.fragment_team_list.*
 import kotlinx.android.synthetic.main.item_team_list.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class TeamListFragment : BaseFragment(), TeamListContract.View {
 
-    @Inject
-    lateinit var presenter: TeamListPresenter<TeamListContract.View>
+    val presenter: TeamListPresenter<TeamListContract.View> by inject()
 
     override var selectedLeague: League
         get() = spTeamList.selectedItem as League
@@ -35,23 +34,20 @@ class TeamListFragment : BaseFragment(), TeamListContract.View {
     override fun getLayoutId(): Int = R.layout.fragment_team_list
 
     override fun onLoadFragment(saveInstance: Bundle?) {
-        if (activityComponent != null) {
-            activityComponent?.inject(this)
-            onAttachView()
-            setHasOptionsMenu(true)
+        onAttachView()
+        setHasOptionsMenu(true)
 
-            spTeamList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    selectedLeague = parent?.getItemAtPosition(position) as League
-                    presenter.getTeamList()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-
-                }
+        spTeamList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedLeague = parent?.getItemAtPosition(position) as League
+                presenter.getTeamList()
             }
-            presenter.getLeagueList()
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
         }
+        presenter.getLeagueList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

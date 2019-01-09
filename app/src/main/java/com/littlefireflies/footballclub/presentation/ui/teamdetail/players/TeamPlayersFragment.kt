@@ -21,23 +21,18 @@ import kotlinx.android.synthetic.main.fragment_team_players.*
 import kotlinx.android.synthetic.main.item_player_list.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.startActivity
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class TeamPlayersFragment : BaseFragment(), TeamPlayersContract.View, TeamDetailActivity.DataListener {
 
-    @Inject
-    lateinit var presenter: TeamPlayersPresenter<TeamPlayersContract.View>
+    val presenter: TeamPlayersPresenter<TeamPlayersContract.View> by inject()
 
     override fun getLayoutId(): Int = R.layout.fragment_team_players
 
     override fun onLoadFragment(saveInstance: Bundle?) {
-        val component = activityComponent
-        if (component != null) {
-            activityComponent?.inject(this)
-            onAttachView()
-            val teamActivity = activity as TeamDetailActivity
-            teamActivity.setPlayerDataListener(this)
-        }
+        onAttachView()
+        val teamActivity = activity as TeamDetailActivity
+        teamActivity.setPlayerDataListener(this)
     }
 
     override fun onDestroyView() {

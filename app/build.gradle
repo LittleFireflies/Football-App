@@ -68,9 +68,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
     //RxAdapter
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-    //Dagger
-    implementation 'com.google.dagger:dagger:2.18'
-    kapt 'com.google.dagger:dagger-compiler:2.18'
+    //Koin
+    implementation "org.koin:koin-android-viewmodel:1.0.2"
     //Live Data
     implementation "android.arch.lifecycle:extensions:1.1.1"
 }

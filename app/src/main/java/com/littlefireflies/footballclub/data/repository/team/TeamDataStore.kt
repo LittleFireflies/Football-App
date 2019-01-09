@@ -10,12 +10,11 @@ import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
-import javax.inject.Inject
 
 /**
  * Created by widyarso.purnomo on 28/09/2018.
  */
-class TeamDataStore @Inject
+class TeamDataStore
 constructor(val networkService: NetworkService, val context: Context): TeamRepository{
     override fun getTeamList(leagueId: String): Single<List<Team>> {
         return networkService.getTeamList(leagueId)

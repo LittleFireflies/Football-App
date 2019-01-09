@@ -1,24 +1,17 @@
 package com.littlefireflies.footballclub
 
 import android.app.Application
-import com.littlefireflies.footballclub.di.component.ApplicationComponent
-import com.littlefireflies.footballclub.di.component.DaggerApplicationComponent
-import com.littlefireflies.footballclub.di.module.ApplicationModule
-import com.littlefireflies.footballclub.di.module.NetworkModule
+import com.littlefireflies.footballclub.di.appModule
+import com.littlefireflies.footballclub.di.networkModule
+import org.koin.android.ext.android.startKoin
 
 /**
  * Created by widyarso.purnomo on 03/09/2018.
  */
 class App: Application() {
 
-    lateinit var applicationComponent: ApplicationComponent
-
     override fun onCreate() {
         super.onCreate()
-        applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(this))
-                .networkModule(NetworkModule())
-                .build()
-        applicationComponent.inject(this)
+        startKoin(this, listOf(networkModule, appModule))
     }
 }

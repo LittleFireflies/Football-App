@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.item_prev_match.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivity
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 /**
  * A simple [Fragment] subclass.
@@ -28,25 +28,21 @@ import javax.inject.Inject
  */
 class FavoriteMatchFragment : BaseFragment(), FavoriteMatchContract.View {
 
-    @Inject
-    lateinit var presenter: FavoriteMatchPresenter<FavoriteMatchContract.View>
+    val presenter: FavoriteMatchPresenter<FavoriteMatchContract.View> by inject()
 
     override fun getLayoutId(): Int = R.layout.fragment_favorite_match
 
     override fun onLoadFragment(saveInstance: Bundle?) {
-        if (activityComponent != null) {
-            activityComponent?.inject(this)
-            onAttachView()
+        onAttachView()
 
-            swipeRefreshLayout.setColorSchemeColors(
-                    ContextCompat.getColor(requireContext(), android.R.color.holo_blue_light),
-                    ContextCompat.getColor(requireContext(), android.R.color.holo_green_light),
-                    ContextCompat.getColor(requireContext(), android.R.color.holo_orange_light),
-                    ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
-            )
-            swipeRefreshLayout.onRefresh {
-                presenter.getFavoriteMatchList()
-            }
+        swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(requireContext(), android.R.color.holo_blue_light),
+                ContextCompat.getColor(requireContext(), android.R.color.holo_green_light),
+                ContextCompat.getColor(requireContext(), android.R.color.holo_orange_light),
+                ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
+        )
+        swipeRefreshLayout.onRefresh {
+            presenter.getFavoriteMatchList()
         }
     }
 

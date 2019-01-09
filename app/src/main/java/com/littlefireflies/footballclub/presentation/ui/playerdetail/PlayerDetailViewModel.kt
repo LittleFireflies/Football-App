@@ -7,9 +7,8 @@ import com.littlefireflies.footballclub.data.repository.player.PlayerRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class PlayerDetailViewModel @Inject
+class PlayerDetailViewModel
 constructor(private val playerRepository: PlayerRepository) : ViewModel() {
 
     private val disposable = CompositeDisposable()

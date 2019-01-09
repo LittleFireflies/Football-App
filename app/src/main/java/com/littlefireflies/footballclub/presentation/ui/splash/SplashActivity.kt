@@ -7,17 +7,15 @@ import com.littlefireflies.footballclub.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.startActivity
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class SplashActivity : BaseActivity(), SplashContract.View {
 
-    @Inject
-    lateinit var presenter: SplashPresenter<SplashContract.View>
+    val presenter: SplashPresenter<SplashContract.View> by inject()
 
     override fun getLayoutId(): Int = R.layout.activity_splash
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
-        activityComponent.inject(this)
         onAttachView()
         presenter.getLeagueList()
     }

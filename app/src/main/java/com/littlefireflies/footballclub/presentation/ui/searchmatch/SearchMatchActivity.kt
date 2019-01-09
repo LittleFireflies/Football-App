@@ -14,18 +14,16 @@ import com.littlefireflies.footballclub.utils.*
 import kotlinx.android.synthetic.main.activity_search_match.*
 import kotlinx.android.synthetic.main.item_next_match.view.*
 import org.jetbrains.anko.startActivity
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class SearchMatchActivity : BaseActivity(), SearchMatchContract.View {
 
-    @Inject
-    lateinit var presenter: SearchMatchPresenter<SearchMatchContract.View>
+    val presenter: SearchMatchPresenter<SearchMatchContract.View> by inject()
 
     override fun getLayoutId(): Int = R.layout.activity_search_match
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        activityComponent.inject(this)
         onAttachView()
     }
 

@@ -21,12 +21,11 @@ import kotlinx.android.synthetic.main.item_prev_match.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivity
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
 
-    @Inject
-    lateinit var presenter: PreviousMatchPresenter<PreviousMatchContract.View>
+    val presenter: PreviousMatchPresenter<PreviousMatchContract.View> by inject()
 
     override var selectedLeague: League
         get() = spPrevMatchList.selectedItem as League
@@ -35,34 +34,30 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
     override fun getLayoutId(): Int = R.layout.fragment_previous_match
 
     override fun onLoadFragment(saveInstance: Bundle?) {
-        val component = activityComponent
-        if (component != null) {
-            activityComponent?.inject(this)
-            onAttachView()
+        onAttachView()
 
-            swipeRefreshLayout.setColorSchemeColors(
-                    ContextCompat.getColor(requireContext(), android.R.color.holo_blue_light),
-                    ContextCompat.getColor(requireContext(), android.R.color.holo_green_light),
-                    ContextCompat.getColor(requireContext(), android.R.color.holo_orange_light),
-                    ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
-            )
-            swipeRefreshLayout.onRefresh {
+        swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(requireContext(), android.R.color.holo_blue_light),
+                ContextCompat.getColor(requireContext(), android.R.color.holo_green_light),
+                ContextCompat.getColor(requireContext(), android.R.color.holo_orange_light),
+                ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
+        )
+        swipeRefreshLayout.onRefresh {
+            presenter.getMatchList()
+        }
+
+        spPrevMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedLeague = parent?.getItemAtPosition(position) as League
                 presenter.getMatchList()
             }
 
-            spPrevMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    selectedLeague = parent?.getItemAtPosition(position) as League
-                    presenter.getMatchList()
-                }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-
-                }
             }
-
-            presenter.getLeagueList()
         }
+
+        presenter.getLeagueList()
     }
 
     override fun onDestroyView() {

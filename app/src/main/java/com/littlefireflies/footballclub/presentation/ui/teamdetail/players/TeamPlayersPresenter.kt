@@ -4,12 +4,11 @@ import com.littlefireflies.footballclub.data.repository.player.PlayerRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
 import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
 /**
  * Created by widyarso.purnomo on 30/09/2018.
  */
-class TeamPlayersPresenter<V: TeamPlayersContract.View> @Inject
+class TeamPlayersPresenter<V : TeamPlayersContract.View>
 constructor(private val playerRepository: PlayerRepository, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), TeamPlayersContract.UserActionListener<V> {
 
     override fun getPlayerList(teamId: String?) {

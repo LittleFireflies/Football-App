@@ -16,12 +16,11 @@ import com.littlefireflies.footballclub.utils.hide
 import com.littlefireflies.footballclub.utils.show
 import kotlinx.android.synthetic.main.activity_team_detail.*
 import org.jetbrains.anko.design.snackbar
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class TeamDetailActivity : BaseActivity(), TeamDetailContract.View {
 
-    @Inject
-    lateinit var presenter: TeamDetailPresenter<TeamDetailContract.View>
+    val presenter: TeamDetailPresenter<TeamDetailContract.View> by inject()
 
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
@@ -35,7 +34,6 @@ class TeamDetailActivity : BaseActivity(), TeamDetailContract.View {
 
     override fun onActivityReady(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        activityComponent.inject(this)
         onAttachView()
         setupViewPager(viewPagerTeam)
         tabLayoutTeam.setupWithViewPager(viewPagerTeam)
