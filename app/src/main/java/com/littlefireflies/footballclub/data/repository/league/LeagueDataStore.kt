@@ -4,7 +4,6 @@ import android.content.Context
 import com.littlefireflies.footballclub.data.database.database
 import com.littlefireflies.footballclub.data.model.League
 import com.littlefireflies.footballclub.data.network.NetworkService
-import io.reactivex.Single
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
@@ -25,17 +24,14 @@ constructor(val networkService: NetworkService, val context: Context) : LeagueRe
         }
     }
 
-    override fun getNetworkLeagueList(): Single<List<League>> {
-        return networkService.getLeagueList()
-                .flatMap {
-                    val entities = it.leagues.filter { league ->
-                        league.sport == "Soccer"
-                    }
-                    Single.just(entities)
+    override suspend fun getNetworkLeagueList(): List<League> {
+        return networkService.getLeagueList().await().leagues
+                .filter { league ->
+                    league.sport == "Soccer"
                 }
     }
 
-    override fun getLocalLeagueList(): List<League> {
+    override suspend fun getLocalLeagueList(): List<League> {
         var leagues: List<League> = mutableListOf()
 
         context.database.use {
@@ -46,11 +42,11 @@ constructor(val networkService: NetworkService, val context: Context) : LeagueRe
         return leagues
     }
 
-    override fun getSoccerLeagueList(): Single<List<League>> {
+    override suspend fun getSoccerLeagueList(): List<League> {
         return if (getLocalLeagueList().isEmpty()) {
             getNetworkLeagueList()
         } else {
-            Single.just(getLocalLeagueList())
+            getLocalLeagueList()
         }
     }
 }

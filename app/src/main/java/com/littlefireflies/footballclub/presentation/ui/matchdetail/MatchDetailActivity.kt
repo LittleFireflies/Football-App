@@ -94,8 +94,9 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         pbMatchDetail.hide()
     }
 
-    override fun displayMatch(match: Match) {
+    override fun displayMatch(match: Match, favorite: Boolean) {
         this.match = match
+        displayFavoriteStatus(favorite)
 
         val date = dateFormatter(match.matchDate)
         val time = timeFormatter(match.matchTime)
@@ -160,7 +161,7 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         Glide.with(this).load(teamBadge).into(ivAwayTeam)
     }
 
-    override fun displayFavoriteStatus(favorite: Boolean) {
+    fun displayFavoriteStatus(favorite: Boolean) {
         isFavorite = favorite
         if (isFavorite)
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_favorites)

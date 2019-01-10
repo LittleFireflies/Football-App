@@ -5,7 +5,6 @@ import com.littlefireflies.footballclub.data.database.database
 import com.littlefireflies.footballclub.data.model.FavoriteTeam
 import com.littlefireflies.footballclub.data.model.Team
 import com.littlefireflies.footballclub.data.network.NetworkService
-import io.reactivex.Single
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
@@ -16,36 +15,19 @@ import org.jetbrains.anko.db.select
  */
 class TeamDataStore
 constructor(val networkService: NetworkService, val context: Context): TeamRepository{
-    override fun getTeamList(leagueId: String): Single<List<Team>> {
-        return networkService.getTeamList(leagueId)
-                .flatMap {
-                    val entities = mutableListOf<Team>()
-                    it.teams.forEach { team ->
-                        entities.add(team)
-                    }
-                    Single.just(entities)
-                }
+    override suspend fun getTeamList(leagueId: String): List<Team> {
+        return networkService.getTeamList(leagueId).await().teams
     }
 
-    override fun getTeamDetail(teamId: String?): Single<Team> {
-        return networkService.getTeamDetail(teamId)
-                .flatMap {
-                    Single.just(it.teams[0])
-                }
+    override suspend fun getTeamDetail(teamId: String?): Team {
+        return networkService.getTeamDetail(teamId).await().teams[0]
     }
 
-    override fun getTeamSearchResult(teamName: String): Single<List<Team>> {
-        return networkService.searchTeamName(teamName)
-                .flatMap {
-                    val entities = mutableListOf<Team>()
-                    it.teams.forEach { team ->
-                        entities.add(team)
-                    }
-                    Single.just(entities)
-                }
+    override suspend fun getTeamSearchResult(teamName: String): List<Team> {
+        return networkService.searchTeamName(teamName).await().teams
     }
 
-    override fun getFavoriteTeamList(): Single<List<FavoriteTeam>> {
+    override suspend fun getFavoriteTeamList(): List<FavoriteTeam> {
         var teamList: List<FavoriteTeam> = mutableListOf()
 
         context.database.use {
@@ -53,10 +35,10 @@ constructor(val networkService: NetworkService, val context: Context): TeamRepos
             teamList = result.parseList(classParser())
         }
 
-        return Single.just(teamList)
+        return teamList
     }
 
-    override fun isFavorite(teamId: String): Single<Boolean> {
+    override suspend fun isFavorite(teamId: String): Boolean {
         var isFavorite = false
 
         context.database.use {
@@ -65,7 +47,7 @@ constructor(val networkService: NetworkService, val context: Context): TeamRepos
             if (!favorite.isEmpty()) isFavorite = true
         }
 
-        return Single.just(isFavorite)
+        return isFavorite
     }
 
     override fun addtoFavorite(team: Team) {

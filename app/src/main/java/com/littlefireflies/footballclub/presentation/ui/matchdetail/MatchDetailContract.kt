@@ -12,11 +12,10 @@ interface MatchDetailContract {
     interface View: BaseView {
         fun showLoading()
         fun hideLoading()
-        fun displayMatch(match: Match)
+        fun displayMatch(match: Match, favorite: Boolean)
         fun displayErrorMessages(message: String)
         fun displayHomeBadge(teamBadge: String?)
         fun displayAwayBadge(teamBadge: String?)
-        fun displayFavoriteStatus(favorite: Boolean)
         fun onAddtoFavorite()
         fun onRemoveFromFavorite()
     }

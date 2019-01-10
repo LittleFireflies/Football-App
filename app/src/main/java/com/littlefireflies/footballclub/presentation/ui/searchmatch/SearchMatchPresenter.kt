@@ -2,27 +2,29 @@ package com.littlefireflies.footballclub.presentation.ui.searchmatch
 
 import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
-import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * Created by Widyarso Joko Purnomo on 13/10/18
  */
 class SearchMatchPresenter<V : SearchMatchContract.View>
-constructor(private val matchRepository: MatchRepository, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), SearchMatchContract.UserActionListener<V> {
+constructor(private val matchRepository: MatchRepository) : BasePresenter<V>(), SearchMatchContract.UserActionListener<V> {
 
     override fun searchMatch(matchName: String) {
         view?.showLoading()
-        disposable.add(
-                matchRepository.getMatchSearchResult(matchName)
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .subscribe({
-                            view?.displayMatch(it)
-                            view?.hideLoading()
-                        }, {
-                            view?.hideLoading()
-                        })
-        )
+
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val data = matchRepository.getMatchSearchResult(matchName)
+                view?.displayMatch(data)
+                view?.hideLoading()
+            } catch (e: Exception) {
+                view?.hideLoading()
+                view?.displayErrorMessage("Unable to load the data")
+            }
+        }
+
     }
 }

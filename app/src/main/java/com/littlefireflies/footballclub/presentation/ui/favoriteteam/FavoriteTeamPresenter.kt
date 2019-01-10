@@ -2,28 +2,25 @@ package com.littlefireflies.footballclub.presentation.ui.favoriteteam
 
 import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
-import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * Created by Widyarso Joko Purnomo on 11/10/18
  */
 class FavoriteTeamPresenter<V : FavoriteTeamContract.View>
-constructor(private val teamRepository: TeamRepository, disposable: CompositeDisposable, schedulerProvider: SchedulerProvider) : BasePresenter<V>(disposable, schedulerProvider), FavoriteTeamContract.UserActionListener<V> {
+constructor(private val teamRepository: TeamRepository) : BasePresenter<V>(), FavoriteTeamContract.UserActionListener<V> {
 
     override fun getFavoriteTeamList() {
         view?.showLoading()
-        disposable.add(
-                teamRepository.getFavoriteTeamList()
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .subscribe({
-                            view?.displayFavoriteTeamList(it)
-                            view?.hideLoading()
-                        }, {
-                            view?.hideLoading()
-                            view?.displayErrorMessage("Unable to load the data")
-                        })
-        )
+        GlobalScope.launch(Dispatchers.Main) {
+            val data = teamRepository.getFavoriteTeamList()
+            view?.displayFavoriteTeamList(data)
+            view?.hideLoading()
+        }
+        //TODO:
+//                            view?.hideLoading()
+//                            view?.displayErrorMessage("Unable to load the data")
     }
 }

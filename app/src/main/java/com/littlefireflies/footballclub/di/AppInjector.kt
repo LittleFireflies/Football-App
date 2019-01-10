@@ -1,5 +1,6 @@
 package com.littlefireflies.footballclub.di
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.littlefireflies.footballclub.data.network.NetworkService
 import com.littlefireflies.footballclub.data.repository.league.LeagueDataStore
 import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
@@ -32,14 +33,10 @@ import com.littlefireflies.footballclub.presentation.ui.teamdetail.players.TeamP
 import com.littlefireflies.footballclub.presentation.ui.teamlist.TeamListContract
 import com.littlefireflies.footballclub.presentation.ui.teamlist.TeamListPresenter
 import com.littlefireflies.footballclub.utils.Constants
-import com.littlefireflies.footballclub.utils.rx.AppSchedulerProvider
-import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
-import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -60,7 +57,7 @@ private fun createRetrofit(): Retrofit {
     val builder = Retrofit.Builder()
     builder.client(okHttpClient)
             .baseUrl(Constants.BASE_URL)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(MoshiConverterFactory.create())
 
     return builder.build()
@@ -76,22 +73,20 @@ val networkModule = module {
 }
 
 val appModule = module {
-    factory { CompositeDisposable() }
-    factory { AppSchedulerProvider() as SchedulerProvider }
     factory<MatchRepository> { MatchDataStore(get(), androidContext()) }
     factory<TeamRepository> { TeamDataStore(get(), androidContext()) }
     factory<PlayerRepository> { PlayerDataStore(get()) }
     factory<LeagueRepository> { LeagueDataStore(get(), androidContext()) }
 
-    factory { SplashPresenter<SplashContract.View>(get(), get(), get()) }
-    factory { PreviousMatchPresenter<PreviousMatchContract.View>(get(), get(), get(), get()) }
-    factory { NextMatchPresenter<NextMatchContract.View>(get(), get(), get(), get()) }
-    factory { TeamListPresenter<TeamListContract.View>(get(), get(), get(), get()) }
-    factory { FavoriteMatchPresenter<FavoriteMatchContract.View>(get(), get(), get()) }
-    factory { FavoriteTeamPresenter<FavoriteTeamContract.View>(get(), get(), get()) }
-    factory { SearchMatchPresenter<SearchMatchContract.View>(get(), get(), get()) }
-    factory { MatchDetailPresenter<MatchDetailContract.View>(get(), get(), get(), get()) }
-    factory { TeamDetailPresenter<TeamDetailContract.View>(get(), get(), get()) }
-    factory { TeamPlayersPresenter<TeamPlayersContract.View>(get(), get(), get()) }
-    factory { PlayerDetailPresenter<PlayerDetailContract.View>(get(), get(), get()) }
+    factory { SplashPresenter<SplashContract.View>(get()) }
+    factory { PreviousMatchPresenter<PreviousMatchContract.View>(get(), get()) }
+    factory { NextMatchPresenter<NextMatchContract.View>(get(), get()) }
+    factory { TeamListPresenter<TeamListContract.View>(get(), get()) }
+    factory { FavoriteMatchPresenter<FavoriteMatchContract.View>(get()) }
+    factory { FavoriteTeamPresenter<FavoriteTeamContract.View>(get()) }
+    factory { SearchMatchPresenter<SearchMatchContract.View>(get()) }
+    factory { MatchDetailPresenter<MatchDetailContract.View>(get(), get()) }
+    factory { TeamDetailPresenter<TeamDetailContract.View>(get()) }
+    factory { TeamPlayersPresenter<TeamPlayersContract.View>(get()) }
+    factory { PlayerDetailPresenter<PlayerDetailContract.View>(get()) }
 }

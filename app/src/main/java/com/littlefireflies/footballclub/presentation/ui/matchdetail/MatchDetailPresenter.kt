@@ -4,8 +4,9 @@ import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.data.repository.team.TeamRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
-import com.littlefireflies.footballclub.utils.rx.SchedulerProvider
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * Created by widyarso.purnomo on 04/09/2018.
@@ -13,61 +14,32 @@ import io.reactivex.disposables.CompositeDisposable
 class MatchDetailPresenter<V : MatchDetailContract.View>
 constructor(
         private val matchRepository: MatchRepository,
-        private val teamRepository: TeamRepository,
-        disposable: CompositeDisposable,
-        schedulerProvider: SchedulerProvider)
-    : BasePresenter<V>(disposable, schedulerProvider), MatchDetailContract.UserActionListener<V> {
+        private val teamRepository: TeamRepository)
+    : BasePresenter<V>(), MatchDetailContract.UserActionListener<V> {
 
     override fun getMatchDetail(matchId: String) {
         view?.showLoading()
-        disposable.add(
-                matchRepository.getMatchDetail(matchId)
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .doOnSuccess {
-                            view?.displayMatch(it)
-                        }
-                        .doOnError {
-                            view?.displayErrorMessages("Unable to load the data")
-                        }
-                        .flatMap {
-                            matchRepository.isFavorite(it.matchId.toString())
-                        }
-                        .doOnSuccess {
-                            view?.displayFavoriteStatus(it)
-                            view?.hideLoading()
-                        }
-                        .doOnError {
-                            view?.displayErrorMessages("Error")
-                        }
-                        .subscribe()
-        )
+        GlobalScope.launch(Dispatchers.Main) {
+            val data = matchRepository.getMatchDetail(matchId)
+            val favorite = matchRepository.isFavorite(matchId)
+
+            view?.displayMatch(data, favorite)
+            view?.hideLoading()
+        }
     }
 
     override fun getHomeTeamImage(teamId: String?) {
-        disposable.add(
-                teamRepository.getTeamDetail(teamId)
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .subscribe({
-                            view?.displayHomeBadge(it.teamBadge)
-                        }, {
-                            view?.displayErrorMessages("Failed to load image")
-                        })
-        )
+        GlobalScope.launch(Dispatchers.Main) {
+            val data = teamRepository.getTeamDetail(teamId)
+            view?.displayHomeBadge(data.teamBadge)
+        }
     }
 
     override fun getAwayTeamImage(teamId: String?) {
-        disposable.add(
-                teamRepository.getTeamDetail(teamId)
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .subscribe({
-                            view?.displayAwayBadge(it.teamBadge)
-                        }, {
-                            view?.displayErrorMessages("Failed to load image")
-                        })
-        )
+        GlobalScope.launch(Dispatchers.Main) {
+            val data = teamRepository.getTeamDetail(teamId)
+            view?.displayAwayBadge(data.teamBadge)
+        }
     }
 
     override fun addToFavorite(match: Match) {

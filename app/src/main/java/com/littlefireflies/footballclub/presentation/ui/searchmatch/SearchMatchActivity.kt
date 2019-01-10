@@ -14,6 +14,7 @@ import com.littlefireflies.footballclub.utils.*
 import kotlinx.android.synthetic.main.activity_search_match.*
 import kotlinx.android.synthetic.main.item_next_match.view.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
 class SearchMatchActivity : BaseActivity(), SearchMatchContract.View {
@@ -89,6 +90,10 @@ class SearchMatchActivity : BaseActivity(), SearchMatchContract.View {
             )
         }
         rvSearchMatch.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun displayErrorMessage(message: String) {
+        toast(message)
     }
 
     inner class SearchAdapter(private val matchList: List<Match>, val listener: (Match) -> Unit) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {

@@ -5,7 +5,6 @@ import com.littlefireflies.footballclub.data.database.database
 import com.littlefireflies.footballclub.data.model.FavoriteMatch
 import com.littlefireflies.footballclub.data.model.Match
 import com.littlefireflies.footballclub.data.network.NetworkService
-import io.reactivex.Single
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
@@ -16,47 +15,24 @@ import org.jetbrains.anko.db.select
  */
 class MatchDataStore
 constructor(val networkService: NetworkService, val context: Context) : MatchRepository {
-    override fun getNextMatch(leagueId: String): Single<List<Match>> {
-        return networkService.getNextMatches(leagueId)
-                .flatMap {
-                    val entities = mutableListOf<Match>()
-                    entities.addAll(it.events)
-
-                    Single.just(entities)
-                }
+    override suspend fun getNextMatch(leagueId: String): List<Match> {
+        return networkService.getNextMatches(leagueId).await().events
     }
 
-    override fun getPreviousMatch(leagueId: String): Single<List<Match>> {
-        return networkService.getPreviousMatches(leagueId)
-                .flatMap {
-                    val entities = mutableListOf<Match>()
-                    entities.addAll(it.events)
-
-                    Single.just(entities)
-                }
+    override suspend fun getPreviousMatch(leagueId: String): List<Match> {
+        return networkService.getPreviousMatches(leagueId).await().events
     }
 
-    override fun getMatchDetail(matchId: String): Single<Match> {
-        return networkService.getMatchDetail(matchId)
-                .flatMap {
-                    Single.just(it.events[0])
-                }
+    override suspend fun getMatchDetail(matchId: String): Match {
+        return networkService.getMatchDetail(matchId).await().events[0]
     }
 
-    override fun getMatchSearchResult(matchName: String): Single<List<Match>> {
-        return networkService.searchMatch(matchName)
-                .flatMap {
-                    val entities = mutableListOf<Match>()
-                    it.event.filter { match ->
-                        match.sport == "Soccer"
-                    }.forEach { match ->
-                        entities.add(match)
-                    }
-                    Single.just(entities)
-                }
+    override suspend fun getMatchSearchResult(matchName: String): List<Match> {
+        val result = networkService.searchMatch(matchName).await()
+        return result.event
     }
 
-    override fun getFavoriteMatches(): Single<List<FavoriteMatch>> {
+    override suspend fun getFavoriteMatches(): List<FavoriteMatch> {
         var favoriteList: List<FavoriteMatch> = mutableListOf()
 
         context.database.use {
@@ -64,10 +40,10 @@ constructor(val networkService: NetworkService, val context: Context) : MatchRep
             favoriteList = result.parseList(classParser())
         }
 
-        return Single.just(favoriteList)
+        return favoriteList
     }
 
-    override fun isFavorite(matchId: String): Single<Boolean> {
+    override suspend fun isFavorite(matchId: String): Boolean {
         var isFavorite = false
 
         context.database.use {
@@ -76,7 +52,7 @@ constructor(val networkService: NetworkService, val context: Context) : MatchRep
             if (!favorite.isEmpty()) isFavorite = true
         }
 
-        return Single.just(isFavorite)
+        return isFavorite
     }
 
     override fun addToFavorite(match: Match) {

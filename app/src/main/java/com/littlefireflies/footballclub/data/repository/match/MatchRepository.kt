@@ -2,18 +2,17 @@ package com.littlefireflies.footballclub.data.repository.match
 
 import com.littlefireflies.footballclub.data.model.FavoriteMatch
 import com.littlefireflies.footballclub.data.model.Match
-import io.reactivex.Single
 
 /**
  * Created by widyarso.purnomo on 28/09/2018.
  */
 interface MatchRepository {
-    fun getNextMatch(leagueId: String): Single<List<Match>>
-    fun getPreviousMatch(leagueId: String): Single<List<Match>>
-    fun getMatchDetail(matchId: String): Single<Match>
-    fun getMatchSearchResult(matchName: String): Single<List<Match>>
-    fun getFavoriteMatches(): Single<List<FavoriteMatch>>
-    fun isFavorite(matchId: String): Single<Boolean>
+    suspend fun getNextMatch(leagueId: String): List<Match>
+    suspend fun getPreviousMatch(leagueId: String): List<Match>
+    suspend fun getMatchDetail(matchId: String): Match
+    suspend fun getMatchSearchResult(matchName: String): List<Match>
+    suspend fun getFavoriteMatches(): List<FavoriteMatch>
+    suspend fun isFavorite(matchId: String): Boolean
     fun addToFavorite(match: Match)
     fun removeFromFavorite(matchId: String)
 }

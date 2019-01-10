@@ -12,6 +12,7 @@ interface SearchMatchContract {
         fun showLoading()
         fun hideLoading()
         fun displayMatch(matchList: List<Match>)
+        fun displayErrorMessage(message: String)
     }
 
     interface UserActionListener<V: View> : IBasePresenter<V> {
