@@ -78,6 +78,7 @@ class PreviousMatchFragment : BaseFragment(), PreviousMatchContract.View {
     }
 
     override fun hideLoading() {
+        swipeRefreshLayout.isRefreshing = false
         pbPrevMatch.hide()
     }
 

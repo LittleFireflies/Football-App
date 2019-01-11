@@ -71,7 +71,7 @@ class TeamPlayersFragment : BaseFragment(), TeamPlayersContract.View, TeamDetail
         pbTeamPlayers.snackbar(message)
     }
 
-    inner class PlayerAdapter(val context: Context?, val players: List<Player>, val listener: (Player) -> Unit) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
+    inner class PlayerAdapter(val context: Context?, private val players: List<Player>, val listener: (Player) -> Unit) : RecyclerView.Adapter<PlayerAdapter.ViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_player_list, parent, false))
 
         override fun getItemCount(): Int = players.size

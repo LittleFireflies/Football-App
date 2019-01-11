@@ -7,7 +7,7 @@ import com.littlefireflies.footballclub.data.network.NetworkService
  * Created by widyarso.purnomo on 30/09/2018.
  */
 class PlayerDataStore
-constructor(val networkService: NetworkService) : PlayerRepository{
+constructor(private val networkService: NetworkService) : PlayerRepository {
     override suspend fun getPlayers(teamId: String): List<Player> {
         return networkService.getPlayersByTeam(teamId).await().player
     }

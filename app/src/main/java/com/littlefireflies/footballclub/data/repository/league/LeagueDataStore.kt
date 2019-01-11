@@ -12,7 +12,7 @@ import org.jetbrains.anko.db.select
  * Created by widyarso.purnomo on 07/10/2018.
  */
 class LeagueDataStore
-constructor(val networkService: NetworkService, val context: Context) : LeagueRepository{
+constructor(private val networkService: NetworkService, val context: Context) : LeagueRepository {
     override fun saveLeagueList(leagues: List<League>) {
         leagues.forEach {
             context.database.use {

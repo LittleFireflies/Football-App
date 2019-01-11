@@ -14,9 +14,14 @@ constructor(private val leagueRepository: LeagueRepository) : BasePresenter<V>()
 
     override fun getLeagueList() {
         GlobalScope.launch(Dispatchers.Main) {
-            val data = leagueRepository.getSoccerLeagueList()
-            leagueRepository.saveLeagueList(data)
-            view?.openActivity()
+            try {
+                val data = leagueRepository.getSoccerLeagueList()
+                leagueRepository.saveLeagueList(data)
+                view?.openActivity()
+            } catch (e: Exception) {
+                view?.displayErrorMessage("Unable to load league data")
+                view?.openActivity()
+            }
         }
     }
 }

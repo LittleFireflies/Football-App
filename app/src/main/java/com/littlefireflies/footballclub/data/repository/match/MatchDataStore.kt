@@ -14,9 +14,10 @@ import org.jetbrains.anko.db.select
  * Created by widyarso.purnomo on 28/09/2018.
  */
 class MatchDataStore
-constructor(val networkService: NetworkService, val context: Context) : MatchRepository {
+constructor(private val networkService: NetworkService, val context: Context) : MatchRepository {
+
     override suspend fun getNextMatch(leagueId: String): List<Match> {
-        return networkService.getNextMatches(leagueId).await().events
+        return networkService.getPreviousMatches(leagueId).await().events
     }
 
     override suspend fun getPreviousMatch(leagueId: String): List<Match> {

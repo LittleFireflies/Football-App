@@ -15,12 +15,14 @@ constructor(private val matchRepository: MatchRepository) : BasePresenter<V>(), 
     override fun getFavoriteMatchList() {
         view?.showLoading()
         GlobalScope.launch(Dispatchers.Main) {
-            val data = matchRepository.getFavoriteMatches()
-            view?.displayFavoriteMatchList(data)
-            view?.hideLoading()
+            try {
+                val data = matchRepository.getFavoriteMatches()
+                view?.displayFavoriteMatchList(data)
+                view?.hideLoading()
+            } catch (e: Exception) {
+                view?.hideLoading()
+                view?.displayErrorMessages("Unable to load Favorite matches")
+            }
         }
-        //TODO:
-//                            view?.hideLoading()
-//                            view?.displayErrorMessages("Unable to load Favorite matches")
     }
 }

@@ -15,26 +15,40 @@ constructor(private val leagueRepository: LeagueRepository, private val teamRepo
 
     override fun getLeagueList() {
         GlobalScope.launch(Dispatchers.Main) {
-            val data = leagueRepository.getSoccerLeagueList()
-            view?.displayLeagueList(data)
+            try {
+                val data = leagueRepository.getSoccerLeagueList()
+                view?.displayLeagueList(data)
+            } catch (e: Exception) {
+                view?.displayErrorMessage("Unable to load league data")
+            }
         }
     }
 
     override fun getTeamList() {
         view?.showLoading()
         GlobalScope.launch(Dispatchers.Main) {
-            val data = teamRepository.getTeamList(view?.selectedLeague?.leagueId.toString())
-            view?.displayTeamList(data)
-            view?.hideLoading()
+            try {
+                val data = teamRepository.getTeamList(view?.selectedLeague?.leagueId.toString())
+                view?.displayTeamList(data)
+                view?.hideLoading()
+            } catch (e: Exception) {
+                view?.hideLoading()
+                view?.displayErrorMessage(e.message ?: "Unable to load team data")
+            }
         }
     }
 
     override fun searchTeam(teamName: String) {
         view?.showLoading()
         GlobalScope.launch(Dispatchers.Main) {
-            val data = teamRepository.getTeamSearchResult(teamName)
-            view?.displayTeamList(data)
-            view?.hideLoading()
+            try {
+                val data = teamRepository.getTeamSearchResult(teamName)
+                view?.displayTeamList(data)
+                view?.hideLoading()
+            } catch (e: Exception) {
+                view?.hideLoading()
+                view?.displayErrorMessage("Unable to load the data")
+            }
         }
     }
 }

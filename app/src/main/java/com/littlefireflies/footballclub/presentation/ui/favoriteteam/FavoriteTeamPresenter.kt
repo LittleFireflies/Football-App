@@ -15,12 +15,14 @@ constructor(private val teamRepository: TeamRepository) : BasePresenter<V>(), Fa
     override fun getFavoriteTeamList() {
         view?.showLoading()
         GlobalScope.launch(Dispatchers.Main) {
-            val data = teamRepository.getFavoriteTeamList()
-            view?.displayFavoriteTeamList(data)
-            view?.hideLoading()
+            try {
+                val data = teamRepository.getFavoriteTeamList()
+                view?.displayFavoriteTeamList(data)
+                view?.hideLoading()
+            } catch (e: Exception) {
+                view?.hideLoading()
+                view?.displayErrorMessage("Unable to load favorite teams")
+            }
         }
-        //TODO:
-//                            view?.hideLoading()
-//                            view?.displayErrorMessage("Unable to load the data")
     }
 }

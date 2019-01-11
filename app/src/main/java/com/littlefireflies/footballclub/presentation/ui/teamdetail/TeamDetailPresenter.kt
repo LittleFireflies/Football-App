@@ -16,12 +16,17 @@ constructor(private val teamRepository: TeamRepository) : BasePresenter<V>(), Te
     override fun getTeamDetail(teamId: String) {
         view?.showLoading()
         GlobalScope.launch(Dispatchers.Main) {
-            val data = teamRepository.getTeamDetail(teamId)
-            val favorite = teamRepository.isFavorite(teamId)
+            try {
+                val data = teamRepository.getTeamDetail(teamId)
+                val favorite = teamRepository.isFavorite(teamId)
 
-            view?.displayTeam(data)
-            view?.displayFavoriteStatus(favorite)
-            view?.hideLoading()
+                view?.displayTeam(data)
+                view?.displayFavoriteStatus(favorite)
+                view?.hideLoading()
+            } catch (e: Exception) {
+                view?.hideLoading()
+                view?.displayErrorMessage("Unable to load team data")
+            }
         }
     }
 

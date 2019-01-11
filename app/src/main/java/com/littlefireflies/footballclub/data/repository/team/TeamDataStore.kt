@@ -14,7 +14,7 @@ import org.jetbrains.anko.db.select
  * Created by widyarso.purnomo on 28/09/2018.
  */
 class TeamDataStore
-constructor(val networkService: NetworkService, val context: Context): TeamRepository{
+constructor(private val networkService: NetworkService, val context: Context) : TeamRepository {
     override suspend fun getTeamList(leagueId: String): List<Team> {
         return networkService.getTeamList(leagueId).await().teams
     }

@@ -20,25 +20,38 @@ constructor(
     override fun getMatchDetail(matchId: String) {
         view?.showLoading()
         GlobalScope.launch(Dispatchers.Main) {
-            val data = matchRepository.getMatchDetail(matchId)
-            val favorite = matchRepository.isFavorite(matchId)
+            try {
+                val data = matchRepository.getMatchDetail(matchId)
+                val favorite = matchRepository.isFavorite(matchId)
 
-            view?.displayMatch(data, favorite)
-            view?.hideLoading()
+                view?.displayMatch(data, favorite)
+                view?.hideLoading()
+            } catch (e: Exception) {
+                view?.hideLoading()
+                view?.displayErrorMessages("Unable to load match data")
+            }
         }
     }
 
     override fun getHomeTeamImage(teamId: String?) {
         GlobalScope.launch(Dispatchers.Main) {
-            val data = teamRepository.getTeamDetail(teamId)
-            view?.displayHomeBadge(data.teamBadge)
+            try {
+                val data = teamRepository.getTeamDetail(teamId)
+                view?.displayHomeBadge(data.teamBadge)
+            } catch (e: Exception) {
+                view?.displayErrorMessages("Unable to display badge")
+            }
         }
     }
 
     override fun getAwayTeamImage(teamId: String?) {
         GlobalScope.launch(Dispatchers.Main) {
-            val data = teamRepository.getTeamDetail(teamId)
-            view?.displayAwayBadge(data.teamBadge)
+            try {
+                val data = teamRepository.getTeamDetail(teamId)
+                view?.displayAwayBadge(data.teamBadge)
+            } catch (e: Exception) {
+                view?.displayAwayBadge("Unable to display badge")
+            }
         }
     }
 

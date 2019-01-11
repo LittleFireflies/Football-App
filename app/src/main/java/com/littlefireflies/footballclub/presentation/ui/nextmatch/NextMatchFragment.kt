@@ -79,6 +79,7 @@ class NextMatchFragment : BaseFragment(), NextMatchContract.View {
     }
 
     override fun hideLoading() {
+        swipeRefreshLayout.isRefreshing = false
         pbNextMatch?.hide()
     }
 

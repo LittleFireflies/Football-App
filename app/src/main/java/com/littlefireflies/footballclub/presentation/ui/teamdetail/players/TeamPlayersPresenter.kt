@@ -15,9 +15,14 @@ constructor(private val playerRepository: PlayerRepository) : BasePresenter<V>()
     override fun getPlayerList(teamId: String?) {
         view?.showLoading()
         GlobalScope.launch(Dispatchers.Main) {
-            val data = playerRepository.getPlayers(teamId.toString())
-            view?.displayPlayerList(data)
-            view?.hideLoading()
+            try {
+                val data = playerRepository.getPlayers(teamId.toString())
+                view?.displayPlayerList(data)
+                view?.hideLoading()
+            } catch (e: Exception) {
+                view?.hideLoading()
+                view?.displayErrorMessage("Unable to load player data")
+            }
         }
     }
 }

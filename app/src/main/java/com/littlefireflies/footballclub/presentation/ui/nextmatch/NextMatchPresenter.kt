@@ -16,8 +16,12 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
 
     override fun getLeagueList() {
         GlobalScope.launch(Dispatchers.Main) {
-            val data = leagueRepository.getSoccerLeagueList()
-            view?.displayLeagueList(data)
+            try {
+                val data = leagueRepository.getSoccerLeagueList()
+                view?.displayLeagueList(data)
+            } catch (e: Exception) {
+                view?.displayErrorMessage("Unable to load league data")
+            }
         }
     }
 
@@ -25,9 +29,14 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
         view?.showLoading()
         val leagueId = view?.selectedLeague?.leagueId
         GlobalScope.launch(Dispatchers.Main) {
-            val data = matchRepository.getNextMatch(leagueId.toString())
-            view?.displayMatchList(data)
-            view?.hideLoading()
+            try {
+                val data = matchRepository.getNextMatch(leagueId.toString())
+                view?.displayMatchList(data)
+                view?.hideLoading()
+            } catch (e: Exception) {
+                view?.hideLoading()
+                view?.displayErrorMessage("Unable to load match data")
+            }
         }
     }
 }
