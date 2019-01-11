@@ -22,8 +22,8 @@ fun getTimeMillis(datetime: String) : Long{
 }
 
 fun dateFormatter(inputDate: String?): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd")
-    val outputFormat = SimpleDateFormat("dd MMMM yyyy")
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
     val beforeFormat: Date
     var afterFormat = ""
 
@@ -44,7 +44,7 @@ fun timeFormatter(inputTime: String?): String {
 
 fun toGmtFormat(datetime: String): String {
     return try {
-        val formatter = SimpleDateFormat("dd MMMM yyyy HH:mm")
+        val formatter = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale.getDefault())
         formatter.timeZone = TimeZone.getTimeZone("UTC")
         val gmtTime = formatter.parse(datetime)
         formatter.timeZone = TimeZone.getDefault()
@@ -56,8 +56,8 @@ fun toGmtFormat(datetime: String): String {
 }
 
 fun bornDateFormatter(inputDate: String?): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd")
-    val outputFormat = SimpleDateFormat("dd MMMM yyyy")
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
     val beforeFormat: Date
     var afterFormat = ""
 

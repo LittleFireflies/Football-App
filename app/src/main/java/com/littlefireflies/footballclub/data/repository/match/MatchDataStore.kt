@@ -17,7 +17,7 @@ class MatchDataStore
 constructor(private val networkService: NetworkService, val context: Context) : MatchRepository {
 
     override suspend fun getNextMatch(leagueId: String): List<Match> {
-        return networkService.getPreviousMatches(leagueId).await().events
+        return networkService.getNextMatches(leagueId).await().events
     }
 
     override suspend fun getPreviousMatch(leagueId: String): List<Match> {
