@@ -3,7 +3,7 @@ package com.littlefireflies.footballclub.presentation.ui.nextmatch
 import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
 import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
-import kotlinx.coroutines.Dispatchers
+import com.littlefireflies.footballclub.utils.CoroutineContextProvider
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -12,10 +12,10 @@ import kotlinx.coroutines.launch
  */
 
 class NextMatchPresenter<V : NextMatchContract.View>
-constructor(private val matchRepository: MatchRepository, private val leagueRepository: LeagueRepository) : BasePresenter<V>(), NextMatchContract.UserActionListener<V> {
+constructor(private val matchRepository: MatchRepository, private val leagueRepository: LeagueRepository, private val context: CoroutineContextProvider = CoroutineContextProvider()) : BasePresenter<V>(), NextMatchContract.UserActionListener<V> {
 
     override fun getLeagueList() {
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(context.main) {
             try {
                 val data = leagueRepository.getSoccerLeagueList()
                 view?.displayLeagueList(data)
@@ -28,7 +28,7 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
     override fun getMatchList() {
         view?.showLoading()
         val leagueId = view?.selectedLeague?.leagueId
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(context.main) {
             try {
                 val data = matchRepository.getNextMatch(leagueId.toString())
                 view?.displayMatchList(data)

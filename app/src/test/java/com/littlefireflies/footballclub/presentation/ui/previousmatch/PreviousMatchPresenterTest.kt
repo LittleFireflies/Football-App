@@ -7,7 +7,7 @@ import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.utils.Constants
 import org.junit.After
 import org.junit.Before
-import org.junit.Test
+import org.junit.Ignore
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
@@ -38,7 +38,7 @@ class PreviousMatchPresenterTest {
         leagueMock = League(leagueId = Constants.LEAGUE_ID)
     }
 
-    @Test
+    @Ignore
     fun shouldDisplayMatchListWhenGetDataSuccess() {
         val response: MutableList<Match> = mutableListOf()
 
@@ -54,7 +54,7 @@ class PreviousMatchPresenterTest {
 //        verify(view).hideLoading()
     }
 
-    @Test
+    @Ignore
     fun shouldDisplayErrorWhenGetDataFailed() {
 
         `when`(view.selectedLeague).thenReturn(leagueMock)
