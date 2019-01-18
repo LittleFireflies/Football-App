@@ -4,11 +4,13 @@ import android.content.Context
 import com.littlefireflies.footballclub.data.database.database
 import com.littlefireflies.footballclub.data.model.FavoriteMatch
 import com.littlefireflies.footballclub.data.model.Match
+import com.littlefireflies.footballclub.data.model.MatchResponse
 import com.littlefireflies.footballclub.data.network.NetworkService
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
+import retrofit2.Response
 
 /**
  * Created by widyarso.purnomo on 28/09/2018.
@@ -16,16 +18,16 @@ import org.jetbrains.anko.db.select
 class MatchDataStore
 constructor(private val networkService: NetworkService, val context: Context) : MatchRepository {
 
-    override suspend fun getNextMatch(leagueId: String): List<Match> {
-        return networkService.getNextMatches(leagueId).await().events
+    override suspend fun getNextMatch(leagueId: String): Response<MatchResponse> {
+        return networkService.getNextMatches(leagueId).await()
     }
 
-    override suspend fun getPreviousMatch(leagueId: String): List<Match> {
-        return networkService.getPreviousMatches(leagueId).await().events
+    override suspend fun getPreviousMatch(leagueId: String): Response<MatchResponse> {
+        return networkService.getPreviousMatches(leagueId).await()
     }
 
-    override suspend fun getMatchDetail(matchId: String): Match {
-        return networkService.getMatchDetail(matchId).await().events[0]
+    override suspend fun getMatchDetail(matchId: String): Response<MatchResponse> {
+        return networkService.getMatchDetail(matchId).await()
     }
 
     override suspend fun getMatchSearchResult(matchName: String): List<Match> {

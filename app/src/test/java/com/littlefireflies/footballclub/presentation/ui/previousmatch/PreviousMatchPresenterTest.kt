@@ -1,16 +1,21 @@
 package com.littlefireflies.footballclub.presentation.ui.previousmatch
 
 import com.littlefireflies.footballclub.data.model.League
-import com.littlefireflies.footballclub.data.model.Match
+import com.littlefireflies.footballclub.data.model.MatchResponse
 import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
 import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.utils.Constants
+import com.littlefireflies.footballclub.utils.TestContextProvider
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
+import org.junit.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import retrofit2.Response
 
 /**
  * Created by widyarso.purnomo on 12/09/2018.
@@ -23,6 +28,8 @@ class PreviousMatchPresenterTest {
     private lateinit var leagueRepository: LeagueRepository
     @Mock
     private lateinit var view: PreviousMatchContract.View
+    @Mock
+    private lateinit var matchResponse: Response<MatchResponse>
 
     private lateinit var leagueMock: League
 
@@ -32,41 +39,45 @@ class PreviousMatchPresenterTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        presenter = PreviousMatchPresenter(matchRepository, leagueRepository)
+        presenter = PreviousMatchPresenter(matchRepository, leagueRepository, TestContextProvider())
         presenter.onAttach(view)
 
         leagueMock = League(leagueId = Constants.LEAGUE_ID)
     }
 
-    @Ignore
+    @Test
     fun shouldDisplayMatchListWhenGetDataSuccess() {
-        val response: MutableList<Match> = mutableListOf()
 
         `when`(view.selectedLeague).thenReturn(leagueMock)
-//        `when`(matchRepository.getPreviousMatch(Constants.LEAGUE_ID)).thenReturn(Single.just(response))
-//
-//        presenter.getMatchList()
-//
-//        testScheduler.triggerActions()
-//
-//        verify(view).showLoading()
-//        verify(view).displayMatchList(response)
-//        verify(view).hideLoading()
+
+        runBlocking {
+            `when`(matchRepository.getPreviousMatch(Constants.LEAGUE_ID)).thenReturn(matchResponse)
+            `when`(matchResponse.isSuccessful).thenReturn(true)
+            `when`(matchResponse.code()).thenReturn(200)
+
+            presenter.getMatchList()
+
+            verify(view).showLoading()
+            verify(view).displayMatchList(matchResponse.body()?.events ?: mutableListOf())
+            verify(view).hideLoading()
+        }
     }
 
-    @Ignore
+    @Test
     fun shouldDisplayErrorWhenGetDataFailed() {
 
         `when`(view.selectedLeague).thenReturn(leagueMock)
-//        `when`(matchRepository.getPreviousMatch(Constants.LEAGUE_ID)).thenReturn(Single.error(Exception("Load Error")))
-//
-//        presenter.getMatchList()
-//
-//        testScheduler.triggerActions()
-//
-//        verify(view).showLoading()
-//        verify(view).hideLoading()
-//        verify(view).displayErrorMessage("Unable to load the data")
+
+        runBlocking {
+            `when`(matchRepository.getNextMatch(Constants.LEAGUE_ID)).thenReturn(matchResponse)
+            `when`(matchResponse.isSuccessful).thenReturn(false)
+
+            presenter.getMatchList()
+
+            verify(view).showLoading()
+            verify(view).hideLoading()
+            verify(view).displayErrorMessage(ArgumentMatchers.anyString())
+        }
     }
 
     @After

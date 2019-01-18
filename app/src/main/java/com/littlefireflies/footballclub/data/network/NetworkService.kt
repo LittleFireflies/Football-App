@@ -5,6 +5,7 @@ import com.littlefireflies.footballclub.data.model.MatchResponse
 import com.littlefireflies.footballclub.data.model.PlayerResponse
 import com.littlefireflies.footballclub.data.model.TeamResponse
 import kotlinx.coroutines.Deferred
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,13 +15,13 @@ import retrofit2.http.Query
 interface NetworkService {
 
     @GET("v1/json/1/eventspastleague.php")
-    fun getPreviousMatches(@Query("id") leagueId: String): Deferred<MatchResponse>
+    fun getPreviousMatches(@Query("id") leagueId: String): Deferred<Response<MatchResponse>>
 
     @GET("v1/json/1/eventsnextleague.php")
-    fun getNextMatches(@Query("id") leagueId: String): Deferred<MatchResponse>
+    fun getNextMatches(@Query("id") leagueId: String): Deferred<Response<MatchResponse>>
 
     @GET("v1/json/1/lookupevent.php")
-    fun getMatchDetail(@Query("id") matchId: String): Deferred<MatchResponse>
+    fun getMatchDetail(@Query("id") matchId: String): Deferred<Response<MatchResponse>>
 
     @GET("v1/json/1/lookup_all_teams.php")
     fun getTeamList(@Query("id") leagueId: String): Deferred<TeamResponse>

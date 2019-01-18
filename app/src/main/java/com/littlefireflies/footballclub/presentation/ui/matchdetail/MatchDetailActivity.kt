@@ -177,7 +177,7 @@ class MatchDetailActivity : BaseActivity(), MatchDetailContract.View {
         pbMatchDetail.snackbar("Removed from favorite")
     }
 
-    class MatchDetailAdapter(private val items: List<String>?, val type: String) : RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {
+    class MatchDetailAdapter(private val items: List<String>?, private val type: String) : RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return when (viewType) {

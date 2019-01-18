@@ -3,7 +3,7 @@ package com.littlefireflies.footballclub.presentation.ui.previousmatch
 import com.littlefireflies.footballclub.data.repository.league.LeagueRepository
 import com.littlefireflies.footballclub.data.repository.match.MatchRepository
 import com.littlefireflies.footballclub.presentation.base.BasePresenter
-import kotlinx.coroutines.Dispatchers
+import com.littlefireflies.footballclub.utils.CoroutineContextProvider
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -11,10 +11,10 @@ import kotlinx.coroutines.launch
  * Created by widyarso.purnomo on 04/09/2018.
  */
 class PreviousMatchPresenter<V : PreviousMatchContract.View>
-constructor(private val matchRepository: MatchRepository, private val leagueRepository: LeagueRepository) : BasePresenter<V>(), PreviousMatchContract.UserActionListener<V> {
+constructor(private val matchRepository: MatchRepository, private val leagueRepository: LeagueRepository, private val context: CoroutineContextProvider = CoroutineContextProvider()) : BasePresenter<V>(), PreviousMatchContract.UserActionListener<V> {
 
     override fun getLeagueList() {
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(context.main) {
             try {
                 val data = leagueRepository.getSoccerLeagueList()
                 view?.displayLeagueList(data)
@@ -26,14 +26,24 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
 
     override fun getMatchList() {
         view?.showLoading()
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(context.main) {
             try {
                 val data = matchRepository.getPreviousMatch(view?.selectedLeague?.leagueId.toString())
-                view?.displayMatchList(data)
-                view?.hideLoading()
+                if (data.isSuccessful) {
+                    if (data.code() == 200) {
+                        view?.displayMatchList(data.body()?.events ?: mutableListOf())
+                        view?.hideLoading()
+                    } else {
+                        view?.hideLoading()
+                        view?.displayErrorMessage("Unable to load match data: ${data.message()}")
+                    }
+                } else {
+                    view?.hideLoading()
+                    view?.displayErrorMessage("Unable to load match data: ${data.message()}")
+                }
             } catch (e: Exception) {
                 view?.hideLoading()
-                view?.displayErrorMessage("Unable to load match data.")
+                view?.displayErrorMessage("Unable to load match data: ${e.message}")
             }
         }
     }
